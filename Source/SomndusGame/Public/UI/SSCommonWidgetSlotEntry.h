@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "CommonButtonBase.h"
 #include "CommonUserWidget.h"
+#include "CommonTabListWidgetBase.h"
 #include "SSCommonFocusWidget.h"
 #include "SSWidgetObjectEntry.h"
 #include "Blueprint/IUserObjectListEntry.h"
