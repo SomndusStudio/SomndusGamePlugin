@@ -25,8 +25,10 @@ public class SomndusGame : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core", "UMG", "CommonUI", "CommonInput", "CommonUser", "CommonGame",
-				"StructUtils"
+				"Core", "UMG", 
+				"InputCore", "EnhancedInput",
+				"StructUtils",
+				"CommonUI", "CommonInput", "CommonUser", "CommonGame",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -40,6 +42,7 @@ public class SomndusGame : ModuleRules
 				"Slate",
 				"SlateCore",
 				"GameplayTags", "StructUtils",
+				"InputCore", "EnhancedInput",
 				"CommonUI", "CommonInput", "CommonGame", "CommonUser"
 				// ... add private dependencies that you statically link with here ...	
 			}
