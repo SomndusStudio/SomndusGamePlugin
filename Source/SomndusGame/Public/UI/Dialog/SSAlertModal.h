@@ -11,16 +11,15 @@
 #include "Components/DynamicEntryBox.h"
 #include "Components/TextBlock.h"
 #include "Messaging/CommonGameDialog.h"
-#include "SSConfirmationModal.generated.h"
+#include "SSAlertModal.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SOMNDUSGAME_API USSConfirmationModal : public UCommonGameDialog
+class SOMNDUSGAME_API USSAlertModal : public UCommonGameDialog
 {
 	GENERATED_BODY()
-
 public:
 	virtual void SetupDialog(UCommonGameDialogDescriptor* Descriptor, FCommonMessagingResultDelegate ResultCallback) override;
 	virtual void KillDialog() override;
@@ -28,7 +27,7 @@ public:
 	virtual TOptional<FUIInputConfig> GetDesiredInputConfig() const override;
 	
 protected:
-	virtual void CloseConfirmationWindow(ECommonMessagingResult Result);
+	virtual void CloseAlertWindow(ECommonMessagingResult Result);
 
 private:
 	

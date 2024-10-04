@@ -1,4 +1,8 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿/**
+* Copyright (C) 2020-2024 Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 #pragma once
 
@@ -11,6 +15,8 @@
 #include "Blueprint/IUserObjectListEntry.h"
 
 #include "SSCommonWidgetSlotEntry.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSWidgetSlotEntryEvent, class USSCommonWidgetSlotEntry*, SlotEntry);
 
 /**
  * 
@@ -39,6 +45,9 @@ public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void OnItemObjectUpdate();
+
+	UFUNCTION(BlueprintCallable)
+	void PerformOnClick();
 	
 	/**
 	 * Auto capture the widget from the given button
@@ -46,5 +55,8 @@ public:
 	 */
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget, BlueprintProtected = true, AllowPrivateAccess = true))
 	TObjectPtr<UCommonButtonBase> DefaultButtonSlot;
+
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="Default")
+	FSSWidgetSlotEntryEvent OnClickEvent;
 };
 

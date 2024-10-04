@@ -1,4 +1,8 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿/**
+* Copyright (C) 2020-2024 Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 
 #include "UI/SSCommonUIFunctionLibrary.h"
@@ -17,4 +21,28 @@ void USSCommonUIFunctionLibrary::SetItemObject(UUserWidget* EntryWidget, UObject
 	{
 		ISSWidgetObjectEntry::Execute_OnItemObjectSet(EntryWidget, InItemObject);
 	}
+}
+
+ULocalPlayer* USSCommonUIFunctionLibrary::GetLocalPlayerFromContext(UObject* WorldContextObject)
+{
+	ULocalPlayer* LocalPlayer = nullptr;
+	if (WorldContextObject)
+	{
+		if (UUserWidget* UserWidget = Cast<UUserWidget>(WorldContextObject))
+		{
+			LocalPlayer = UserWidget->GetOwningLocalPlayer<ULocalPlayer>();
+		}
+		else if (APlayerController* PC = Cast<APlayerController>(WorldContextObject))
+		{
+			LocalPlayer = PC->GetLocalPlayer();
+		}
+		else if (UWorld* World = WorldContextObject->GetWorld())
+		{
+			if (UGameInstance* GameInstance = World->GetGameInstance<UGameInstance>())
+			{
+				LocalPlayer = GameInstance->GetPrimaryPlayerController(false)->GetLocalPlayer();
+			}
+		}
+	}
+	return LocalPlayer;
 }

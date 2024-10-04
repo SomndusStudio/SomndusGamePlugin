@@ -1,4 +1,8 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿/**
+* Copyright (C) 2020-2024 Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 #pragma once
 
@@ -31,4 +35,12 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "Somndus Studio", meta = (WorldContext = "ContextObject", BlueprintInternalUseOnly = "true"))
 	static USSDAOObjectBase* GetDAOByClass(UObject* ContextObject, TSubclassOf<USSDAOObjectBase> Class);
+	
+	template<class T>
+	static T* FindDAO(UObject* ContextObject)
+	{
+		static_assert(TPointerIsConvertibleFromTo<T, const USSDAOObjectBase>::Value, "'T' template parameter to GetDAOByClass must be derived from USSDAOObjectBase");
+
+		return (T*) GetDAOByClass(ContextObject, T::StaticClass());
+	}
 };

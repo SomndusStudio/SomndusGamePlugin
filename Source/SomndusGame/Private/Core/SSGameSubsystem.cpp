@@ -1,4 +1,8 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿/**
+* Copyright (C) 2020-2024 Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 
 #include "Core/SSGameSubsystem.h"
@@ -7,7 +11,7 @@ USSGameModule* USSGameSubsystem::GetGameModule(TSubclassOf<USSGameModule> GameMo
 {
 	for (auto* GameModule : GameModules)
 	{
-		if (GameModule)
+		if (GameModule && GameModule->IsA(GameModuleClass))
 		{
 			return GameModule;
 		}

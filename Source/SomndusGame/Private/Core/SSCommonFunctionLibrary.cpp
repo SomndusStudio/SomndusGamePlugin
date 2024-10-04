@@ -1,4 +1,8 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿/**
+* Copyright (C) 2020-2024 Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 
 #include "Core/SSCommonFunctionLibrary.h"
@@ -20,7 +24,7 @@ USSGameModule* USSCommonFunctionLibrary::GetGameModule(UObject* ContextObject, T
 
 USSDAOObjectBase* USSCommonFunctionLibrary::GetDAOByClass(UObject* ContextObject, TSubclassOf<USSDAOObjectBase> Class)
 {
-	if (USSDAOManager* DAOManager = GetGameModuleByClass<USSDAOManager>(ContextObject))
+	if (auto* DAOManager = GetGameModuleByClass<USSDAOManager>(ContextObject))
 	{
 		return DAOManager->GetDAO(Class);
 	}

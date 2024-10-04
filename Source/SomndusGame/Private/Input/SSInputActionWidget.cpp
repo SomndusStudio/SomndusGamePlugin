@@ -1,4 +1,8 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿/**
+* Copyright (C) 2020-2024 Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 
 #include "Input/SSInputActionWidget.h"
@@ -36,17 +40,21 @@ bool USSInputActionWidget::UpdateKeyboardAction(const UCommonInputSubsystem* Com
 			KeyboardTextBlock->SetVisibility(EVisibility::SelfHitTestInvisible);
 			KeyboardTextBlock->SetText(KeyDefaultText);
 		}
-
-		if (IsHeldAction())
+		if (MyProgressImage)
 		{
-			MyProgressImage->SetVisibility(EVisibility::SelfHitTestInvisible);
+			if (IsHeldAction())
+			{
+				MyProgressImage->SetVisibility(EVisibility::SelfHitTestInvisible);
+			}
+			else
+			{
+				MyProgressImage->SetVisibility(EVisibility::Collapsed);
+			}
 		}
-		else
+		if (MyIcon)
 		{
-			MyProgressImage->SetVisibility(EVisibility::Collapsed);
+			MyIcon->SetVisibility(EVisibility::Collapsed);
 		}
-						
-		MyIcon->SetVisibility(EVisibility::Collapsed);
 		SetVisibility(IsDesignTime() ? ESlateVisibility::Visible : ESlateVisibility::SelfHitTestInvisible);
 					
 		return true;

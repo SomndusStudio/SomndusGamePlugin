@@ -5,12 +5,11 @@
 */
 
 
-#include "UI/Dialog/SSConfirmationModal.h"
+#include "UI/Dialog/SSAlertModal.h"
 
 #include "UI/Button/SSButtonText.h"
 
-
-void USSConfirmationModal::SetupDialog(UCommonGameDialogDescriptor* Descriptor, FCommonMessagingResultDelegate ResultCallback)
+void USSAlertModal::SetupDialog(UCommonGameDialogDescriptor* Descriptor, FCommonMessagingResultDelegate ResultCallback)
 {
 	Super::SetupDialog(Descriptor, ResultCallback);
 
@@ -25,26 +24,25 @@ void USSConfirmationModal::SetupDialog(UCommonGameDialogDescriptor* Descriptor, 
 	for (const FConfirmationDialogAction& Action : Descriptor->ButtonActions)
 	{
 		USSButtonText* Button = EntryBox_Buttons->CreateEntry<USSButtonText>();
-		Button->OnClicked().AddUObject(this, &ThisClass::CloseConfirmationWindow, Action.Result);
+		Button->OnClicked().AddUObject(this, &ThisClass::CloseAlertWindow, Action.Result);
 		Button->SetButtonText(Action.OptionalDisplayText);
 	}
 
 	OnResultCallback = ResultCallback;
 }
 
-void USSConfirmationModal::KillDialog()
+void USSAlertModal::KillDialog()
 {
 	Super::KillDialog();
 }
 
-TOptional<FUIInputConfig> USSConfirmationModal::GetDesiredInputConfig() const
+TOptional<FUIInputConfig> USSAlertModal::GetDesiredInputConfig() const
 {
 	return FUIInputConfig(ECommonInputMode::Menu, EMouseCaptureMode::NoCapture);
 }
 
-void USSConfirmationModal::CloseConfirmationWindow(ECommonMessagingResult Result)
+void USSAlertModal::CloseAlertWindow(ECommonMessagingResult Result)
 {
 	DeactivateWidget();
 	OnResultCallback.ExecuteIfBound(Result);
 }
-

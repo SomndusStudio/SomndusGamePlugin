@@ -1,4 +1,8 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿/**
+* Copyright (C) 2020-2024 Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 #pragma once
 
@@ -18,4 +22,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="SS|UI")
 	static void SetItemObject(UUserWidget* EntryWidget, UObject* InItemObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|UI", meta = (WorldContext = "WorldContextObject"))
+	static ULocalPlayer* GetLocalPlayerFromContext(UObject* WorldContextObject);
 };
