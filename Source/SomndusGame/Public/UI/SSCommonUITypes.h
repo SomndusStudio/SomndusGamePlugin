@@ -16,6 +16,21 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSCommonMessagingResultMCDelegate, 
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_SS_LAYER_MODAL);
 
 USTRUCT(BlueprintType)
+struct SOMNDUSGAME_API FSSCursorRequestInfo
+{
+	GENERATED_BODY()
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector2D Position;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FVector2D Size = FVector2D(50.f);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float Angle = -90.f;
+};
+
+USTRUCT(BlueprintType)
 struct SOMNDUSGAME_API FSSMenuInfo : public FTableRowBase
 {
 	GENERATED_BODY()

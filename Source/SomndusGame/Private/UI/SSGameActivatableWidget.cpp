@@ -74,9 +74,8 @@ void USSGameActivatableWidget::NativeOnActivated()
 	}
 }
 
-void USSGameActivatableWidget::NativeOnDeactivated()
+void USSGameActivatableWidget::OnDelayDeactivatedFinished()
 {
-	Super::NativeOnDeactivated();
 	if (CommonUI::IsEnhancedInputSupportEnabled())
 	{
 		if (const ULocalPlayer* LocalPlayer = GetOwningLocalPlayer())
@@ -86,6 +85,22 @@ void USSGameActivatableWidget::NativeOnDeactivated()
 				InputSystem->PopGlobalMappingContext(GetInputToken());
 			}
 		}
+	}
+}
+
+void USSGameActivatableWidget::NativeOnDeactivated()
+{
+	Super::NativeOnDeactivated();
+	// wait 0.1 sec before pop mapping context to avoid kind of "flash" input disappear in bound action bar for example
+
+	// Vérifie si le monde est valide
+	if (GetWorld())
+	{
+		// Créer un handle de timer
+		FTimerHandle TimerHandle;
+
+		// Utiliser TimerManager pour définir un délai de 0,1 seconde
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &USSGameActivatableWidget::OnDelayDeactivatedFinished, 0.1f, false);
 	}
 }
 

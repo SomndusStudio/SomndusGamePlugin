@@ -42,6 +42,9 @@ public:
 	virtual void OnItemObjectSet_Implementation(UObject* InItemObject) override;
 	
 	virtual const UWidget* GetDefaultFocusWidget_Implementation() override;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void PreOnItemObjectUpdate();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void OnItemObjectUpdate();

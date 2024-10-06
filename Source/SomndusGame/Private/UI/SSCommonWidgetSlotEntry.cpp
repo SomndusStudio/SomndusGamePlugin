@@ -16,6 +16,8 @@ USSCommonWidgetSlotEntry::USSCommonWidgetSlotEntry()
 void USSCommonWidgetSlotEntry::OnItemObjectSet_Implementation(UObject* InItemObject)
 {
 	ISSWidgetObjectEntry::OnItemObjectSet_Implementation(InItemObject);
+
+	PreOnItemObjectUpdate();
 	
 	ItemObject = InItemObject;
 
@@ -29,6 +31,10 @@ const UWidget* USSCommonWidgetSlotEntry::GetDefaultFocusWidget_Implementation()
 		return DefaultButtonSlot;
 	}
 	return ISSCommonFocusWidget::GetDefaultFocusWidget_Implementation();
+}
+
+void USSCommonWidgetSlotEntry::PreOnItemObjectUpdate_Implementation()
+{
 }
 
 void USSCommonWidgetSlotEntry::PerformOnClick()

@@ -11,6 +11,21 @@
 #include "DAO/SSDAOManager.h"
 #include "Kismet/GameplayStatics.h"
 
+FText USSCommonFunctionLibrary::LocalizeFromString(FString Key)
+{
+	FText Result;
+	if (FText::FindText(FString("FGameModule"), Key, Result))
+	{
+		return Result;
+	}
+	return FText::FromString(Key);
+}
+
+FText USSCommonFunctionLibrary::LocalizeFromName(const FName Key)
+{
+	return LocalizeFromString(Key.ToString());
+}
+
 USSGameModule* USSCommonFunctionLibrary::GetGameModule(UObject* ContextObject, TSubclassOf<USSGameModule> Class)
 {
 	if (USSGameSubsystem* GameSubsystem = UGameplayStatics::GetGameInstance(ContextObject)->GetSubsystem<

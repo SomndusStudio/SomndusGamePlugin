@@ -19,6 +19,9 @@ class SOMNDUSGAME_API USSButtonText : public UCommonButtonBase
 	GENERATED_BODY()
 	
 public:
+
+	virtual void NativePreConstruct() override;
+	
 	UFUNCTION(BlueprintCallable)
 	void SetButtonText(const FText& InText);
 

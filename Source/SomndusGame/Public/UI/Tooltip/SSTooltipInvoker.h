@@ -7,13 +7,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SSCommonUITypes.h"
+#include "SSTooltipWidgetBase.h"
 #include "UObject/Interface.h"
-#include "SSWidgetObjectEntry.generated.h"
+#include "SSTooltipInvoker.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE()
-class USSWidgetObjectEntry : public UInterface
+class USSTooltipInvoker : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -21,15 +21,13 @@ class USSWidgetObjectEntry : public UInterface
 /**
  * 
  */
-class SOMNDUSGAME_API ISSWidgetObjectEntry
+class SOMNDUSGAME_API ISSTooltipInvoker
 {
 	GENERATED_BODY()
 
-	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-
-	virtual void NativeOnItemObjectSet(UObject* InItemObject);
-
+	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "SS|UI|Item")
-	void OnItemObjectSet(UObject* InItemObject);
+	FVector2D GetTooltipOffsetPosition(UUserWidget* TooltipWidgetBase);
+	
 };

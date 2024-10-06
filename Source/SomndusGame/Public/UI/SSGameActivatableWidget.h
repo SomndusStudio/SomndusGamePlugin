@@ -42,6 +42,9 @@ public:
 
 	FString GetInputToken();
 	virtual void NativeOnActivated() override;
+	
+	UFUNCTION()
+	void OnDelayDeactivatedFinished();
 	virtual void NativeOnDeactivated() override;
 	
 protected:

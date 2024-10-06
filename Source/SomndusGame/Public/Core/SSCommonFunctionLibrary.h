@@ -22,6 +22,12 @@ class SOMNDUSGAME_API USSCommonFunctionLibrary : public UBlueprintFunctionLibrar
 
 public:
 
+	UFUNCTION(BlueprintPure, Category = "Somndus Studio|Utilities|Text")
+	static FText LocalizeFromString(FString Key);
+
+	UFUNCTION(BlueprintPure, Category = "Somndus Studio|Utilities|Text")
+	static FText LocalizeFromName(const FName Key);
+
 	UFUNCTION(BlueprintPure, Category = "Somndus Studio", meta = (WorldContext = "ContextObject", BlueprintInternalUseOnly = "true"))
 	static USSGameModule* GetGameModule(UObject* ContextObject, TSubclassOf<USSGameModule> Class);
 

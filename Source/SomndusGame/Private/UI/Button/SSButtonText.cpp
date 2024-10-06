@@ -4,8 +4,13 @@
 * Official Documentation: https://www.somndus-studio.com
 */
 
-
 #include "UI/Button/SSButtonText.h"
+
+void USSButtonText::NativePreConstruct()
+{
+	Super::NativePreConstruct();
+	SetButtonText(ButtonText);
+}
 
 void USSButtonText::SetButtonText(const FText& InText)
 {

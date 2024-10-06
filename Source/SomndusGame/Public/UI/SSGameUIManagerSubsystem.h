@@ -8,6 +8,8 @@
 
 #include "CoreMinimal.h"
 #include "GameUIManagerSubsystem.h"
+#include "Cursor/SSCursorManager.h"
+#include "Tooltip/SSTooltipManager.h"
 #include "SSGameUIManagerSubsystem.generated.h"
 
 /**
@@ -26,4 +28,11 @@ private:
 	void SyncRootLayoutVisibilityToShowHUD();
 	
 	FTSTicker::FDelegateHandle TickHandle;
+
+public:
+	UPROPERTY()
+	TObjectPtr<USSTooltipManager> TooltipManager;
+	
+	UPROPERTY()
+	TObjectPtr<USSCursorManager> CursorManager;
 };

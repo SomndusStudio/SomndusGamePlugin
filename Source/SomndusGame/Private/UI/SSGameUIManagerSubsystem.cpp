@@ -16,6 +16,9 @@ void USSGameUIManagerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 
+	TooltipManager = NewObject<USSTooltipManager>(this);
+	CursorManager = NewObject<USSCursorManager>(this);
+	CursorManager->Init(this);
 	TickHandle = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateUObject(this, &USSGameUIManagerSubsystem::Tick), 0.0f);
 }
 
