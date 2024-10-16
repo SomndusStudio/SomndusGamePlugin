@@ -14,13 +14,15 @@
 
 void USSCursorManager::Init(const USSGameUIManagerSubsystem* GameUIManagerSubsystem)
 {
-	auto Class = CursorClass.LoadSynchronous();
-	MainCursor = CreateWidget<USSCursorWidgetBase>(GameUIManagerSubsystem->GetGameInstance(), Class);
+	if (auto Class = CursorClass.LoadSynchronous())
+	{
+		MainCursor = CreateWidget<USSCursorWidgetBase>(GameUIManagerSubsystem->GetGameInstance(), Class);
+	}
 }
 
 void USSCursorManager::ShowCursor(UUserWidget* Invoker)
 {
-	if (Invoker->Implements<USSCursorHandler>())
+	if (MainCursor && Invoker->Implements<USSCursorHandler>())
 	{
 		auto CursorInfo = ISSCursorHandler::Execute_GetCursorRequestInfo(Invoker);
 		
@@ -35,7 +37,10 @@ void USSCursorManager::ShowCursor(UUserWidget* Invoker)
 
 void USSCursorManager::HideCursor(UUserWidget* Invoker)
 {
-	MainCursor->Invoker = nullptr;
-	MainCursor->SetVisibility(ESlateVisibility::Collapsed);
-	MainCursor->RemoveFromParent();
+	if (MainCursor)
+	{
+		MainCursor->Invoker = nullptr;
+		MainCursor->SetVisibility(ESlateVisibility::Collapsed);
+		MainCursor->RemoveFromParent();
+	}
 }

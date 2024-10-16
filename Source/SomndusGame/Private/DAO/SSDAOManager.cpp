@@ -18,6 +18,7 @@ USSDAOObjectBase* USSDAOManager::GetDAO(TSubclassOf<USSDAOObjectBase> DAOClass)
 	}
 
 	auto* DAOObject = NewObject<USSDAOObjectBase>(this, DAOClass);
+	DAOObject->NativeInitialize();
 	DAOObjects.Add(DAOObject);
 
 	return DAOObject;

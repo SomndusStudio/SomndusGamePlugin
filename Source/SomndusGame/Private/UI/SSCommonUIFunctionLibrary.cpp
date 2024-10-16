@@ -51,8 +51,32 @@ ULocalPlayer* USSCommonUIFunctionLibrary::GetLocalPlayerFromContext(UObject* Wor
 	return LocalPlayer;
 }
 
+APlayerController* USSCommonUIFunctionLibrary::GetLocalPlayerControllerFromContext(UObject* WorldContextObject)
+{
+	APlayerController* LocalPlayerController = nullptr;
+	if (WorldContextObject)
+	{
+		if (UUserWidget* UserWidget = Cast<UUserWidget>(WorldContextObject))
+		{
+			LocalPlayerController = UserWidget->GetOwningLocalPlayer<ULocalPlayer>()->PlayerController;
+		}
+		else if (APlayerController* PC = Cast<APlayerController>(WorldContextObject))
+		{
+			LocalPlayerController = PC;
+		}
+		else if (UWorld* World = WorldContextObject->GetWorld())
+		{
+			if (UGameInstance* GameInstance = World->GetGameInstance<UGameInstance>())
+			{
+				LocalPlayerController = GameInstance->GetPrimaryPlayerController(false);
+			}
+		}
+	}
+	return LocalPlayerController;
+}
+
 USSTooltipWidgetBase* USSCommonUIFunctionLibrary::ShowTooltip(UObject* WorldContextObject, TSubclassOf<USSTooltipWidgetBase> TooltipClass,
-	UUserWidget* Invoker, UObject* DataObject, bool Active)
+                                                              UUserWidget* Invoker, UObject* DataObject, bool Active)
 {
 	if (auto* UISubsystem = UGameplayStatics::GetGameInstance(WorldContextObject)->GetSubsystem<USSGameUIManagerSubsystem>())
 	{

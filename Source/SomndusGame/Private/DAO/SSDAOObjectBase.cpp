@@ -6,3 +6,10 @@
 
 
 #include "DAO/SSDAOObjectBase.h"
+
+#include "Core/SSCoreGlobals.h"
+
+void USSDAOObjectBase::NativeInitialize()
+{
+	UE_LOG(LogSomndusGame, Display, TEXT("AFT: %s"), *GetName());
+}

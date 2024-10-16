@@ -17,4 +17,8 @@ UCLASS(Abstract)
 class SOMNDUSGAME_API USSDAOObjectBase : public USSContextObject
 {
 	GENERATED_BODY()
+
+public:
+
+	virtual void NativeInitialize();
 };

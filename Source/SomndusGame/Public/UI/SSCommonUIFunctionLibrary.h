@@ -26,6 +26,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|UI", meta = (WorldContext = "WorldContextObject"))
 	static ULocalPlayer* GetLocalPlayerFromContext(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|UI", meta = (WorldContext = "WorldContextObject"))
+	static APlayerController* GetLocalPlayerControllerFromContext(UObject* WorldContextObject);
 	
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "UI", meta=(WorldContext="WorldContextObject", DeterminesOutputType = "TooltipClass"))
 	static USSTooltipWidgetBase* ShowTooltip(UObject* WorldContextObject, TSubclassOf<USSTooltipWidgetBase> TooltipClass, UUserWidget* Invoker, UObject* DataObject, bool Active=true);

@@ -55,4 +55,62 @@ public:
 	{
 		return GetDataTableRow(InDataTable, FName(FString::FromInt(Identifier)), OutData);
 	}
+
+	template <class T>
+static TArray<T> GetAllDataTableRow(const UDataTable* InDataTable)
+	{
+		// name not none
+		TArray<T> Results;
+		TArray<T*> Rows;
+		InDataTable->GetAllRows("All Rows", Rows);
+
+		for (auto Row : Rows)
+		{
+			Results.Add(*Row);
+		}
+		return Results;
+	}
+
+	template <class T>
+	static void ShuffleArray(T& InArray)
+	{
+		const int32 LastIndex = InArray.Num() - 1;
+		for (int32 i = 0; i < LastIndex; ++i)
+		{
+			int32 Index = FMath::RandRange(0, LastIndex);
+			if (i != Index)
+			{
+				InArray.Swap(i, Index);
+			}
+		}
+	}
+
+	template <class T>
+	static void ShuffleArray(T& InArray, const FRandomStream& InRandomStream)
+	{
+		const int32 LastIndex = InArray.Num() - 1;
+		for (int32 i = 0; i < LastIndex; ++i)
+		{
+			int32 Index = InRandomStream.RandRange(0, LastIndex);
+			if (i != Index)
+			{
+				InArray.Swap(i, Index);
+			}
+		}
+	}
+
+	template <class T>
+	static void ShuffleArray(T& InArray, int32 Seed)
+	{
+		const FRandomStream Stream{Seed};
+		const int32 LastIndex = InArray.Num() - 1;
+		for (int32 i = 0; i < LastIndex; ++i)
+		{
+			int32 Index = Stream.RandRange(0, LastIndex);
+			if (i != Index)
+			{
+				InArray.Swap(i, Index);
+			}
+		}
+	}
 };
