@@ -9,14 +9,13 @@
 #include "CoreMinimal.h"
 #include "CommonButtonBase.h"
 #include "CommonUserWidget.h"
-#include "CommonTabListWidgetBase.h"
 #include "SSCommonFocusWidget.h"
 #include "SSWidgetObjectEntry.h"
-#include "Blueprint/IUserObjectListEntry.h"
 
 #include "SSCommonWidgetSlotEntry.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSWidgetSlotEntryEvent, class USSCommonWidgetSlotEntry*, SlotEntry);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSSWidgetSlotEntryBoolEvent, class USSCommonWidgetSlotEntry*, SlotEntry, bool, bActive);
 
 /**
  * 
@@ -51,6 +50,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void PerformOnClick();
+
+	UFUNCTION(BlueprintCallable)
+	void PerformOnHover(bool bActive);
+
+	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
 	
 	/**
 	 * Auto capture the widget from the given button
@@ -61,5 +66,8 @@ public:
 
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="Default")
 	FSSWidgetSlotEntryEvent OnClickEvent;
+
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="Default")
+	FSSWidgetSlotEntryBoolEvent OnHoverEvent;
 };
 

@@ -42,6 +42,23 @@ void USSCommonWidgetSlotEntry::PerformOnClick()
 	OnClickEvent.Broadcast(this);
 }
 
+void USSCommonWidgetSlotEntry::PerformOnHover(bool bActive)
+{
+	OnHoverEvent.Broadcast(this, bActive);
+}
+
+void USSCommonWidgetSlotEntry::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
+	PerformOnHover(true);
+}
+
+void USSCommonWidgetSlotEntry::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
+{
+	Super::NativeOnMouseLeave(InMouseEvent);
+	PerformOnHover(false);
+}
+
 void USSCommonWidgetSlotEntry::OnItemObjectUpdate_Implementation()
 {
 }

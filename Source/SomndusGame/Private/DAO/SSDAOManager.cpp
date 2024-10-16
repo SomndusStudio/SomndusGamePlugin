@@ -11,7 +11,7 @@ USSDAOObjectBase* USSDAOManager::GetDAO(TSubclassOf<USSDAOObjectBase> DAOClass)
 {
 	for (auto* DAOObject : DAOObjects)
 	{
-		if (DAOObject)
+		if (DAOObject && DAOObject->IsA(DAOClass))
 		{
 			return DAOObject;
 		}
