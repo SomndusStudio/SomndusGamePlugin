@@ -45,6 +45,7 @@ public:
 	
 	UFUNCTION()
 	void OnDelayDeactivatedFinished();
+	
 	virtual void NativeOnDeactivated() override;
 
 	virtual void NativeDestruct() override;

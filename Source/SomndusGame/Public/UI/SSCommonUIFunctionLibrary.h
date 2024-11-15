@@ -25,7 +25,7 @@ public:
 	static void SetItemObject(UUserWidget* EntryWidget, UObject* InItemObject);
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|UI", meta = (WorldContext = "WorldContextObject"))
-	static ULocalPlayer* GetLocalPlayerFromContext(UObject* WorldContextObject);
+	static ULocalPlayer* GetLocalPlayerFromContext(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|UI", meta = (WorldContext = "WorldContextObject"))
 	static APlayerController* GetLocalPlayerControllerFromContext(UObject* WorldContextObject);

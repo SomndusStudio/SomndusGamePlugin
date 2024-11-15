@@ -27,16 +27,16 @@ void USSCommonUIFunctionLibrary::SetItemObject(UUserWidget* EntryWidget, UObject
 	}
 }
 
-ULocalPlayer* USSCommonUIFunctionLibrary::GetLocalPlayerFromContext(UObject* WorldContextObject)
+ULocalPlayer* USSCommonUIFunctionLibrary::GetLocalPlayerFromContext(const UObject* WorldContextObject)
 {
 	ULocalPlayer* LocalPlayer = nullptr;
 	if (WorldContextObject)
 	{
-		if (UUserWidget* UserWidget = Cast<UUserWidget>(WorldContextObject))
+		if (const UUserWidget* UserWidget = Cast<UUserWidget>(WorldContextObject))
 		{
 			LocalPlayer = UserWidget->GetOwningLocalPlayer<ULocalPlayer>();
 		}
-		else if (APlayerController* PC = Cast<APlayerController>(WorldContextObject))
+		else if (const APlayerController* PC = Cast<APlayerController>(WorldContextObject))
 		{
 			LocalPlayer = PC->GetLocalPlayer();
 		}
@@ -44,7 +44,10 @@ ULocalPlayer* USSCommonUIFunctionLibrary::GetLocalPlayerFromContext(UObject* Wor
 		{
 			if (UGameInstance* GameInstance = World->GetGameInstance<UGameInstance>())
 			{
-				LocalPlayer = GameInstance->GetPrimaryPlayerController(false)->GetLocalPlayer();
+				if (const auto* PrimaryPC = GameInstance->GetPrimaryPlayerController(false))
+				{
+					LocalPlayer = PrimaryPC->GetLocalPlayer();
+				}
 			}
 		}
 	}

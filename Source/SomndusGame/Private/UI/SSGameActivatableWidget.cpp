@@ -54,6 +54,8 @@ void USSGameActivatableWidget::ValidateCompiledWidgetTree(const UWidgetTree& Blu
 	}
 }
 
+#endif
+
 FString USSGameActivatableWidget::GetInputToken()
 {
 	return GetName();
@@ -104,7 +106,5 @@ void USSGameActivatableWidget::NativeDestruct()
 	OnDelayDeactivatedFinished();
 	Super::NativeDestruct();
 }
-
-#endif
 
 #undef LOCTEXT_NAMESPACE
