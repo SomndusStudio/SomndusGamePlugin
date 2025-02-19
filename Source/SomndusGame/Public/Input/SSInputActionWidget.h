@@ -42,7 +42,7 @@ protected:
 	FText KeyDefaultText;
 	
 public:
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Keyboard")
 	FSlateBrush KeyboardBackgroundBrush;
 

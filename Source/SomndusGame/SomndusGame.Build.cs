@@ -38,7 +38,7 @@ public class SomndusGame : ModuleRules
 			new string[]
 			{
 				"CoreUObject",
-				"Engine",
+				"Engine", "NetCore",
 				"Slate",
 				"SlateCore",
 				"GameplayTags", "StructUtils",

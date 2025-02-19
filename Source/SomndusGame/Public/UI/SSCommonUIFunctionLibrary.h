@@ -52,6 +52,9 @@ public:
 	static void AbsoluteToViewport(UUserWidget* UserWidget, FVector2D AbsoluteDesktopCoordinate, FVector2D& PixelPosition, FVector2D& ViewportPosition);
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "UI", meta=(WorldContext="WorldContextObject"))
+	static UWidgetAnimation* TryGetWidgetAnimation(UUserWidget* UserWidget, FName InAnimationName);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "UI", meta=(WorldContext="WorldContextObject"))
 	static FVector2D GetTopLeftPosition(UUserWidget* UserWidget);
 	
 };

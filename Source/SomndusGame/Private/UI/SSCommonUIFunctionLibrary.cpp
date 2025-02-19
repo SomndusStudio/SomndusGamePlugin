@@ -7,9 +7,11 @@
 
 #include "UI/SSCommonUIFunctionLibrary.h"
 
+#include "Animation/WidgetAnimation.h"
 #include "Blueprint/IUserObjectListEntry.h"
 #include "Blueprint/SlateBlueprintLibrary.h"
 #include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetBlueprintGeneratedClass.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "UI/SSGameUIManagerSubsystem.h"
@@ -131,6 +133,24 @@ void USSCommonUIFunctionLibrary::AbsoluteToViewport(UUserWidget* UserWidget, FVe
 	FVector2D& PixelPosition, FVector2D& ViewportPosition)
 {
 	USlateBlueprintLibrary::AbsoluteToViewport(UserWidget, AbsoluteDesktopCoordinate, PixelPosition, ViewportPosition);
+}
+
+UWidgetAnimation* USSCommonUIFunctionLibrary::TryGetWidgetAnimation(UUserWidget* UserWidget, FName InAnimationName)
+{
+	UWidgetBlueprintGeneratedClass* WidgetClass = UserWidget->GetWidgetTreeOwningClass();
+	
+	// Try to play reject animation dynamically 
+	for (int i = 0; i < WidgetClass->Animations.Num(); i++)
+	{
+		auto Animation = WidgetClass->Animations[i];
+		FString AnimName = Animation->GetName();
+		FString CompareName = FString::Format(TEXT("{0}_INST"), {InAnimationName.ToString()});
+		if (AnimName == CompareName)
+		{
+			return Animation;
+		}
+	}
+	return nullptr;
 }
 
 FVector2D USSCommonUIFunctionLibrary::GetTopLeftPosition(UUserWidget* UserWidget)
