@@ -12,6 +12,7 @@
 #include "Tooltip/SSTooltipManager.h"
 #include "SSGameUIManagerSubsystem.generated.h"
 
+class USSWidgetTransitionMgr;
 /**
  * 
  */
@@ -35,4 +36,10 @@ public:
 	
 	UPROPERTY()
 	TObjectPtr<USSCursorManager> CursorManager;
+
+	UPROPERTY()
+	TObjectPtr<USSWidgetTransitionMgr> WidgetTransitionMgr;
+
+	UFUNCTION(BlueprintCallable)
+	USSWidgetTransitionMgr* GetWidgetTransitionMgr();
 };
