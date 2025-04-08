@@ -48,6 +48,9 @@ protected:
 	 * Allows identifying which generated token is responsible for suspending player inputs during a Gameplay
 	 */
 	FName CommonGameplayInputSuspendToken;
+
+	UPROPERTY()
+	TMap<FGameplayTag, FName> GameSuspendTokens;
 	
 public:
 	/**
@@ -93,6 +96,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	void ResumeInputForGameplay();
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	void SuspendInputForTag(FGameplayTag Tag);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	void ResumeInputForTag(FGameplayTag Tag);
 	
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UInputMappingContext> GenericUIMappingContext;

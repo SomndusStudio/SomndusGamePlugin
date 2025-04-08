@@ -186,3 +186,25 @@ void USSInputLocalPlayerSubsystem::ResumeInputForGameplay()
 	UCommonUIExtensions::ResumeInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), CommonGameplayInputSuspendToken);
 	CommonGameplayInputSuspendToken = FName();
 }
+
+void USSInputLocalPlayerSubsystem::SuspendInputForTag(FGameplayTag Tag)
+{
+	// if already suspended do nothing
+	if (GameSuspendTokens.Contains(Tag))
+	{
+		return;
+	}
+	FName SuspendToken = UCommonUIExtensions::SuspendInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), Tag.GetTagName());
+	GameSuspendTokens.Add(Tag, SuspendToken);
+}
+
+void USSInputLocalPlayerSubsystem::ResumeInputForTag(FGameplayTag Tag)
+{
+	if (!GameSuspendTokens.Contains(Tag))
+	{
+		return;
+	}
+	FName SuspendToken = GameSuspendTokens.FindChecked(Tag);
+	UCommonUIExtensions::ResumeInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), SuspendToken);
+	GameSuspendTokens.Remove(Tag);
+}

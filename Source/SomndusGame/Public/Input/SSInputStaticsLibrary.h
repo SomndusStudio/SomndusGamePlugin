@@ -8,6 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "CommonInputSubsystem.h"
+#include "GameplayTagContainer.h"
 #include "InputAction.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "SSInputStaticsLibrary.generated.h"
@@ -44,4 +45,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static FSlateBrush GetIconForKey(const UCommonInputSubsystem* CommonInputSubsystem, const FKey Key);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, meta=(WorldContext="WorldContextObject"))
+	static void SetGameSuspendInput(const UObject* WorldContextObject, FGameplayTag Tag, bool bSuspend=true);
 };

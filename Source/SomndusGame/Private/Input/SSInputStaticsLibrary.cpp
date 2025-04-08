@@ -11,6 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInput/Public/PlayerMappableKeySettings.h"
 #include "Input/SSInputLocalPlayerSubsystem.h"
+#include "Kismet/GameplayStatics.h"
 #include "UserSettings/EnhancedInputUserSettings.h"
 
 FText USSInputStaticsLibrary::GetKeyNameForEnhancedInputAction(const UCommonInputSubsystem* CommonInputSubsystem,
@@ -200,4 +201,21 @@ FSlateBrush USSInputStaticsLibrary::GetIconForKey(const UCommonInputSubsystem* C
 	}
 
 	return *FStyleDefaults::GetNoBrush();
+}
+
+void USSInputStaticsLibrary::SetGameSuspendInput(const UObject* WorldContextObject, FGameplayTag Tag, bool bSuspend)
+{
+	if (auto* PlayerController = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
+	{
+		auto* SSInputLocalPlayerSubsystem = PlayerController->GetLocalPlayer()->GetSubsystem<USSInputLocalPlayerSubsystem>();
+
+		if (bSuspend)
+		{
+			SSInputLocalPlayerSubsystem->SuspendInputForTag(Tag);
+		}
+		else
+		{
+			SSInputLocalPlayerSubsystem->ResumeInputForTag(Tag);
+		}
+	}
 }

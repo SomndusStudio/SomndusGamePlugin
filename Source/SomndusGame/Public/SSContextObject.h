@@ -13,7 +13,7 @@
 /**
  * 
  */
-UCLASS(Blueprintable)
+UCLASS(Blueprintable, BlueprintType)
 class SOMNDUSGAME_API USSContextObject : public UObject
 {
 	GENERATED_BODY()
