@@ -25,8 +25,12 @@ void USSCursorManager::ShowCursor(UUserWidget* Invoker)
 	if (MainCursor && Invoker->Implements<USSCursorHandler>())
 	{
 		auto CursorInfo = ISSCursorHandler::Execute_GetCursorRequestInfo(Invoker);
+
+		if (!MainCursor->IsInViewport())
+		{
+			MainCursor->AddToViewport();
+		}
 		
-		MainCursor->AddToViewport();
 		MainCursor->SetVisibility(ESlateVisibility::HitTestInvisible);
 		
 		MainCursor->SetPositionInViewport(CursorInfo.Position, true);
