@@ -31,15 +31,34 @@ bool USSInputActionWidget::UpdateKeyboardAction(const UCommonInputSubsystem* Com
 				}
 			}
 #endif
-			// stop if not keyboard key (ignore gamepad)
-			if (KeyDefaultText.IsEmpty())
-			{
-				return false;
-			}
-			KeyboardBackground->SetVisibility(EVisibility::SelfHitTestInvisible);
-			KeyboardTextBlock->SetVisibility(EVisibility::SelfHitTestInvisible);
-			KeyboardTextBlock->SetText(KeyDefaultText);
 		}
+		else
+		{
+			if (!IsDesignTime())
+			{
+				FKey KeyboardKey = USSInputStaticsLibrary::GetFirstKeyForInputType(CommonInputSubsystem, ECommonInputType::MouseAndKeyboard, InputActions);;
+				KeyDefaultText = KeyboardKey.GetDisplayName(false);
+			}
+#if WITH_EDITORONLY_DATA
+			else
+			{
+				if (!DesignTimeKey.IsGamepadKey())
+				{
+					KeyDefaultText = DesignTimeKey.GetDisplayName();
+				}
+			}
+#endif
+		}
+		
+		// stop if not keyboard key (ignore gamepad)
+		if (KeyDefaultText.IsEmpty())
+		{
+			return false;
+		}
+		KeyboardBackground->SetVisibility(EVisibility::SelfHitTestInvisible);
+		KeyboardTextBlock->SetVisibility(EVisibility::SelfHitTestInvisible);
+		KeyboardTextBlock->SetText(KeyDefaultText);
+		
 		if (MyProgressImage)
 		{
 			if (IsHeldAction())
@@ -187,6 +206,7 @@ TSharedRef<SWidget> USSInputActionWidget::RebuildWidget()
 		[
 			SAssignNew(KeyboardTextBlock, STextBlock)
 			.Font(KeyboardFontStyle)
+			.ColorAndOpacity(FSlateColor(FLinearColor(0.0f, 0.0f, 0.0f, 1.0f)))
 			.Text(FText::FromString(TEXT("???")))
 		]);
 	

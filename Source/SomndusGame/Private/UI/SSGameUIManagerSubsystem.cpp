@@ -11,6 +11,7 @@
 #include "GameUIPolicy.h"
 #include "PrimaryGameLayout.h"
 #include "GameFramework/HUD.h"
+#include "UI/Transition/SSWidgetTransitionMgr.h"
 
 void USSGameUIManagerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -64,4 +65,13 @@ void USSGameUIManagerSubsystem::SyncRootLayoutVisibilityToShowHUD()
 			}
 		}
 	}
+}
+
+USSWidgetTransitionMgr* USSGameUIManagerSubsystem::GetWidgetTransitionMgr()
+{
+	if (!WidgetTransitionMgr)
+	{
+		WidgetTransitionMgr = NewObject<USSWidgetTransitionMgr>(this);
+	}
+	return WidgetTransitionMgr;
 }

@@ -13,7 +13,7 @@
 /**
  * 
  */
-UCLASS(Blueprintable)
+UCLASS(Blueprintable, BlueprintType)
 class SOMNDUSGAME_API USSContextObject : public UObject
 {
 	GENERATED_BODY()
@@ -24,9 +24,7 @@ class SOMNDUSGAME_API USSContextObject : public UObject
 public:
 	// Allows the Object to use BP_Functions
 	virtual class UWorld* GetWorld() const override;
-
-
+	
 	UFUNCTION(BlueprintPure)
 	class UGameInstance* GetGameInstance() const;
-	
 };

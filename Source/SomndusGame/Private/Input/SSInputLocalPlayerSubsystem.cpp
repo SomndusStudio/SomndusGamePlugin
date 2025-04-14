@@ -7,8 +7,10 @@
 
 #include "Input/SSInputLocalPlayerSubsystem.h"
 
+#include "CommonUIExtensions.h"
 #include "CommonUITypes.h"
 #include "EnhancedInputSubsystems.h"
+#include "Input/SSEnhancedPlayerInput.h"
 
 void USSInputLocalPlayerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -16,6 +18,34 @@ void USSInputLocalPlayerSubsystem::Initialize(FSubsystemCollectionBase& Collecti
 
 	// Load global mapping context
 	GenericUIMappingContext = GenericUIMappingContextSoft.LoadSynchronous();
+}
+
+void USSInputLocalPlayerSubsystem::UpdateKeyMappingCache(const UEnhancedInputLocalPlayerSubsystem* EISubsystem)
+{
+	if (const auto* PlayerInput = Cast<USSEnhancedPlayerInput>(EISubsystem->GetPlayerInput()))
+	{
+		for (const FEnhancedActionKeyMapping& Mapping : PlayerInput->GetPublicEnhancedActionMappings())
+		{
+			KeyMappingRows.Add(Mapping);
+		}
+	}
+	/*
+	const UEnhancedInputUserSettings* UserSettings = EISubsystem->GetUserSettings();
+	for (const auto& ProfilePair : UserSettings->GetAllSavedKeyProfiles())
+	{
+		for (const auto& MappingRowPair : ProfilePair.Value->GetPlayerMappingRows())
+		{
+			KeyMappingRows.Add(MappingRowPair.Key, MappingRowPair.Value);
+		}
+	}
+	*/
+}
+
+void USSInputLocalPlayerSubsystem::UpdateKeyMappingCache()
+{
+	const ULocalPlayer* LocalPlayer = GetLocalPlayer();
+	const UEnhancedInputLocalPlayerSubsystem* EISubsystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+	UpdateKeyMappingCache(EISubsystem);
 }
 
 bool USSInputLocalPlayerSubsystem::FirstTimeMappingContext(const UInputMappingContext* MappingContext)
@@ -115,4 +145,66 @@ void USSInputLocalPlayerSubsystem::PopMappingContext(const UInputMappingContext*
 		}
 	}
 
+}
+
+void USSInputLocalPlayerSubsystem::SuspendInputForUIAnimation()
+{
+	// if already suspended do nothing
+	if (!CommonUIAnimationInputSuspendToken.IsNone())
+	{
+		return;
+	}
+	CommonUIAnimationInputSuspendToken = UCommonUIExtensions::SuspendInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), "CommonUIAnimation");
+}
+
+void USSInputLocalPlayerSubsystem::ResumeInputForUIAnimation()
+{
+	if (CommonUIAnimationInputSuspendToken.IsNone())
+	{
+		return;
+	}
+	UCommonUIExtensions::ResumeInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), CommonUIAnimationInputSuspendToken);
+	CommonUIAnimationInputSuspendToken = FName();
+}
+
+void USSInputLocalPlayerSubsystem::SuspendInputForGameplay()
+{
+	// if already suspended do nothing
+	if (!CommonGameplayInputSuspendToken.IsNone())
+	{
+		return;
+	}
+	CommonGameplayInputSuspendToken = UCommonUIExtensions::SuspendInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), "Gameplay");
+}
+
+void USSInputLocalPlayerSubsystem::ResumeInputForGameplay()
+{
+	if (CommonGameplayInputSuspendToken.IsNone())
+	{
+		return;
+	}
+	UCommonUIExtensions::ResumeInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), CommonGameplayInputSuspendToken);
+	CommonGameplayInputSuspendToken = FName();
+}
+
+void USSInputLocalPlayerSubsystem::SuspendInputForTag(FGameplayTag Tag)
+{
+	// if already suspended do nothing
+	if (GameSuspendTokens.Contains(Tag))
+	{
+		return;
+	}
+	FName SuspendToken = UCommonUIExtensions::SuspendInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), Tag.GetTagName());
+	GameSuspendTokens.Add(Tag, SuspendToken);
+}
+
+void USSInputLocalPlayerSubsystem::ResumeInputForTag(FGameplayTag Tag)
+{
+	if (!GameSuspendTokens.Contains(Tag))
+	{
+		return;
+	}
+	FName SuspendToken = GameSuspendTokens.FindChecked(Tag);
+	UCommonUIExtensions::ResumeInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), SuspendToken);
+	GameSuspendTokens.Remove(Tag);
 }
