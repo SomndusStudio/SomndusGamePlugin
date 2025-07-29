@@ -62,3 +62,4 @@ float USSSettingData_Float::GetValueNormalized()
 {
 	return Value;
 }
+#undef LOCTEXT_NAMESPACE

@@ -196,3 +196,15 @@ USSSettingDataObject* USSCommonUIFunctionLibrary::BP_TryResolveData(USSSettingDa
 
 	return nullptr;
 }
+
+void USSCommonUIFunctionLibrary::CommonModalNavigationRules(UWidget* Widget)
+{
+	// Lock navigation from modal root
+	if (Widget)
+	{
+		Widget->SetNavigationRuleBase(EUINavigation::Down, EUINavigationRule::Stop);
+		Widget->SetNavigationRuleBase(EUINavigation::Up, EUINavigationRule::Stop);
+		Widget->SetNavigationRuleBase(EUINavigation::Left, EUINavigationRule::Stop);
+		Widget->SetNavigationRuleBase(EUINavigation::Right, EUINavigationRule::Stop);
+	}
+}

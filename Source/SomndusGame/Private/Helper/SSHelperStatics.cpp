@@ -22,3 +22,20 @@ int USSHelperStatics::GetPlayInEditorID()
 {
 	return GPlayInEditorID;
 }
+
+bool USSHelperStatics::CallFunctionByName(UObject* Target, const FString& FunctionName)
+{
+	if (!Target)
+	{
+		return false;
+	}
+
+	UFunction* Function = Target->FindFunction(FName(*FunctionName));
+	if (Function)
+	{
+		Target->ProcessEvent(Function, nullptr);
+		return true;
+	}
+
+	return false;
+}

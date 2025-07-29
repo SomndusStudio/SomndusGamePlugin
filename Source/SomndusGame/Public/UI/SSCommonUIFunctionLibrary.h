@@ -68,4 +68,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category="SomndusGame", DisplayName="TryResolveData", meta=(DeterminesOutputType = "DataClass", ExpandBoolAsExecs="bValid"))
 	static USSSettingDataObject* BP_TryResolveData(USSSettingDataObject* Target, FName InIdentifier, TSubclassOf<USSSettingDataObject> DataClass, bool& bValid);
 	
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "UI", meta=(WorldContext="WorldContextObject"))
+	static void CommonModalNavigationRules(UWidget* Widget);
+	
 };
