@@ -4,48 +4,42 @@
 
 #include "CoreMinimal.h"
 #include "UI/Setting/SSSettingDataObject.h"
-#include "SSSettingData_Float.generated.h"
+#include "SSSettingData_Int.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SOMNDUSGAME_API USSSettingData_Float : public USSSettingDataObject
+class SOMNDUSGAME_API USSSettingData_Int : public USSSettingDataObject
 {
 	GENERATED_BODY()
 
 public:
-
-	USSSettingData_Float();
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float DefaultValue = 1.0f;
+	USSSettingData_Int();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MinValue = 0.0f;
+	int32 DefaultValue = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MaxValue = 1.0f;
+	int32 MinValue = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bUsePercent = true;
-	
+	int32 MaxValue = 10;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Step = 1;
+
 	UPROPERTY(BlueprintReadOnly, Transient)
-	float Value;
+	int32 Value;
 
 	virtual void Initialize_Implementation() override;
 	
 	UFUNCTION(BlueprintCallable)
-	float GetValue() const;
-	
-	UFUNCTION(BlueprintCallable)
-	void SetValue(float InValue);
+	int32 GetValue() const { return Value; }
 
-	virtual TRange<double> GetSourceRange() const;
-	virtual double GetSourceStep() const;
+	UFUNCTION(BlueprintCallable)
+	void SetValue(int32 InValue);
 
 	virtual FText GetFormattedText_Implementation() override;
-	
-	float GetNormalizedStepSize();
-	float GetValueNormalized();
 };

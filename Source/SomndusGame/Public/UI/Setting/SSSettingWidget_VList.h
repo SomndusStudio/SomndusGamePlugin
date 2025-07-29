@@ -37,6 +37,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Setup(USSSettingWidgetThemeDataAsset* InSettingWidgetThemeDataAsset, USSSettingRegistryDataAsset* InSettingRegistryDataAsset);
 
+	UFUNCTION(BlueprintCallable)
+	void SetSettingRegistryDataAsset(USSSettingRegistryDataAsset* InSettingRegistryDataAsset, bool bRefresh=true);
+	
 protected:
 	virtual void NativePreConstruct() override;
 

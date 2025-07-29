@@ -9,6 +9,7 @@
 #include "CoreMinimal.h"
 #include "Messaging/CommonGameDialog.h"
 #include "Messaging/CommonMessagingSubsystem.h"
+#include "Notification/SSGameNotificationManager.h"
 #include "SSGameMessagingSubsystem.generated.h"
 
 /**
@@ -18,6 +19,7 @@ UCLASS()
 class SOMNDUSGAME_API USSGameMessagingSubsystem : public UCommonMessagingSubsystem
 {
 	GENERATED_BODY()
+
 public:
 	USSGameMessagingSubsystem() { }
 
@@ -76,4 +78,12 @@ private:
 
 	UPROPERTY(config)
 	TSoftClassPtr<UCommonGameDialog> LoadingDialogClass;
+	
+	UPROPERTY()
+	TObjectPtr<USSGameNotificationManager> NotificationManager;
+
+public:
+
+	UFUNCTION(BlueprintCallable)
+	USSGameNotificationManager* GetNotificationManager() const;
 };

@@ -26,8 +26,5 @@ public:
 	FGameplayTag TypeTag;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced)
-	TObjectPtr<USSSettingDataObject> Data;	
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced)
-	TObjectPtr<USSSettingDataHandler> Handler;
+	TObjectPtr<USSSettingDataObject> Data;
 };

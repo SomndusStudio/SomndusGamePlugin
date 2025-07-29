@@ -13,6 +13,16 @@ void USSSettingWidget_VList::Setup(USSSettingWidgetThemeDataAsset* InSettingWidg
 	SettingRegistryDataAsset = InSettingRegistryDataAsset;
 }
 
+void USSSettingWidget_VList::SetSettingRegistryDataAsset(USSSettingRegistryDataAsset* InSettingRegistryDataAsset, bool bRefresh)
+{
+	SettingRegistryDataAsset = InSettingRegistryDataAsset;
+
+	if (bRefresh)
+	{
+		PopulateList();
+	}
+}
+
 void USSSettingWidget_VList::NativePreConstruct()
 {
 	Super::NativePreConstruct();
@@ -58,20 +68,23 @@ void USSSettingWidget_VList::PopulateList()
 
 	// Clear existing widgets from the VerticalBox
 	ItemListBox->ClearChildren();
+	DataObjects.Empty();
 
 	for (const auto& Setting : SettingRegistryDataAsset->Settings)
 	{
-		// Link world context object for runtime stuff
-		if (Setting->Handler)
-		{
-			Setting->Handler->WorldObjectContext = this;
-		}
-
+		// Clone object
+		TObjectPtr<USSSettingDataObject> ClonedData = DuplicateObject(Setting->Data, this);
 		// Transfer identifier
-		Setting->Data->Identifier = Setting->Identifier;
+		ClonedData->Identifier = Setting->Identifier;
+		// Link world context object for runtime stuff
+		if (ClonedData->Handler)
+		{
+			ClonedData->Handler->WorldObjectContext = this;
+		}
 		
-		// Store data object ref
-		DataObjects.Add(Setting->Data);
+		ClonedData->Initialize();
+		
+		DataObjects.Add(ClonedData);
 		
 		// Get theme
 		auto& SettingWidgetTheme = SettingWidgetThemeDataAsset->GetSettingThemeInfo(Setting->TypeTag);
@@ -98,7 +111,7 @@ void USSSettingWidget_VList::PopulateList()
 		if (NewItemWidget->Implements<USSSettingWidgetEntry>())
 		{
 			// Set data on the new widget (e.g., item name)
-			ISSSettingWidgetEntry::Execute_SetData(NewItemWidget, Setting->Data);
+			ISSSettingWidgetEntry::Execute_SetData(NewItemWidget,ClonedData);
 			// Add the widget to the VerticalBox
 			ItemListBox->AddChildToVerticalBox(NewItemWidget);
 		}
@@ -117,11 +130,11 @@ TArray<USSSettingWidgetObject*> USSSettingWidget_VList::GetWidgetObjects()
 
 void USSSettingWidget_VList::PerformApply()
 {
-	for (const auto& SettingWidgetObject: SettingRegistryDataAsset->Settings)
+	for (const auto& DataObject: DataObjects)
 	{
-		if (!SettingWidgetObject->Handler) continue;
+		if (!DataObject->Handler) continue;
 
-		SettingWidgetObject->Handler->NativeApply(SettingWidgetObject->Data);
-		SettingWidgetObject->Data->NotifyDefaultValueChange();
+		DataObject->Handler->NativeApply(DataObject);
+		DataObject->NotifyDefaultValueChange();
 	}
 }

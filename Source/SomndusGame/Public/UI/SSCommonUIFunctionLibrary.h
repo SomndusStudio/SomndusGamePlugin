@@ -8,9 +8,11 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Setting/SSSettingDataObject.h"
 #include "Tooltip/SSTooltipWidgetBase.h"
 #include "SSCommonUIFunctionLibrary.generated.h"
 
+class USSGameNotificationManager;
 /**
  * 
  */
@@ -21,6 +23,12 @@ class SOMNDUSGAME_API USSCommonUIFunctionLibrary : public UBlueprintFunctionLibr
 
 public:
 
+	/**
+	 * Returns the game notification manager for the current local player.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "SomndusGame|Notification", meta = (WorldContext = "WorldContextObject", CompactNodeTitle = "Notification Mgr"))
+	static USSGameNotificationManager* GetNotificationManager(UObject* WorldContextObject);
+	
 	UFUNCTION(BlueprintCallable, Category="SS|UI")
 	static void SetItemObject(UUserWidget* EntryWidget, UObject* InItemObject);
 
@@ -56,5 +64,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "UI", meta=(WorldContext="WorldContextObject"))
 	static FVector2D GetTopLeftPosition(UUserWidget* UserWidget);
+	
+	UFUNCTION(BlueprintCallable, Category="SomndusGame", DisplayName="TryResolveData", meta=(DeterminesOutputType = "DataClass", ExpandBoolAsExecs="bValid"))
+	static USSSettingDataObject* BP_TryResolveData(USSSettingDataObject* Target, FName InIdentifier, TSubclassOf<USSSettingDataObject> DataClass, bool& bValid);
 	
 };

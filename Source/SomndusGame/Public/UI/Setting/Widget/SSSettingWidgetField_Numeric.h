@@ -3,51 +3,52 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AnalogSlider.h"
+#include "CommonButtonBase.h"
 #include "CommonTextBlock.h"
+#include "Components/Button.h"
 #include "UI/Setting/SSSettingWidgetFieldBase.h"
-#include "SSSettingWidgetField_Scalar.generated.h"
+#include "UI/Setting/Data/SSSettingData_Int.h"
+#include "SSSettingWidgetField_Numeric.generated.h"
 
-class USSSettingData_Float;
 /**
  * 
  */
 UCLASS()
-class SOMNDUSGAME_API USSSettingWidgetField_Scalar : public USSSettingWidgetFieldBase
+class SOMNDUSGAME_API USSSettingWidgetField_Numeric : public USSSettingWidgetFieldBase
 {
 	GENERATED_BODY()
 
+	
 protected:
-	bool bSuspendChangeUpdates = false;
-	
+
 	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<USSSettingData_Float> DataFloat;
-	
-	void Refresh();
+	TObjectPtr<USSSettingData_Int> DataInt;
+
 	virtual void NativeOnInitialized() override;
-
-	UFUNCTION()
-	void HandleSliderValueChanged(float Value);
-	
-	UFUNCTION()
-	void HandleSliderCaptureEnded();
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnValueChanged(float Value);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnDefaultValueChanged(float DefaultValue);
-
 	virtual void SetData_Implementation(USSSettingDataObject* DataObject) override;
-	
+
+	UFUNCTION()
+	void OnLeftPressed();
+
+	UFUNCTION()
+	void OnRightPressed();
+
+	UFUNCTION()
+	void RefreshDisplay(USSSettingDataObject* DataObject);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnValueChanged(int32 Value);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDefaultValueChanged(int32 DefaultValue);
+
 private:
-	// Bound Widgets
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget, BlueprintProtected = true, AllowPrivateAccess = true))
-	TObjectPtr<UPanelWidget> Panel_Value;
-
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget, BlueprintProtected = true, AllowPrivateAccess = true))
-	TObjectPtr<UAnalogSlider> Slider_SettingValue;
-
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget, BlueprintProtected = true, AllowPrivateAccess = true))
 	TObjectPtr<UCommonTextBlock> Text_SettingValue;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget, BlueprintProtected = true, AllowPrivateAccess = true))
+	TObjectPtr<UCommonButtonBase> Button_Left;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget, BlueprintProtected = true, AllowPrivateAccess = true))
+	TObjectPtr<UCommonButtonBase> Button_Right;
 };

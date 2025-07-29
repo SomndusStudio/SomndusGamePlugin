@@ -25,6 +25,7 @@ public:
 	virtual void SetupDialog(UCommonGameDialogDescriptor* Descriptor, FCommonMessagingResultDelegate ResultCallback) override;
 	virtual void KillDialog() override;
 
+	virtual UWidget* NativeGetDesiredFocusTarget() const override;
 	virtual TOptional<FUIInputConfig> GetDesiredInputConfig() const override;
 	
 protected:

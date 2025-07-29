@@ -8,14 +8,18 @@
 #include "UI/SSCommonUIFunctionLibrary.h"
 
 #include "Animation/WidgetAnimation.h"
-#include "Blueprint/IUserObjectListEntry.h"
 #include "Blueprint/SlateBlueprintLibrary.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetBlueprintGeneratedClass.h"
-#include "Blueprint/WidgetLayoutLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "UI/SSGameUIManagerSubsystem.h"
 #include "UI/SSWidgetObjectEntry.h"
+#include "UI/Notification/SSGameNotificationManager.h"
+
+USSGameNotificationManager* USSCommonUIFunctionLibrary::GetNotificationManager(UObject* WorldContextObject)
+{
+	return USSGameNotificationManager::Get(WorldContextObject);
+}
 
 void USSCommonUIFunctionLibrary::SetItemObject(UUserWidget* EntryWidget, UObject* InItemObject)
 {
@@ -173,4 +177,22 @@ FVector2D USSCommonUIFunctionLibrary::GetTopLeftPosition(UUserWidget* UserWidget
 	USlateBlueprintLibrary::AbsoluteToViewport(UserWidget, AbsoluteTopLeftPosition, ScreenPosition, ViewportPosition);
 
 	return ScreenPosition;
+}
+
+USSSettingDataObject* USSCommonUIFunctionLibrary::BP_TryResolveData(USSSettingDataObject* Target, FName InIdentifier, TSubclassOf<USSSettingDataObject> DataClass,
+	bool& bValid)
+{
+	bValid = false;
+	if (!Target)
+	{
+		return nullptr;
+	}
+
+	if (Target->IsA(DataClass) && Target->Identifier == InIdentifier)
+	{
+		bValid = true;
+		return Target;
+	}
+
+	return nullptr;
 }

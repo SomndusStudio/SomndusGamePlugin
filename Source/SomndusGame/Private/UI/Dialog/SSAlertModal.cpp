@@ -36,6 +36,15 @@ void USSAlertModal::KillDialog()
 	Super::KillDialog();
 }
 
+UWidget* USSAlertModal::NativeGetDesiredFocusTarget() const
+{
+	if (EntryBox_Buttons->GetAllEntries().IsValidIndex(0))
+	{
+		return EntryBox_Buttons->GetAllEntries()[0];
+	}
+	return Super::NativeGetDesiredFocusTarget();
+}
+
 TOptional<FUIInputConfig> USSAlertModal::GetDesiredInputConfig() const
 {
 	return FUIInputConfig(ECommonInputMode::Menu, EMouseCaptureMode::NoCapture);

@@ -18,10 +18,14 @@ UCLASS()
 class SOMNDUSGAME_API USSHelperStatics : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
+
 public:
 	UFUNCTION(BlueprintCallable, Category="SomndusStudio|Helper|String")
 	static TArray<FName> ConvertGTagsToFTags(const TArray<FGameplayTag>& InGameplayTags);
-	
+
+	UFUNCTION(BlueprintPure)
+	static int GetPlayInEditorID();
+
 	template <class T>
 	static bool GetDataTableRow(const UDataTable* InDataTable, FName Identifier, T& OutData)
 	{
@@ -57,7 +61,7 @@ public:
 	}
 
 	template <class T>
-static TArray<T> GetAllDataTableRow(const UDataTable* InDataTable)
+	static TArray<T> GetAllDataTableRow(const UDataTable* InDataTable)
 	{
 		// name not none
 		TArray<T> Results;

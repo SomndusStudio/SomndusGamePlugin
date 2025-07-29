@@ -7,7 +7,7 @@
 
 #include "DAO/SSDAOObjectBase.h"
 
-#include "Core/SSCoreGlobals.h"
+#include "SSLog.h"
 
 void USSDAOObjectBase::NativeInitialize()
 {
