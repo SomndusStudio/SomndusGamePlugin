@@ -21,6 +21,9 @@ class SOMNDUSGAME_API USSHelperStatics : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, Category="SomndusStudio|Helper|String")
 	static TArray<FName> ConvertGTagsToFTags(const TArray<FGameplayTag>& InGameplayTags);
+
+	UFUNCTION(BlueprintCallable, Category = "Reflection")
+	static bool CallFunctionByName(UObject* Target, const FString& FunctionName);
 	
 	template <class T>
 	static bool GetDataTableRow(const UDataTable* InDataTable, FName Identifier, T& OutData)
@@ -57,7 +60,7 @@ public:
 	}
 
 	template <class T>
-static TArray<T> GetAllDataTableRow(const UDataTable* InDataTable)
+	static TArray<T> GetAllDataTableRow(const UDataTable* InDataTable)
 	{
 		// name not none
 		TArray<T> Results;
@@ -112,5 +115,70 @@ static TArray<T> GetAllDataTableRow(const UDataTable* InDataTable)
 				InArray.Swap(i, Index);
 			}
 		}
+	}
+
+	/**
+	 * @brief Attempts to retrieve an asset from a TSoftObjectPtr.
+	 *
+	 * If the asset is already loaded, it is returned directly.
+	 * Otherwise, a warning is logged and the asset is loaded synchronously as a fallback.
+	 *
+	 * @tparam AssetType The expected type of the asset (e.g., USkeletalMesh, UTexture2D).
+	 * @param SoftPtr Soft reference to the asset.
+	 * @param Context Optional string used to identify the log context (e.g., calling function).
+	 * @return Pointer to the loaded asset, or nullptr if the soft pointer is null.
+	 */
+	template <typename AssetType>
+	static AssetType* TryGetAsset(const TSoftObjectPtr<AssetType>& SoftPtr, const FString& Context = "SomndusGame")
+	{
+		if (SoftPtr.IsNull())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("[%s] Soft pointer is null."), *Context);
+			return nullptr;
+		}
+
+		if (AssetType* Loaded = SoftPtr.Get())
+		{
+			return Loaded;
+		}
+
+		// Asset not loaded: log warning
+		UE_LOG(LogTemp, Warning,
+			TEXT("[%s] Asset '%s' was not preloaded asynchronously. Falling back to LoadSynchronous()."),
+			*Context, *SoftPtr.ToString());
+		
+		return SoftPtr.LoadSynchronous();
+	}
+
+	/**
+	 * @brief Attempts to retrieve a class from a TSoftClassPtr.
+	 *
+	 * If the class is already loaded, it is returned directly.
+	 * Otherwise, a warning is logged and the class is loaded synchronously as a fallback.
+	 *
+	 * @tparam ClassType The expected type of the class (e.g., UUserWidget, UAnimInstance).
+	 * @param SoftClassPtr Soft reference to the class.
+	 * @param Context Optional string used to identify the log context (e.g., calling function).
+	 * @return Pointer to the loaded class, or nullptr if the soft class pointer is null.
+	 */
+	template <typename ClassType>
+	static UClass* TryGetClass(const TSoftClassPtr<ClassType>& SoftClassPtr, const FString& Context = "SomndusGame")
+	{
+		if (SoftClassPtr.IsNull())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("[%s] Soft class pointer is null."), *Context);
+			return nullptr;
+		}
+
+		if (UClass* LoadedClass = SoftClassPtr.Get())
+		{
+			return LoadedClass;
+		}
+
+		UE_LOG(LogTemp, Warning,
+			TEXT("[%s] Class '%s' was not preloaded asynchronously. Falling back to LoadSynchronous()."),
+			*Context, *SoftClassPtr.ToString());
+
+		return SoftClassPtr.LoadSynchronous();
 	}
 };

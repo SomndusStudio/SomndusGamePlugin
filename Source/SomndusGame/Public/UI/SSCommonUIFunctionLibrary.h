@@ -56,5 +56,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "UI", meta=(WorldContext="WorldContextObject"))
 	static FVector2D GetTopLeftPosition(UUserWidget* UserWidget);
-	
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "UI", meta=(WorldContext="WorldContextObject"))
+	static void CommonModalNavigationRules(UWidget* Widget);
+
 };

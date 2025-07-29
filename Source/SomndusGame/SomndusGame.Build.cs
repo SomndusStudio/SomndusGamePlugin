@@ -29,7 +29,7 @@ public class SomndusGame : ModuleRules
 				"InputCore", "EnhancedInput",
 				"StructUtils",
 				"CommonUI", "CommonInput", "CommonUser", "CommonGame",
-				// ... add other public dependencies that you statically link with here ...
+				"MovieScene", "LevelSequence",
 			}
 			);
 			
@@ -44,7 +44,6 @@ public class SomndusGame : ModuleRules
 				"GameplayTags", "StructUtils",
 				"InputCore", "EnhancedInput",
 				"CommonUI", "CommonInput", "CommonGame", "CommonUser"
-				// ... add private dependencies that you statically link with here ...	
 			}
 			);
 		
@@ -52,7 +51,6 @@ public class SomndusGame : ModuleRules
 		DynamicallyLoadedModuleNames.AddRange(
 			new string[]
 			{
-				// ... add any modules that your module loads dynamically here ...
 			}
 			);
 	}

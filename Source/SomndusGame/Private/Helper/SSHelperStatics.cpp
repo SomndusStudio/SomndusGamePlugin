@@ -17,3 +17,20 @@ TArray<FName> USSHelperStatics::ConvertGTagsToFTags(const TArray<FGameplayTag>& 
 	}
 	return Results;
 }
+
+bool USSHelperStatics::CallFunctionByName(UObject* Target, const FString& FunctionName)
+{
+	if (!Target)
+	{
+		return false;
+	}
+
+	UFunction* Function = Target->FindFunction(FName(*FunctionName));
+	if (Function)
+	{
+		Target->ProcessEvent(Function, nullptr);
+		return true;
+	}
+
+	return false;
+}
