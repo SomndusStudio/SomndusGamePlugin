@@ -10,7 +10,7 @@
 #include "CommonUIExtensions.h"
 #include "CommonUITypes.h"
 #include "EnhancedInputSubsystems.h"
-#include "Core/SSCoreGlobals.h"
+#include "SSLog.h"
 #include "Input/SSEnhancedPlayerInput.h"
 
 void USSInputLocalPlayerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
