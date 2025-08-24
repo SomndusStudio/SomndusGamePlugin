@@ -181,4 +181,25 @@ public:
 
 		return SoftClassPtr.LoadSynchronous();
 	}
+
+	/**
+	 * @brief Blueprint wrapper of TryGetAsset
+	 *
+	 * @param SoftObject A soft reference to any UObject-derived asset.
+	 * @param Context Optional context string for logging.
+	 * @return The resolved UObject, or null if not valid or failed to load.
+	 */
+	UFUNCTION(BlueprintCallable, Category="SomndusGame|Asset", meta=(DisplayName="TryGetAsset"))
+	static UObject* BP_TryGetAsset(const TSoftObjectPtr<UObject>& SoftObject, const FString& Context = TEXT("SomndusGame"));
+
+	/**
+	 * @brief  Blueprint wrapper of TryGetClass
+	 *
+	 * @param SoftClass A soft reference to any UObject-derived asset.
+	 * @param Context Optional context string for logging.
+	 * @return The resolved UObject, or null if not valid or failed to load.
+	 */
+	UFUNCTION(BlueprintCallable, Category="SomndusGame|Asset", meta=(DisplayName="TryGetClass"))
+	static UClass* BP_TryGetClass(const TSoftClassPtr<UObject>& SoftClass, const FString& Context = TEXT("SomndusGame"));
+	
 };
