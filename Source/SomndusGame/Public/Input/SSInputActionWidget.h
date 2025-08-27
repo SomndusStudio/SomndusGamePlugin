@@ -26,6 +26,9 @@ public:
 	virtual TSharedRef<SWidget> RebuildWidget() override;
 	/** End UWidet */
 
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	bool IsEmptyKeyboard();
+	
 protected:
 
 	/**
@@ -48,4 +51,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Keyboard")
 	FSlateFontInfo KeyboardFontStyle;
+
+	UPROPERTY(BlueprintAssignable, Category = CommonActionWidget)
+	FOnInputMethodChanged OnInputActionUpdated;
 };

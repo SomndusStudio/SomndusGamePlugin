@@ -49,7 +49,7 @@ bool USSInputActionWidget::UpdateKeyboardAction(const UCommonInputSubsystem* Com
 			}
 #endif
 		}
-		
+
 		// stop if not keyboard key (ignore gamepad)
 		if (KeyDefaultText.IsEmpty())
 		{
@@ -58,7 +58,7 @@ bool USSInputActionWidget::UpdateKeyboardAction(const UCommonInputSubsystem* Com
 		KeyboardBackground->SetVisibility(EVisibility::SelfHitTestInvisible);
 		KeyboardTextBlock->SetVisibility(EVisibility::SelfHitTestInvisible);
 		KeyboardTextBlock->SetText(KeyDefaultText);
-		
+
 		if (MyProgressImage)
 		{
 			if (IsHeldAction())
@@ -75,7 +75,7 @@ bool USSInputActionWidget::UpdateKeyboardAction(const UCommonInputSubsystem* Com
 			MyIcon->SetVisibility(EVisibility::Collapsed);
 		}
 		SetVisibility(IsDesignTime() ? ESlateVisibility::Visible : ESlateVisibility::SelfHitTestInvisible);
-					
+
 		return true;
 	}
 	return false;
@@ -99,6 +99,10 @@ void USSInputActionWidget::UpdateActionWidget()
 					// Update dynamic keyboard
 					if (UpdateKeyboardAction(CommonInputSubsystem))
 					{
+						if (CommonInputSubsystem)
+						{
+							OnInputActionUpdated.Broadcast(CommonInputSubsystem->GetCurrentInputType() == ECommonInputType::Gamepad);
+						}
 						return;
 					}
 					SetVisibility(ESlateVisibility::Collapsed);
@@ -113,7 +117,7 @@ void USSInputActionWidget::UpdateActionWidget()
 						KeyboardTextBlock->SetVisibility(EVisibility::Collapsed);
 					}
 					MyIcon->SetVisibility(EVisibility::Visible);
-					
+
 					MyIcon->SetImage(&Icon);
 
 					if (GetVisibility() != ESlateVisibility::Collapsed)
@@ -135,12 +139,21 @@ void USSInputActionWidget::UpdateActionWidget()
 					MyKeyBox->Invalidate(EInvalidateWidget::LayoutAndVolatility);
 					SetVisibility(IsDesignTime() ? ESlateVisibility::Visible : ESlateVisibility::SelfHitTestInvisible);
 
+					if (CommonInputSubsystem)
+					{
+						OnInputActionUpdated.Broadcast(CommonInputSubsystem->GetCurrentInputType() == ECommonInputType::Gamepad);
+					}
 					return;
 				}
 			}
 		}
 
 		SetVisibility(ESlateVisibility::Collapsed);
+
+		if (CommonInputSubsystem)
+		{
+			OnInputActionUpdated.Broadcast(CommonInputSubsystem->GetCurrentInputType() == ECommonInputType::Gamepad);
+		}
 	}
 }
 
@@ -169,7 +182,7 @@ TSharedRef<SWidget> USSInputActionWidget::RebuildWidget()
 		.HAlign(HAlign_Center)
 		.VAlign(VAlign_Center);
 
-	MyKeyBox->SetContent(	
+	MyKeyBox->SetContent(
 		SNew(SOverlay)
 		+ SOverlay::Slot()
 		.HAlign(HAlign_Center)
@@ -209,6 +222,11 @@ TSharedRef<SWidget> USSInputActionWidget::RebuildWidget()
 			.ColorAndOpacity(FSlateColor(FLinearColor(0.0f, 0.0f, 0.0f, 1.0f)))
 			.Text(FText::FromString(TEXT("???")))
 		]);
-	
+
 	return MyKeyBox.ToSharedRef();
+}
+
+bool USSInputActionWidget::IsEmptyKeyboard()
+{
+	return KeyDefaultText.ToString() == "None";
 }

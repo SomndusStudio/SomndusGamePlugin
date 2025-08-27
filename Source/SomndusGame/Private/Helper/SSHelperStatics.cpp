@@ -39,3 +39,13 @@ bool USSHelperStatics::CallFunctionByName(UObject* Target, const FString& Functi
 
 	return false;
 }
+
+UObject* USSHelperStatics::BP_TryGetAsset(const TSoftObjectPtr<UObject>& SoftObject, const FString& Context)
+{
+	return 	TryGetAsset(SoftObject, Context);
+}
+
+UClass* USSHelperStatics::BP_TryGetClass(const TSoftClassPtr<UObject>& SoftClass, const FString& Context)
+{
+	return TryGetClass(SoftClass, Context);
+}
