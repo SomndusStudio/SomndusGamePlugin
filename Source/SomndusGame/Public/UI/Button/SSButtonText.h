@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -11,7 +11,9 @@
 #include "SSButtonText.generated.h"
 
 /**
- * 
+ * USSButtonText is a subclass of UCommonButtonBase that provides functionality for managing
+ * and updating button text. This class allows integration with Unreal Engine's UI system
+ * and provides flexible options for customizing button behavior.
  */
 UCLASS()
 class SOMNDUSGAME_API USSButtonText : public UCommonButtonBase

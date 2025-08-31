@@ -31,7 +31,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FName DefaultGamepadName;
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Config")
 	TArray<FSSInputPlatformWidget> InputPlatformWidgetSettings;
 
 	UFUNCTION(BlueprintCallable)

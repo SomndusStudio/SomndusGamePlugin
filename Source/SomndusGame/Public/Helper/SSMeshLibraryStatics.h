@@ -1,4 +1,8 @@
-﻿// Copyright (C) 2020-2023 Schartier Isaac
+﻿/**
+* Copyright (C) Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 #pragma once
 
@@ -7,7 +11,7 @@
 #include "SSMeshLibraryStatics.generated.h"
 
 /**
- * 
+ * Utility class that provides functions to manipulate and retrieve materials on a skinned mesh component.
  */
 UCLASS()
 class SOMNDUSGAME_API USSMeshLibraryStatics : public UBlueprintFunctionLibrary

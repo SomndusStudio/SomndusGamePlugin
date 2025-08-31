@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -11,7 +11,8 @@
 #include "SSTooltipWidgetBase.generated.h"
 
 /**
- * 
+ * USSTooltipWidgetBase is the base class for tooltip widgets used in the SOMNDUSGAME.
+ * It provides a method for updating the widget with a data object that contains the information the tooltip should display.
  */
 UCLASS()
 class SOMNDUSGAME_API USSTooltipWidgetBase : public UUserWidget

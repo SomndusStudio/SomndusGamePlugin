@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -15,7 +15,6 @@
  * This is useful because there are many localized keyboard layouts, and developers may not want to
  * specify like over 200 images to support all possible keyboard input images in the keyboard input controller settings.
  */
-
 UCLASS()
 class SOMNDUSGAME_API USSInputActionWidget : public UCommonActionWidget
 {
@@ -24,7 +23,7 @@ class SOMNDUSGAME_API USSInputActionWidget : public UCommonActionWidget
 public:
 	/** Begin UWidget */
 	virtual TSharedRef<SWidget> RebuildWidget() override;
-	/** End UWidet */
+	/** End UWidget */
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	bool IsEmptyKeyboard();

@@ -10,7 +10,9 @@
 class UCommonInputSubsystem;
 
 /**
- * A custom widget for displaying input actions, supporting dynamic updates based on the input method (keyboard/gamepad).
+ * USSGameInputActionWidget is a customizable widget for displaying input actions
+ * such as keyboard or gamepad bindings. It provides mechanisms to dynamically
+ * update its appearance based on the current input method.
  */
 UCLASS(BlueprintType, Blueprintable)
 class SOMNDUSGAME_API USSGameInputActionWidget : public UWidget

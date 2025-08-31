@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -11,7 +11,7 @@
 #include "UObject/Interface.h"
 #include "SSTooltipInvoker.generated.h"
 
-// This class does not need to be modified.
+
 UINTERFACE()
 class USSTooltipInvoker : public UInterface
 {

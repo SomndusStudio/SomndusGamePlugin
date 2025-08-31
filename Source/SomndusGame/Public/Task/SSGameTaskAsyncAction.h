@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -12,7 +12,11 @@
 #include "SSGameTaskAsyncAction.generated.h"
 
 /**
- * 
+ * Represents an asynchronous action within the USS game task system.
+ *
+ * This class provides the framework for executing game tasks asynchronously.
+ * It serves as a base or utility class for handling asynchronous operations
+ * specific to the gameplay tasks within the USS system.
  */
 UCLASS()
 class SOMNDUSGAME_API USSGameTaskAsyncAction : public UCancellableAsyncAction
@@ -51,7 +55,7 @@ private:
 	const UObject* WorldContextObject;
 	
 	/**
-	 * @brief Modal widget want to spawn
+	 * Modal widget want to spawn
 	 */
 	UPROPERTY()
 	TSoftClassPtr<USSGameTaskBase> GameTaskClass;

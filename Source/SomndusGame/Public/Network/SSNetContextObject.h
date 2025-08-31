@@ -7,7 +7,11 @@
 #include "SSNetContextObject.generated.h"
 
 /**
- * 
+ * USSNetContextObject
+ *
+ * A base UObject class supporting custom replication logic, including optional replication control
+ * and support for push-based property updates. Designed to be used with replicated subsystems or
+ * context-based replicated UObjects.
  */
 UCLASS()
 class SOMNDUSGAME_API USSNetContextObject : public USSContextObject
@@ -15,7 +19,8 @@ class SOMNDUSGAME_API USSNetContextObject : public USSContextObject
 	GENERATED_BODY()
 
 public:
-	
+
+	/** Whether this object should replicate. Can be changed at runtime. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Replicated, Category=ObjectReplication,meta=(DisplayName = "Object Replicates", AllowPrivateAccess = "true"))
 	uint8 bReplicates:1;
 	
@@ -24,6 +29,14 @@ public:
 		return bReplicates;
 	}
 
+	/**
+	 * Sets whether this object should replicate by default.
+	 *
+	 * This modifies the `bReplicates` flag and marks it dirty so that the replication system
+	 * is notified of the change.
+	 *
+	 * @param bNewReplicates	New replicate state to apply.
+	 */
 	void SetIsReplicatedByDefault(const bool bNewReplicates);
 	
 protected:

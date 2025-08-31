@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -13,7 +13,8 @@
 #include "SSButtonText_WithCursor.generated.h"
 
 /**
- * 
+ * USSButtonText_WithCursor is a specialized button class that enhances USSButtonText with cursor handling
+ * capabilities. It also implements the ISSCursorHandler interface to provide specific cursor behavior.
  */
 UCLASS()
 class SOMNDUSGAME_API USSButtonText_WithCursor : public USSButtonText, public ISSCursorHandler

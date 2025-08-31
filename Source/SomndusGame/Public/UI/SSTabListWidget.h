@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -17,7 +17,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSSNavigationEventSignature, clas
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSSOnTabInfoSelected, class USSTabListWidget*, Widget, FName, TabId, const FInstancedStruct, InstancedStruct);
 
 /**
- * 
+ * A UI widget representing a list of tabs, derived from UCommonTabListWidgetBase.
+ * This class provides functionalities to manage, navigate, and interact with tabs.
  */
 UCLASS()
 class SOMNDUSGAME_API USSTabListWidget : public UCommonTabListWidgetBase

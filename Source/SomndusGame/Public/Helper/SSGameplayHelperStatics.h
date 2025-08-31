@@ -12,7 +12,12 @@ class ALevelSequenceActor;
 class ULevelSequencePlayer;
 
 /**
- * 
+ * @class USSGameplayHelperStatics
+ * A utility class providing static functions to manage and play Level Sequences in Unreal Engine.
+ *
+ * This class extends UBlueprintFunctionLibrary to expose functionality for creating and managing
+ * Level Sequence Players at specified transforms or actors. These functionalities can be used
+ * in both C++ and Blueprint to handle sequences dynamically in the game.
  */
 UCLASS()
 class SOMNDUSGAME_API USSGameplayHelperStatics : public UBlueprintFunctionLibrary

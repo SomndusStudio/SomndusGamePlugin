@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -11,6 +11,7 @@
 #include "Blueprint/SlateBlueprintLibrary.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetBlueprintGeneratedClass.h"
+#include "Components/ScrollBox.h"
 #include "Kismet/GameplayStatics.h"
 #include "UI/SSGameUIManagerSubsystem.h"
 #include "UI/SSWidgetObjectEntry.h"
@@ -207,4 +208,16 @@ void USSCommonUIFunctionLibrary::CommonModalNavigationRules(UWidget* Widget)
 		Widget->SetNavigationRuleBase(EUINavigation::Left, EUINavigationRule::Stop);
 		Widget->SetNavigationRuleBase(EUINavigation::Right, EUINavigationRule::Stop);
 	}
+}
+
+bool USSCommonUIFunctionLibrary::IsScrollBoxScrollable(UScrollBox* ScrollBox)
+{
+	if (!ScrollBox) return false;
+	
+	float ContentHeight = ScrollBox->GetScrollOffsetOfEnd();
+	float ViewportHeight = ScrollBox->GetCachedGeometry().GetLocalSize().Y;
+
+	if (ViewportHeight <= 0.0f) return false;
+	
+	return ContentHeight > 0.f;
 }

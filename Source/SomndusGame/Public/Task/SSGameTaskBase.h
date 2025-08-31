@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -39,7 +39,8 @@ struct SOMNDUSGAME_API FSSGameTaskSetting
 
 
 /**
- * 
+ * Base class for creating game tasks in the SS system.
+ * Defines the foundational structure and functionality that all game tasks should inherit and extend.
  */
 UCLASS()
 class SOMNDUSGAME_API USSGameTaskBase : public USSContextObject
@@ -71,6 +72,7 @@ public:
 	UFUNCTION()
 	void TimerElapsed();
 
+	UPROPERTY()
 	const UObject* WorldContextObject;
 	
 	UPROPERTY(BlueprintAssignable)

@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -12,7 +12,9 @@
 #include "SSDAOManager.generated.h"
 
 /**
- * 
+ * The USSDAOManager class is responsible for managing DAO (Data Access Object) objects
+ * in the game framework. It extends USSGameModule and provides functionality to retrieve
+ * or create DAO objects dynamically during runtime.
  */
 UCLASS()
 class SOMNDUSGAME_API USSDAOManager : public USSGameModule
@@ -31,6 +33,6 @@ public:
 	{
 		static_assert(TPointerIsConvertibleFromTo<T, const USSDAOObjectBase>::Value, "'T' template parameter to GetDAO must be derived from USSDAOObjectBase");
 
-		return (T*) GetDAO(T::StaticClass());
+		return static_cast<T*>(GetDAO(T::StaticClass()));
 	}
 };

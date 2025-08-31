@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -11,7 +11,11 @@
 #include "K2Node_SSGetGameModule.generated.h"
 
 /**
- * 
+ * @class UK2Node_SSGetGameModule
+ * A specialized K2Node designed to access and retrieve game modules based on a custom class.
+ *
+ * This class is derived from the `UK2Node_SSCustomClassAccessBase` and serves as
+ * a Blueprint node that facilitates obtaining instances of specific game modules in the editor.
  */
 UCLASS()
 class SOMNDUSGAMEEDITOR_API UK2Node_SSGetGameModule : public UK2Node_SSCustomClassAccessBase

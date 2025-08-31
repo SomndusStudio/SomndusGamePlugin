@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -27,7 +27,9 @@ struct SOMNDUSGAME_API FSSInputMappingContextPullToken
 };
 
 /**
- * 
+ * A local player subsystem responsible for managing input mappings and input suspension during gameplay and UI animations.
+ * This subsystem provides functionality to add, remove, and manage input contexts dynamically.
+ * Additionally, it handles suspending and resuming inputs for various gameplay or UI-specific scenarios.
  */
 UCLASS(config = Game)
 class SOMNDUSGAME_API USSInputLocalPlayerSubsystem : public ULocalPlayerSubsystem

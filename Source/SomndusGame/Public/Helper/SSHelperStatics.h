@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -12,7 +12,11 @@
 #include "SSHelperStatics.generated.h"
 
 /**
- * 
+ * Utility functions for various operations such as gameplay tags, reflection, assets, and data tables.
+ *
+ * USSHelperStatics provides a collection of static helper methods that can be used
+ * for gameplay tag conversions, reflection-based function calling, asset resolution,
+ * and manipulation of data tables and arrays.
  */
 UCLASS()
 class SOMNDUSGAME_API USSHelperStatics : public UBlueprintFunctionLibrary
@@ -122,7 +126,7 @@ public:
 	}
 
 	/**
-	 * @brief Attempts to retrieve an asset from a TSoftObjectPtr.
+	 * Attempts to retrieve an asset from a TSoftObjectPtr.
 	 *
 	 * If the asset is already loaded, it is returned directly.
 	 * Otherwise, a warning is logged and the asset is loaded synchronously as a fallback.
@@ -155,7 +159,7 @@ public:
 	}
 
 	/**
-	 * @brief Attempts to retrieve a class from a TSoftClassPtr.
+	 * Attempts to retrieve a class from a TSoftClassPtr.
 	 *
 	 * If the class is already loaded, it is returned directly.
 	 * Otherwise, a warning is logged and the class is loaded synchronously as a fallback.
@@ -187,7 +191,7 @@ public:
 	}
 
 	/**
-	 * @brief Blueprint wrapper of TryGetAsset
+	 * Blueprint wrapper of TryGetAsset
 	 *
 	 * @param SoftObject A soft reference to any UObject-derived asset.
 	 * @param Context Optional context string for logging.
@@ -197,7 +201,7 @@ public:
 	static UObject* BP_TryGetAsset(const TSoftObjectPtr<UObject>& SoftObject, const FString& Context = TEXT("SomndusGame"));
 
 	/**
-	 * @brief  Blueprint wrapper of TryGetClass
+	 *  Blueprint wrapper of TryGetClass
 	 *
 	 * @param SoftClass A soft reference to any UObject-derived asset.
 	 * @param Context Optional context string for logging.

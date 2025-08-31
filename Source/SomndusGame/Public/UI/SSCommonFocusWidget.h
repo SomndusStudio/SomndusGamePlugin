@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -7,11 +7,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/Widget.h"
 #include "UObject/Interface.h"
 #include "SSCommonFocusWidget.generated.h"
 
-// This class does not need to be modified.
+class UWidget;
+
 UINTERFACE()
 class USSCommonFocusWidget : public UInterface
 {
@@ -19,7 +19,9 @@ class USSCommonFocusWidget : public UInterface
 };
 
 /**
- * 
+ * Interface for widgets that can specify a default focusable sub-widget.
+ * This is useful for widgets that have complex compositions and require
+ * a particular child widget to receive focus by default.
  */
 class SOMNDUSGAME_API ISSCommonFocusWidget
 {
