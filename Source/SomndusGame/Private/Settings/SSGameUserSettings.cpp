@@ -3,7 +3,7 @@
 
 #include "Settings/SSGameUserSettings.h"
 
-#include "Core/SSCoreGlobals.h"
+#include "SSLog.h"
 
 void USSGameUserSettings::CheckSubSettings()
 {

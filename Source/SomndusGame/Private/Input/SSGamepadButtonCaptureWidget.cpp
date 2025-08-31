@@ -4,9 +4,9 @@
 #include "Input/SSGamepadButtonCaptureWidget.h"
 
 #include "InputAction.h"
+#include "SSLog.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
-#include "Core/SSCoreGlobals.h"
 #include "Input/SSInputStaticsLibrary.h"
 
 void USSGamepadButtonCaptureWidget::Refresh_Implementation()

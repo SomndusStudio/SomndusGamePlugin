@@ -5,7 +5,7 @@
 
 #include "InputMappingContext.h"
 #include "Components/CanvasPanel.h"
-#include "Core/SSCoreGlobals.h"
+#include "SSLog.h"
 #include "Input/SSGamepadButtonCaptureWidget.h"
 
 void USSGamepadLayoutWidget::NativeOnInitialized()

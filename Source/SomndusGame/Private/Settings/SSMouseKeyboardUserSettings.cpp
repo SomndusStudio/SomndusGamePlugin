@@ -3,7 +3,7 @@
 
 #include "Settings/SSMouseKeyboardUserSettings.h"
 
-#include "Core/SSCoreGlobals.h"
+#include "SSLog.h"
 
 void USSMouseKeyboardUserSettings::SetToDefaults()
 {

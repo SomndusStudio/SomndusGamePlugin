@@ -3,7 +3,7 @@
 
 #include "Settings/SSGamepadUserSettings.h"
 
-#include "Core/SSCoreGlobals.h"
+#include "SSLog.h"
 
 void USSGamepadUserSettings::SetToDefaults()
 {

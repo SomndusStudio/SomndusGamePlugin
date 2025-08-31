@@ -5,7 +5,7 @@
 
 #include "CommonInputSubsystem.h"
 #include "Components/WidgetSwitcher.h"
-#include "Core/SSCoreGlobals.h"
+#include "SSLog.h"
 #include "Engine/AssetManager.h"
 #include "GameFramework/InputDeviceSubsystem.h"
 #include "Input/SSInputLocalPlayerSubsystem.h"

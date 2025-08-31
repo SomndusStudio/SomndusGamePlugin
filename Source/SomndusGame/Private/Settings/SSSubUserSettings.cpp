@@ -3,7 +3,7 @@
 
 #include "Settings/SSSubUserSettings.h"
 
-#include "Core/SSCoreGlobals.h"
+#include "SSLog.h"
 
 void USSSubUserSettings::SetToDefaults()
 {
