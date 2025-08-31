@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -24,6 +24,7 @@ public:
 	virtual void SetupDialog(UCommonGameDialogDescriptor* Descriptor, FCommonMessagingResultDelegate ResultCallback) override;
 	virtual void KillDialog() override;
 
+	virtual UWidget* NativeGetDesiredFocusTarget() const override;
 	virtual TOptional<FUIInputConfig> GetDesiredInputConfig() const override;
 	
 protected:

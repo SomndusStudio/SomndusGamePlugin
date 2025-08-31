@@ -1,4 +1,8 @@
-﻿// Copyright (C) 2020-2023 Schartier Isaac
+﻿/**
+* Copyright (C) Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 #pragma once
 
@@ -26,12 +30,17 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxValue = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bUsePercent = true;
 	
 	UPROPERTY(BlueprintReadOnly, Transient)
 	float Value;
 
+	virtual void Initialize_Implementation() override;
+	
 	UFUNCTION(BlueprintCallable)
-	float GetValue();
+	float GetValue() const;
 	
 	UFUNCTION(BlueprintCallable)
 	void SetValue(float InValue);

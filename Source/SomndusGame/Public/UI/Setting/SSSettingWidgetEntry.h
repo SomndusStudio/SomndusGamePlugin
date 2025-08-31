@@ -1,4 +1,8 @@
-﻿// Copyright (C) 2020-2023 Schartier Isaac
+﻿/**
+* Copyright (C) Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 #pragma once
 
@@ -8,7 +12,7 @@
 
 class USSSettingDataObject;
 
-// This class does not need to be modified.
+
 UINTERFACE()
 class USSSettingWidgetEntry : public UInterface
 {

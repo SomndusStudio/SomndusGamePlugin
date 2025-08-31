@@ -1,4 +1,8 @@
-﻿// Copyright (C) 2020-2023 Schartier Isaac
+﻿/**
+* Copyright (C) Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 #pragma once
 
@@ -37,6 +41,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Setup(USSSettingWidgetThemeDataAsset* InSettingWidgetThemeDataAsset, USSSettingRegistryDataAsset* InSettingRegistryDataAsset);
 
+	UFUNCTION(BlueprintCallable)
+	void SetSettingRegistryDataAsset(USSSettingRegistryDataAsset* InSettingRegistryDataAsset, bool bRefresh=true);
+	
 protected:
 	virtual void NativePreConstruct() override;
 

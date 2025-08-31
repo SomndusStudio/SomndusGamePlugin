@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -13,7 +13,8 @@
 #include "K2Node_SSCustomClassAccessBase.generated.h"
 
 /**
- * 
+ * Base class for K2 nodes that provide custom class access functionality.
+ * This abstract class is intended to be extended for specific use cases.
  */
 UCLASS(Abstract)
 class SOMNDUSGAMEEDITOR_API UK2Node_SSCustomClassAccessBase : public UK2Node

@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -10,6 +10,7 @@
 #include "CommonUIExtensions.h"
 #include "CommonUITypes.h"
 #include "EnhancedInputSubsystems.h"
+#include "SSLog.h"
 #include "Input/SSEnhancedPlayerInput.h"
 
 void USSInputLocalPlayerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
@@ -155,6 +156,8 @@ void USSInputLocalPlayerSubsystem::SuspendInputForUIAnimation()
 		return;
 	}
 	CommonUIAnimationInputSuspendToken = UCommonUIExtensions::SuspendInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), "CommonUIAnimation");
+
+	UE_LOG(LogSomndusGame, Log, TEXT("SSInput: SuspendInputForUIAnimation"));
 }
 
 void USSInputLocalPlayerSubsystem::ResumeInputForUIAnimation()
@@ -165,6 +168,8 @@ void USSInputLocalPlayerSubsystem::ResumeInputForUIAnimation()
 	}
 	UCommonUIExtensions::ResumeInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), CommonUIAnimationInputSuspendToken);
 	CommonUIAnimationInputSuspendToken = FName();
+
+	UE_LOG(LogSomndusGame, Log, TEXT("SSInput: ResumeInputForUIAnimation"));
 }
 
 void USSInputLocalPlayerSubsystem::SuspendInputForGameplay()
@@ -175,6 +180,8 @@ void USSInputLocalPlayerSubsystem::SuspendInputForGameplay()
 		return;
 	}
 	CommonGameplayInputSuspendToken = UCommonUIExtensions::SuspendInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), "Gameplay");
+
+	UE_LOG(LogSomndusGame, Log, TEXT("SSInput: SuspendInputForGameplay"));
 }
 
 void USSInputLocalPlayerSubsystem::ResumeInputForGameplay()
@@ -185,6 +192,8 @@ void USSInputLocalPlayerSubsystem::ResumeInputForGameplay()
 	}
 	UCommonUIExtensions::ResumeInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), CommonGameplayInputSuspendToken);
 	CommonGameplayInputSuspendToken = FName();
+	
+	UE_LOG(LogSomndusGame, Log, TEXT("SSInput: ResumeInputForGameplay"));
 }
 
 void USSInputLocalPlayerSubsystem::SuspendInputForTag(FGameplayTag Tag)
@@ -196,6 +205,8 @@ void USSInputLocalPlayerSubsystem::SuspendInputForTag(FGameplayTag Tag)
 	}
 	FName SuspendToken = UCommonUIExtensions::SuspendInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), Tag.GetTagName());
 	GameSuspendTokens.Add(Tag, SuspendToken);
+	
+	UE_LOG(LogSomndusGame, Log, TEXT("SSInput: SuspendInputForTag -> %s"), *Tag.GetTagName().ToString());
 }
 
 void USSInputLocalPlayerSubsystem::ResumeInputForTag(FGameplayTag Tag)
@@ -207,4 +218,6 @@ void USSInputLocalPlayerSubsystem::ResumeInputForTag(FGameplayTag Tag)
 	FName SuspendToken = GameSuspendTokens.FindChecked(Tag);
 	UCommonUIExtensions::ResumeInputForPlayer(GetLocalPlayer()->GetPlayerController(GetWorld()), SuspendToken);
 	GameSuspendTokens.Remove(Tag);
+
+	UE_LOG(LogSomndusGame, Log, TEXT("SSInput: ResumeInputForTag -> %s"), *Tag.GetTagName().ToString());
 }

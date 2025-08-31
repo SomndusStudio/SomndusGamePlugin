@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -12,7 +12,8 @@
 #include "SSTabButton.generated.h"
 
 /**
- * 
+ * USSTabButton is a user interface component derived from UCommonButtonBase that represents a tab button
+ * in the UI. It includes functionality to manage associated menu information.
  */
 UCLASS()
 class SOMNDUSGAME_API USSTabButton : public UCommonButtonBase

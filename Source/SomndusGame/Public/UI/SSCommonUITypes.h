@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -15,6 +15,13 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSCommonMessagingResultMCDelegate, 
 
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_SS_LAYER_MODAL);
 
+/**
+ * Encapsulates information required to define the cursor's appearance and behavior.
+ *
+ * This structure is utilized to request and represent cursor-related data, including
+ * its position, size, and angle. It is primarily used within the UI system to manage
+ * cursor attributes dynamically.
+ */
 USTRUCT(BlueprintType)
 struct SOMNDUSGAME_API FSSCursorRequestInfo
 {
@@ -30,6 +37,13 @@ struct SOMNDUSGAME_API FSSCursorRequestInfo
 	float Angle = -90.f;
 };
 
+/**
+ * Represents menu information used within the system.
+ *
+ * This structure encapsulates details about a menu, including its
+ * metadata and properties necessary for menu rendering and interaction.
+ * It is designed to standardize the storage and handling of menu-specific data.
+ */
 USTRUCT(BlueprintType)
 struct SOMNDUSGAME_API FSSMenuInfo : public FTableRowBase
 {
@@ -45,7 +59,14 @@ struct SOMNDUSGAME_API FSSMenuInfo : public FTableRowBase
 	FName Value;
 };
 
-/** For some UI */
+/**
+ * Represents a common UI item structure for defining UI elements in the system.
+ *
+ * This structure is used to encapsulate basic UI element data, including:
+ * - An icon representing the UI item.
+ * - A label text for the item.
+ * - A description text for detailed information related to the item.
+ */
 USTRUCT(BlueprintType)
 struct SOMNDUSGAME_API FSSCommonUIItem : public FTableRowBase
 {

@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -11,7 +11,15 @@
 #include "K2Node_SSGetWidgetEntryItemObject.generated.h"
 
 /**
- * 
+ * A custom Blueprint node that retrieves a casted item object from a widget entry in an editor-specific context.
+ *
+ * This node is used to extract and cast an item object in the context of a widget slot entry.
+ *
+ * Features:
+ * - Pure Node: This is a pure node that performs the operation without side effects.
+ * - Blueprints Integration: Can be used within Blueprint graphs, with functionality to define pins,
+ *   behavior, and menu actions specific to this node.
+ * - Automatic Casting: Includes functionality to cast the item object to a specified type.
  */
 UCLASS()
 class SOMNDUSGAMEEDITOR_API UK2Node_SSGetWidgetEntryItemObject : public UK2Node

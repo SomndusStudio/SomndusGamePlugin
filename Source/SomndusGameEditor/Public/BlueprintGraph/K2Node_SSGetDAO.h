@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -11,7 +11,12 @@
 #include "K2Node_SSGetDAO.generated.h"
 
 /**
- * 
+ * @class UK2Node_SSGetDAO
+ * A node implementation used in Unreal Engine's Blueprint system to retrieve DAO (Data Access Object) instances.
+ *
+ * The UK2Node_SSGetDAO class is derived from UK2Node_SSCustomClassAccessBase and specializes in enabling
+ * Blueprint access to objects that extend from USSDAOObjectBase. This allows users to dynamically create
+ * and access DAO objects within the editor's visual scripting environment.
  */
 UCLASS()
 class SOMNDUSGAMEEDITOR_API UK2Node_SSGetDAO : public UK2Node_SSCustomClassAccessBase

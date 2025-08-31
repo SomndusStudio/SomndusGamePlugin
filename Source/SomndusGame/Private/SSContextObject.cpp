@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -26,7 +26,7 @@ UGameInstance* USSContextObject::GetGameInstance() const
 
 class UWorld* USSContextObject::GetWorld() const {
 	// If the actors outer is destroyed or unreachable we are shutting down and the world should be nullptr
-	if (!HasAnyFlags(RF_ClassDefaultObject) && ensureMsgf(GetOuter(), TEXT("Actor: %s has a null OuterPrivate in UDUObject::GetWorld()"), *GetFullName())
+	if (!HasAnyFlags(RF_ClassDefaultObject) && ensureMsgf(GetOuter(), TEXT("Actor: %s has a null OuterPrivate in USSContextObject::GetWorld()"), *GetFullName())
 		&& !GetOuter()->HasAnyFlags(RF_BeginDestroyed) && !GetOuter()->IsUnreachable())
 	{
 		return GetOuter()->GetWorld();

@@ -1,4 +1,8 @@
-﻿// Copyright (C) 2020-2023 Schartier Isaac
+﻿/**
+* Copyright (C) Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 #pragma once
 
@@ -28,6 +32,7 @@ protected:
 
 	UFUNCTION()
 	void HandleSliderValueChanged(float Value);
+	
 	UFUNCTION()
 	void HandleSliderCaptureEnded();
 
@@ -39,7 +44,8 @@ protected:
 
 	virtual void SetData_Implementation(USSSettingDataObject* DataObject) override;
 	
-private:	// Bound Widgets
+private:
+	// Bound Widgets
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget, BlueprintProtected = true, AllowPrivateAccess = true))
 	TObjectPtr<UPanelWidget> Panel_Value;
 

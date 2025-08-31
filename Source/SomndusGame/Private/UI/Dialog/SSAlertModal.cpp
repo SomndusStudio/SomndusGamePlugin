@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -34,6 +34,15 @@ void USSAlertModal::SetupDialog(UCommonGameDialogDescriptor* Descriptor, FCommon
 void USSAlertModal::KillDialog()
 {
 	Super::KillDialog();
+}
+
+UWidget* USSAlertModal::NativeGetDesiredFocusTarget() const
+{
+	if (EntryBox_Buttons->GetAllEntries().IsValidIndex(0))
+	{
+		return EntryBox_Buttons->GetAllEntries()[0];
+	}
+	return Super::NativeGetDesiredFocusTarget();
 }
 
 TOptional<FUIInputConfig> USSAlertModal::GetDesiredInputConfig() const

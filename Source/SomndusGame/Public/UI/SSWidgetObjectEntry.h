@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -11,7 +11,7 @@
 #include "UObject/Interface.h"
 #include "SSWidgetObjectEntry.generated.h"
 
-// This class does not need to be modified.
+
 UINTERFACE()
 class USSWidgetObjectEntry : public UInterface
 {
@@ -19,7 +19,9 @@ class USSWidgetObjectEntry : public UInterface
 };
 
 /**
- * 
+ * The ISSWidgetObjectEntry interface defines the necessary functionality for widget objects
+ * that can have item objects assigned or updated. Classes implementing this interface
+ * are expected to provide logic for handling the assignment and updating of item objects.
  */
 class SOMNDUSGAME_API ISSWidgetObjectEntry
 {

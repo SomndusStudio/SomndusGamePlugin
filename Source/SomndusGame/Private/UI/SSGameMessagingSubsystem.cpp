@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -25,6 +25,7 @@ void USSGameMessagingSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	ErrorDialogClassPtr = ErrorDialogClass.LoadSynchronous();
 	AlertDialogClassPtr = AlertDialogClass.LoadSynchronous();
 	LoadingDialogClassPtr = LoadingDialogClass.LoadSynchronous();
+	NotificationManager = NewObject<USSGameNotificationManager>(this);
 }
 
 void USSGameMessagingSubsystem::ShowConfirmation(UCommonGameDialogDescriptor* DialogDescriptor, FCommonMessagingResultDelegate ResultCallback)
@@ -146,6 +147,11 @@ UCommonGameDialogDescriptor* USSGameMessagingSubsystem::CreateLoadingDescriptor(
 	Descriptor->Body = Body;
 
 	return Descriptor;
+}
+
+USSGameNotificationManager* USSGameMessagingSubsystem::GetNotificationManager() const
+{
+	return NotificationManager;
 }
 
 #undef LOCTEXT_NAMESPACE

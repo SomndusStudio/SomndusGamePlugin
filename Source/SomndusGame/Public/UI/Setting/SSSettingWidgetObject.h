@@ -1,4 +1,8 @@
-﻿// Copyright (C) 2020-2023 Schartier Isaac
+﻿/**
+* Copyright (C) Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 #pragma once
 
@@ -26,8 +30,5 @@ public:
 	FGameplayTag TypeTag;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced)
-	TObjectPtr<USSSettingDataObject> Data;	
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced)
-	TObjectPtr<USSSettingDataHandler> Handler;
+	TObjectPtr<USSSettingDataObject> Data;
 };

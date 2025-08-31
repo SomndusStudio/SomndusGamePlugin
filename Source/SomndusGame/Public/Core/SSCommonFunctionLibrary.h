@@ -1,5 +1,5 @@
 ﻿/**
-* Copyright (C) 2020-2024 Schartier Isaac
+* Copyright (C) Schartier Isaac
 *
 * Official Documentation: https://www.somndus-studio.com
 */
@@ -13,7 +13,8 @@
 #include "SSCommonFunctionLibrary.generated.h"
 
 /**
- * 
+ * A utility class that provides common functionality for working with game modules, data access objects (DAOs), and text localization.
+ * This class is designed to be used within a Blueprint environment and provides static methods for various purposes.
  */
 UCLASS()
 class SOMNDUSGAME_API USSCommonFunctionLibrary : public UBlueprintFunctionLibrary
@@ -36,7 +37,7 @@ public:
 	{
 		static_assert(TPointerIsConvertibleFromTo<T, const USSGameModule>::Value, "'T' template parameter to GetGameModule must be derived from USSGameModule");
 
-		return (T*) GetGameModule(ContextObject, T::StaticClass());
+		return static_cast<T*>(GetGameModule(ContextObject, T::StaticClass()));
 	}
 	
 	UFUNCTION(BlueprintPure, Category = "Somndus Studio", meta = (WorldContext = "ContextObject", BlueprintInternalUseOnly = "true"))
@@ -47,6 +48,6 @@ public:
 	{
 		static_assert(TPointerIsConvertibleFromTo<T, const USSDAOObjectBase>::Value, "'T' template parameter to GetDAOByClass must be derived from USSDAOObjectBase");
 
-		return (T*) GetDAOByClass(ContextObject, T::StaticClass());
+		return static_cast<T*>(GetDAOByClass(ContextObject, T::StaticClass()));
 	}
 };
