@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "SSContextObject.h"
+#include "Engine/Engine.h"
+#include "Engine/NetDriver.h"
 #include "SSNetContextObject.generated.h"
 
 /**

@@ -8,6 +8,7 @@
 #include "UI/Dialog/AsyncAction_ShowAlert.h"
 
 #include "Blueprint/UserWidget.h"
+#include "Engine/GameInstance.h"
 #include "Messaging/CommonMessagingSubsystem.h"
 #include "UI/SSGameMessagingSubsystem.h"
 

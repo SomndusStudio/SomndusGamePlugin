@@ -7,6 +7,7 @@
 
 #include "UI/Transition/SSWidgetTransitionAsyncAction.h"
 
+#include "Engine/GameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "UI/SSGameUIManagerSubsystem.h"
 #include "UI/Transition/SSWidgetTransitionMgr.h"

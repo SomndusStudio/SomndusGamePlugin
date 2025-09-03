@@ -10,6 +10,7 @@
 #include "CommonLocalPlayer.h"
 #include "GameUIPolicy.h"
 #include "PrimaryGameLayout.h"
+#include "Engine/GameInstance.h"
 #include "GameFramework/HUD.h"
 #include "UI/Transition/SSWidgetTransitionMgr.h"
 
@@ -33,6 +34,8 @@ void USSGameUIManagerSubsystem::Deinitialize()
 bool USSGameUIManagerSubsystem::Tick(float DeltaTime)
 {
 	SyncRootLayoutVisibilityToShowHUD();
+
+	TooltipManager->Tick(DeltaTime);
 	
 	return true;
 }

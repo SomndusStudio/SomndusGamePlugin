@@ -4,6 +4,7 @@
 #include "Settings/SSCultureUserSettings.h"
 
 #include "Internationalization/Culture.h"
+#include "Misc/ConfigCacheIni.h"
 
 const FString& USSCultureUserSettings::GetPendingCulture() const
 {

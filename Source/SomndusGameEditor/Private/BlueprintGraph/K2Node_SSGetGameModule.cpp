@@ -7,6 +7,7 @@
 
 #include "BlueprintGraph/K2Node_SSGetGameModule.h"
 
+#include "EdGraphSchema_K2.h"
 #include "Core/SSCommonFunctionLibrary.h"
 #include "Core/SSGameModule.h"
 

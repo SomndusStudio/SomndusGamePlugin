@@ -7,6 +7,7 @@
 
 #include "UI/Action/SSAsyncAction_PushContentForLocal.h"
 #include "PrimaryGameLayout.h"
+#include "Engine/Engine.h"
 #include "Engine/StreamableManager.h"
 #include "UI/SSCommonUIFunctionLibrary.h"
 

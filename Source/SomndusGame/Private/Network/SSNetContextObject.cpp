@@ -3,6 +3,7 @@
 
 #include "Network/SSNetContextObject.h"
 
+#include "Engine/BlueprintGeneratedClass.h"
 #include "Net/UnrealNetwork.h"
 #include "Net/Core/PushModel/PushModel.h"
 

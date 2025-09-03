@@ -11,6 +11,7 @@
 #include "KismetCompiler.h"
 #include "KismetCompilerMisc.h"
 #include "Kismet2/BlueprintEditorUtils.h"
+#include "Styling/AppStyle.h"
 
 void UK2Node_SSCustomClassAccessBase::Serialize(FArchive& Ar)
 {

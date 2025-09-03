@@ -7,7 +7,8 @@ public class SomndusGameEditor : ModuleRules
     public SomndusGameEditor(ReadOnlyTargetRules Target) : base(Target)
     {
         PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
-
+        IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
+        
         PublicDependencyModuleNames.AddRange(
             new string[]
             {
@@ -26,7 +27,6 @@ public class SomndusGameEditor : ModuleRules
                 "BlueprintGraph",
                 "KismetCompiler", 
                 "UnrealEd",
-                "SomndusGame"
             }
         );
     }

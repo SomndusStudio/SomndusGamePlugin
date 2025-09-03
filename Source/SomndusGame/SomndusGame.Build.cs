@@ -7,6 +7,9 @@ public class SomndusGame : ModuleRules
 	public SomndusGame(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
+		
+		PrivatePCHHeaderFile = "Public/SomndusGame.h";
 
 		PublicDependencyModuleNames.AddRange(
 			new string[]

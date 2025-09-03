@@ -8,6 +8,7 @@
 #include "UI/SSGameActivatableWidget.h"
 
 #include "CommonUITypes.h"
+#include "TimerManager.h"
 #include "Editor/WidgetCompilerLog.h"
 #include "Input/SSInputLocalPlayerSubsystem.h"
 

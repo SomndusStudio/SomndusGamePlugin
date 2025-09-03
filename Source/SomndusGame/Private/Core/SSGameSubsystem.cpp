@@ -7,6 +7,8 @@
 
 #include "Core/SSGameSubsystem.h"
 
+#include "Templates/SubclassOf.h"
+
 USSGameModule* USSGameSubsystem::GetGameModule(TSubclassOf<USSGameModule> GameModuleClass)
 {
 	for (auto* GameModule : GameModules)

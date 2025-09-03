@@ -6,6 +6,11 @@
 #include "CommonInputSubsystem.h"
 #include "CommonUITypes.h"
 #include "Input/SSInputStaticsLibrary.h"
+#include "Widgets/DeclarativeSyntaxSupport.h"
+#include "Widgets/SOverlay.h"
+#include "Widgets/Images/SImage.h"
+#include "Widgets/Layout/SBox.h"
+#include "Widgets/Text/STextBlock.h"
 
 UCommonInputSubsystem* USSGameInputActionWidget::GetInputSubsystem() const
 {

@@ -7,7 +7,7 @@
 	"Category": "Other",
 	"CreatedBy": "Schartier Isaac",
 	"CreatedByURL": "https://somndus-studio.com/",
-	"DocsURL": "",
+	"DocsURL": "https://somndus-studio.com/docs/category/somndus-game",
 	"MarketplaceURL": "",
 	"CanContainContent": true,
 	"IsBetaVersion": false,
@@ -17,21 +17,35 @@
 		{
 			"Name": "SomndusGame",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [
+				"Win64"
+			]
 		},
 		{
 			"Name": "SomndusGameEditor",
 			"Type": "UncookedOnly",
-			"LoadingPhase": "PreDefault"
+			"LoadingPhase": "PreDefault",
+			"WhitelistPlatforms": [
+				"Win64"
+			]
 		}
 	],
 	"Plugins": [
 		{
 			"Name": "EnhancedInput",
 			"Enabled": true
+		},		
+		{
+			"Name": "AudioModulation",
+			"Enabled": true
 		},
 		{
 			"Name": "StructUtils",
+			"Enabled": true
+		},
+		{
+			"Name": "TemplateSequence",
 			"Enabled": true
 		},
 		{
@@ -44,6 +58,10 @@
 		},
 		{
 			"Name": "CommonGame",
+			"Enabled": true
+		},
+		{
+			"Name": "GameSettings",
 			"Enabled": true
 		}
 	]

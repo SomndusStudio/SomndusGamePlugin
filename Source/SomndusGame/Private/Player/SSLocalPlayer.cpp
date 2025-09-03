@@ -3,6 +3,7 @@
 
 #include "Player/SSLocalPlayer.h"
 
+#include "Engine/Engine.h"
 #include "GameFramework/GameUserSettings.h"
 
 UGameUserSettings* USSLocalPlayer::GetGameUserSettings() const

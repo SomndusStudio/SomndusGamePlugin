@@ -11,6 +11,7 @@
 #include "BlueprintNodeSpawner.h"
 #include "K2Node_CallFunction.h"
 #include "KismetCompiler.h"
+#include "Engine/BlueprintGeneratedClass.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 #include "UI/SSCommonWidgetSlotEntry.h"
 #include "UObject/UnrealTypePrivate.h"

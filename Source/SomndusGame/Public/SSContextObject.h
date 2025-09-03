@@ -8,6 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
+#include "Engine/Level.h"
 #include "SSContextObject.generated.h"
 
 /**

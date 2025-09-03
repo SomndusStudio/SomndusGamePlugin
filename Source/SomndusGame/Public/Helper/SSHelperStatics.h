@@ -8,6 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "Engine/DataTable.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "SSHelperStatics.generated.h"
 

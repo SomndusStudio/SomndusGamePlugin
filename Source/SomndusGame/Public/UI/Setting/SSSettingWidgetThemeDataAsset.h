@@ -8,8 +8,12 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "Engine/DataAsset.h"
+#include "Engine/DataTable.h"
 
 #include "SSSettingWidgetThemeDataAsset.generated.h"
+
+class UUserWidget;
 
 USTRUCT(BlueprintType)
 struct SOMNDUSGAME_API FSSWidgetSettingThemeInfo : public FTableRowBase

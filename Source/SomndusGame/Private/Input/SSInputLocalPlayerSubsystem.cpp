@@ -11,6 +11,7 @@
 #include "CommonUITypes.h"
 #include "EnhancedInputSubsystems.h"
 #include "SSLog.h"
+#include "Engine/LocalPlayer.h"
 #include "Input/SSEnhancedPlayerInput.h"
 
 void USSInputLocalPlayerSubsystem::Initialize(FSubsystemCollectionBase& Collection)

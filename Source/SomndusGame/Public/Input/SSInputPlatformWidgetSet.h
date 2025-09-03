@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "Engine/DataTable.h"
 #include "SSInputPlatformWidgetSet.generated.h"
+
+class UUserWidget;
 
 USTRUCT(BlueprintType)
 struct SOMNDUSGAME_API FSSInputPlatformWidget : public FTableRowBase

@@ -9,6 +9,7 @@
 #include "CoreMinimal.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 #include "BlueprintNodeSpawner.h"
+#include "EdGraphSchema_K2.h"
 #include "K2Node.h"
 #include "K2Node_SSCustomClassAccessBase.generated.h"
 

@@ -8,6 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "GameUIManagerSubsystem.h"
+#include "Containers/Ticker.h"
 #include "Cursor/SSCursorManager.h"
 #include "Tooltip/SSTooltipManager.h"
 #include "SSGameUIManagerSubsystem.generated.h"

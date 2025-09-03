@@ -10,6 +10,7 @@
 #include "CommonActionWidget.h"
 #include "SSInputActionWidget.generated.h"
 
+class STextBlock;
 /**
  * This ActionWidget supports automatic keyboard input if a key image is not found.
  * This is useful because there are many localized keyboard layouts, and developers may not want to

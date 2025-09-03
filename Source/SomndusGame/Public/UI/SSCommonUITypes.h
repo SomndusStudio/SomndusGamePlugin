@@ -11,6 +11,7 @@
 #include "UObject/Object.h"
 #include "SSCommonUITypes.generated.h"
 
+class UTexture2D;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSCommonMessagingResultMCDelegate, ECommonMessagingResult, Result);
 
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_SS_LAYER_MODAL);

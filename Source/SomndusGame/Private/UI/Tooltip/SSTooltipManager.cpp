@@ -7,10 +7,33 @@
 
 #include "UI/Tooltip/SSTooltipManager.h"
 
+#include "TimerManager.h"
+#include "Blueprint/SlateBlueprintLibrary.h"
 #include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
+#include "UI/SSCommonUIFunctionLibrary.h"
 #include "UI/Tooltip/SSTooltipInvoker.h"
 #include "UI/Tooltip/SSTooltipWidgetBase.h"
 
+
+bool USSTooltipManager::Tick(float DeltaSeconds)
+{
+	if (IsValid(CurrentTooltip))
+	{
+		if (!TryFixTooltip(this, TooltipInvoker, CurrentTooltip))
+		{
+			FVector2D InvokerPosition = GetWidgetInvokerPosition(CurrentTooltip, TooltipInvoker);
+			
+			// If invoker position changed
+			if (LastTooltipInvokerPosition != InvokerPosition)
+			{
+				// Refresh position
+				LastTooltipInvokerPosition = USSCommonUIFunctionLibrary::HardPositionWidgetToInvoker(CurrentTooltip, TooltipInvoker, InvokerPosition);
+			}
+		}
+	}
+	return true;
+}
 
 void USSTooltipManager::AddTooltip(USSTooltipWidgetBase* TooltipWidget)
 {
@@ -56,29 +79,65 @@ FVector2D USSTooltipManager::GetWidgetPositionInViewport(UUserWidget* Widget)
 	return FVector2D::ZeroVector;
 }
 
-void USSTooltipManager::PositionWidgetToInvoker(UUserWidget* Widget, UUserWidget* Invoker)
+bool USSTooltipManager::TryFixTooltip(UObject* WorldContextObject, UUserWidget* InvokerWidget, UUserWidget* TooltipWidget)
 {
-	// Add to viewport if necessary
-	if (!Widget->IsInViewport())
-	{
-		Widget->AddToViewport();
-	}
-	// Visibility
-	Widget->SetVisibility(ESlateVisibility::HitTestInvisible);
-
+	bool bShouldFix = false;
 	// Get desired position
-	// FVector2D PixelPosition;
-	FVector2D ViewportPosition = GetWidgetPositionInViewport(Invoker);
-	// USlateBlueprintLibrary::LocalToViewport(WorldContextObject, Invoker->GetCachedGeometry(), FVector2D(), PixelPosition, ViewportPosition);
+	FVector2D NewPosition = TooltipWidget->GetCachedGeometry().GetAbsolutePosition();
+	FVector2D PixelPosition;
+	USlateBlueprintLibrary::AbsoluteToViewport(WorldContextObject,TooltipWidget->GetCachedGeometry().GetAbsolutePosition(), PixelPosition, NewPosition);
+	
+	// Widget Size
+	FVector2D WidgetSize;
+	FVector2D PixelPositionSize;
+	USlateBlueprintLibrary::AbsoluteToViewport(WorldContextObject, TooltipWidget->GetCachedGeometry().GetAbsoluteSize(), PixelPositionSize, WidgetSize);
+	
+	// Screen size
+	FVector2D ViewportSize = UWidgetLayoutLibrary::GetViewportSize(WorldContextObject);
+	
+	// Check if widget does not exceed the X screen
+	if (WidgetSize.X + NewPosition.X > ViewportSize.X)
+	{
+		// should position in left to invoker
+		FVector2D InvokerPixel;
+		FVector2D InvokerViewportPosition;
+		USlateBlueprintLibrary::AbsoluteToViewport(WorldContextObject, InvokerWidget->GetCachedGeometry().GetAbsolutePosition(), InvokerPixel, InvokerViewportPosition);
+		NewPosition.X = InvokerViewportPosition.X - WidgetSize.X;
+		bShouldFix = true;
+	}
+	// Check if widget does not exceed the Y screen
+	if (WidgetSize.Y + NewPosition.Y > ViewportSize.Y)
+	{
+		NewPosition.Y = ViewportSize.Y - WidgetSize.Y;
+		bShouldFix = true;
+	}
+	// Re position to viewport
+	if (bShouldFix)
+	{
+		TooltipWidget->SetPositionInViewport(NewPosition, false);
+	}
+
+	return bShouldFix;
+}
+
+FVector2D USSTooltipManager::GetWidgetInvokerPosition(UUserWidget* Widget, UUserWidget* Invoker)
+{
+	FVector2D WidgetPosition = USSCommonUIFunctionLibrary::GetWidgetInvokerPosition(Widget, Invoker);
 
 	// position offset
 	if (Invoker->Implements<USSTooltipInvoker>())
 	{
-		ViewportPosition += ISSTooltipInvoker::Execute_GetTooltipOffsetPosition(Invoker, Widget);
+		WidgetPosition += ISSTooltipInvoker::Execute_GetTooltipOffsetPosition(Invoker, Widget);
 	}
 
-	// Set position
-	Widget->SetPositionInViewport(ViewportPosition, true);
+	return WidgetPosition;
+}
+
+FVector2D USSTooltipManager::PositionWidgetToInvoker(UUserWidget* Widget, UUserWidget* Invoker)
+{
+	FVector2D WidgetPosition = GetWidgetInvokerPosition(Widget, Invoker);
+
+	return USSCommonUIFunctionLibrary::HardPositionWidgetToInvoker(Widget, Invoker, WidgetPosition);
 }
 
 void USSTooltipManager::OnDelayCheckPool()
@@ -139,7 +198,7 @@ void USSTooltipManager::ShowTooltipWidget(USSTooltipWidgetBase* TooltipWidget, U
 			CurrentTooltip->UpdateDataObject(DataObject);
 			
 			// Position
-			PositionWidgetToInvoker(TooltipWidget, Invoker);
+			LastTooltipInvokerPosition = PositionWidgetToInvoker(TooltipWidget, Invoker);
 		}
 		// If hide
 		else

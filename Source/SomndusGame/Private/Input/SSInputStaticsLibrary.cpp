@@ -8,9 +8,12 @@
 #include "Input/SSInputStaticsLibrary.h"
 
 #include "CommonUITypes.h"
+#include "Engine/LocalPlayer.h"
+#include "Engine/Texture2D.h"
 #include "EnhancedInput/Public/PlayerMappableKeySettings.h"
 #include "Input/SSInputLocalPlayerSubsystem.h"
 #include "Kismet/GameplayStatics.h"
+#include "Styling/StyleDefaults.h"
 
 ULocalPlayer* USSInputStaticsLibrary::GetLocalPlayer(const UObject* WorldContextObject)
 {

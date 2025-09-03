@@ -5,6 +5,7 @@
 
 #include "AudioModulationStatics.h"
 #include "Audio/SSAudioSettings.h"
+#include "Engine/Engine.h"
 
 void USSAudioUserSettings::SetToDefaults()
 {

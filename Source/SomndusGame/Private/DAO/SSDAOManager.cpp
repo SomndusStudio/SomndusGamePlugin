@@ -7,6 +7,8 @@
 
 #include "DAO/SSDAOManager.h"
 
+#include "Templates/SubclassOf.h"
+
 USSDAOObjectBase* USSDAOManager::GetDAO(TSubclassOf<USSDAOObjectBase> DAOClass)
 {
 	for (auto* DAOObject : DAOObjects)

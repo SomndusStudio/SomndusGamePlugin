@@ -8,6 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Engine/DataTable.h"
 #include "SSWidgetTransition.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSWidgetTransitionEventSignature, class USSWidgetTransition*, WidgetTransition);

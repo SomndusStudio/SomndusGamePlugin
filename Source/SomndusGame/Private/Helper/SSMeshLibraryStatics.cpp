@@ -7,6 +7,9 @@
 
 #include "Helper/SSMeshLibraryStatics.h"
 
+#include "Components/SkinnedMeshComponent.h"
+#include "Materials/MaterialInstanceDynamic.h"
+
 TArray<UMaterialInstanceDynamic*> USSMeshLibraryStatics::GetDynamicMaterials(USkinnedMeshComponent* Mesh)
 {
 	TArray<UMaterialInstanceDynamic*> MaterialInstances;

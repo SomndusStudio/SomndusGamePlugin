@@ -7,6 +7,9 @@
 #include "Components/Widget.h"
 #include "SSGameInputActionWidget.generated.h"
 
+class STextBlock;
+class SBox;
+class SImage;
 class UCommonInputSubsystem;
 
 /**

@@ -72,6 +72,15 @@ public:
 	UPROPERTY()
 	TArray<USSTooltipWidgetBase*> ActiveTooltips;
 
+protected:
+	/**
+	 * To know if we should fix/.refresh tooltip position for tick performance
+	 */
+	FVector2D LastTooltipInvokerPosition;
+
+public:
+	bool Tick(float DeltaSeconds);
+	
 	/**
 	 * Adds a tooltip to the list of active tooltips and makes it visible.
 	 *
@@ -104,6 +113,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	static FVector2D GetWidgetPositionInViewport(UUserWidget* Widget);
 
+	static bool TryFixTooltip(UObject* WorldContextObject, UUserWidget* InvokerWidget, UUserWidget* TooltipWidget);
+
+	static FVector2D GetWidgetInvokerPosition(UUserWidget* Widget, UUserWidget* Invoker);
 	/**
 	 * Positions a widget relative to the invoker widget in the viewport.
 	 *
@@ -111,7 +123,7 @@ public:
 	 * @param Invoker The widget that triggered the tooltip.
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
-	void PositionWidgetToInvoker(UUserWidget* Widget, UUserWidget* Invoker);
+	FVector2D PositionWidgetToInvoker(UUserWidget* Widget, UUserWidget* Invoker);
 	
 	/** Internal function called after a delay to manage the tooltip pool (e.g. cleanup). */
 	void OnDelayCheckPool();

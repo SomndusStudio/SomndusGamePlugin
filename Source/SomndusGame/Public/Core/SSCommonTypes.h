@@ -8,9 +8,8 @@
 
 #include "CoreMinimal.h"
 #include "InstancedStruct.h"
-#include "UObject/Object.h"
+#include "Engine/DataTable.h"
 #include "UObject/Class.h"
-#include "UObject/UnrealType.h"
 #include "SSCommonTypes.generated.h"
 
 USTRUCT(BlueprintType)

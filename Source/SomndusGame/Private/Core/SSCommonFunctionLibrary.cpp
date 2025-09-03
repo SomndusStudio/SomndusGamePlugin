@@ -9,6 +9,7 @@
 
 #include "Core/SSGameSubsystem.h"
 #include "DAO/SSDAOManager.h"
+#include "Engine/GameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 FText USSCommonFunctionLibrary::LocalizeFromString(FString Key)

@@ -11,7 +11,9 @@
 #include "Blueprint/SlateBlueprintLibrary.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetBlueprintGeneratedClass.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/ScrollBox.h"
+#include "Engine/GameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "UI/SSGameUIManagerSubsystem.h"
 #include "UI/SSWidgetObjectEntry.h"
@@ -83,6 +85,54 @@ APlayerController* USSCommonUIFunctionLibrary::GetLocalPlayerControllerFromConte
 		}
 	}
 	return LocalPlayerController;
+}
+
+FVector2D USSCommonUIFunctionLibrary::GetWidgetInvokerPosition(UUserWidget* Widget, UUserWidget* Invoker)
+{
+	// Get desired position
+	FGeometry WidgetGeometry = Invoker->GetTickSpaceGeometry();
+	WidgetGeometry.GetLocalSize(); 
+
+	// Convertir la position locale en coordonnées écran
+	FVector2D AbsolutePosition;
+	FVector2D PixelPosition;
+	FVector2D LocalPosition(0, 0); // On prend l'origine du widget
+	
+
+	auto* PlayerController = UGameplayStatics::GetPlayerController(Invoker, 0);
+	UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition(PlayerController, FVector(0, 0, 0), AbsolutePosition, false);
+	
+	USlateBlueprintLibrary::LocalToViewport(Invoker, WidgetGeometry, LocalPosition, PixelPosition, AbsolutePosition);
+	
+	FVector2D WidgetPosition = AbsolutePosition;
+	
+	// Size offset
+	WidgetPosition.X += WidgetGeometry.GetLocalSize().X;
+
+	return WidgetPosition;
+}
+
+FVector2D USSCommonUIFunctionLibrary::HardPositionWidgetToInvoker(UUserWidget* Widget, UUserWidget* Invoker, const FVector2D& WidgetPosition)
+{
+	// Add to viewport if necessary
+	if (!Widget->IsInViewport())
+	{
+		Widget->AddToViewport();
+	}
+	// Visibility
+	Widget->SetVisibility(ESlateVisibility::HitTestInvisible);
+	
+	// Set position
+	Widget->SetPositionInViewport(WidgetPosition, false);
+
+	return WidgetPosition;
+}
+
+FVector2D USSCommonUIFunctionLibrary::PositionWidgetToInvoker(UUserWidget* Widget, UUserWidget* Invoker)
+{
+	const FVector2D WidgetPosition = GetWidgetInvokerPosition(Widget, Invoker);
+	
+	return HardPositionWidgetToInvoker(Widget, Invoker, WidgetPosition);
 }
 
 USSTooltipWidgetBase* USSCommonUIFunctionLibrary::ShowTooltip(UObject* WorldContextObject, TSubclassOf<USSTooltipWidgetBase> TooltipClass,

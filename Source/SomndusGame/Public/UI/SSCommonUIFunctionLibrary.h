@@ -40,6 +40,13 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|UI", meta = (WorldContext = "WorldContextObject"))
 	static APlayerController* GetLocalPlayerControllerFromContext(UObject* WorldContextObject);
+
+	static FVector2D GetWidgetInvokerPosition(UUserWidget* Widget, UUserWidget* Invoker);
+	
+	static FVector2D HardPositionWidgetToInvoker(UUserWidget* Widget, UUserWidget* Invoker, const FVector2D& WidgetPosition);
+	
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	static FVector2D PositionWidgetToInvoker(UUserWidget* Widget, UUserWidget* Invoker);
 	
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI", meta=(WorldContext="WorldContextObject", DeterminesOutputType = "TooltipClass"))
 	static USSTooltipWidgetBase* ShowTooltip(UObject* WorldContextObject, TSubclassOf<USSTooltipWidgetBase> TooltipClass, UUserWidget* Invoker, UObject* DataObject, bool Active=true);

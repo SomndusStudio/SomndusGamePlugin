@@ -9,6 +9,11 @@
 
 #include "CommonUITypes.h"
 #include "Input/SSInputStaticsLibrary.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Widgets/SOverlay.h"
+#include "Widgets/Images/SImage.h"
+#include "Widgets/Layout/SBox.h"
+#include "Widgets/Text/STextBlock.h"
 
 bool USSInputActionWidget::UpdateKeyboardAction(const UCommonInputSubsystem* CommonInputSubsystem)
 {
