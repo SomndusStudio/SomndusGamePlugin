@@ -7,6 +7,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SSCommonTypes.h"
 #include "SSGameModule.h"
 #include "DAO/SSDAOObjectBase.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
@@ -50,4 +51,10 @@ public:
 
 		return static_cast<T*>(GetDAOByClass(ContextObject, T::StaticClass()));
 	}
+
+	UFUNCTION(BlueprintPure, Category = "Somndus Studio", DisplayName="IsSuccess (OperationResult)")
+	static bool OperationResult_IsSuccess(const FSSOperationResult& OperationResult);
+
+	UFUNCTION(BlueprintPure, Category = "Somndus Studio", DisplayName="IsError (OperationResult)")
+	static bool OperationResult_IsError(const FSSOperationResult& OperationResult);
 };

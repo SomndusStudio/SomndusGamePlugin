@@ -56,6 +56,22 @@ public:
 	static constexpr bool Value = decltype(Test<T>(0))::value;
 };
 
+/**
+ * Wrapper for common operator result with boolean data
+ */
+USTRUCT(BlueprintType)
+struct FSSBoolData
+{
+	GENERATED_BODY()
+	
+	FSSBoolData() {}
+	
+	FSSBoolData(bool _Value) : Value(_Value) {}
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool Value = false;
+};
+
 USTRUCT(BlueprintType)
 struct FSSOperationResult
 {
@@ -69,6 +85,10 @@ struct FSSOperationResult
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FInstancedStruct Data;
+
+	bool IsSuccess() const { return Code == SSOperationCode::CD_SUCCESS; }
+	
+	bool IsError() const { return Code == SSOperationCode::CD_ERROR; }
 };
 
 /**

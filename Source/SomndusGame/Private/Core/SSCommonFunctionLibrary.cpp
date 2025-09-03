@@ -7,6 +7,7 @@
 
 #include "Core/SSCommonFunctionLibrary.h"
 
+#include "Core/SSCommonTypes.h"
 #include "Core/SSGameSubsystem.h"
 #include "DAO/SSDAOManager.h"
 #include "Engine/GameInstance.h"
@@ -46,4 +47,14 @@ USSDAOObjectBase* USSCommonFunctionLibrary::GetDAOByClass(UObject* ContextObject
 	}
 	UE_LOG(LogTemp, Warning, TEXT("Can't found DAO named %s"), *Class->GetName());
 	return nullptr;
+}
+
+bool USSCommonFunctionLibrary::OperationResult_IsSuccess(const FSSOperationResult& OperationResult)
+{
+	return OperationResult.IsSuccess();
+}
+
+bool USSCommonFunctionLibrary::OperationResult_IsError(const FSSOperationResult& OperationResult)
+{
+	return OperationResult.IsError();
 }
