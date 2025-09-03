@@ -7,7 +7,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CommonButtonBase.h"
+#include "SSCommonButton.h"
 #include "SSButtonText.generated.h"
 
 /**
@@ -16,7 +16,7 @@
  * and provides flexible options for customizing button behavior.
  */
 UCLASS()
-class SOMNDUSGAME_API USSButtonText : public UCommonButtonBase
+class SOMNDUSGAME_API USSButtonText : public USSCommonButton
 {
 	GENERATED_BODY()
 	
