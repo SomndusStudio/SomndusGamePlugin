@@ -8,6 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "InstancedStruct.h"
+#include "SSLog.h"
 #include "Engine/DataTable.h"
 #include "UObject/Class.h"
 #include "SSCommonTypes.generated.h"
@@ -79,7 +80,7 @@ struct FSSOperationResult
  * @tparam T Struct type used as the payload for the operation result.
  */
 template<typename T>
-struct SOMNDUSGAME_API TSSOperationResult
+struct TSSOperationResult
 {
 	/** Operation result code (e.g., "SUCCESS", "ERROR", etc.). */
 	FString Code;
@@ -125,7 +126,7 @@ struct SOMNDUSGAME_API TSSOperationResult
 		Result.Code = SSOperationCode::CD_SUCCESS;
 		return Result;
 	}
-
+	
 	/**
 	 * Creates an error result without a data payload.
 	 *
@@ -148,7 +149,7 @@ struct SOMNDUSGAME_API TSSOperationResult
 		Code = SSOperationCode::CD_SUCCESS;
 		Message = Reason;
 	}
-
+	
 	/**
 	 * Marks the result as an error and optionally sets a message.
 	 *
@@ -160,6 +161,13 @@ struct SOMNDUSGAME_API TSSOperationResult
 		Message = Reason;
 	}
 
+	void Compute() const
+	{
+		UE_LOG(LogSomndusGame, Log, TEXT("TSSOperationResult - Code: %s | Message: %s"),
+				*Code,
+				*Message.ToString()
+			);
+	}
 	/**
 	 * Converts the templated C++ operation result into a Blueprint-compatible result.
 	 * 
@@ -178,3 +186,43 @@ struct SOMNDUSGAME_API TSSOperationResult
 		return BPResult;
 	}
 };
+
+namespace SSOperationHelpers
+{
+	template<typename U, typename... TArgs>
+	static TSSOperationResult<U> ErrorWithMessage(const FText& Reason, TArgs&&... FormatArgs)
+	{
+		TSSOperationResult<U> Result = TSSOperationResult<U>::Error();
+		if constexpr (sizeof...(FormatArgs) > 0)
+		{
+			FText FinalReason = FText::Format(Reason, FText::FromString(FormatArgs)...);
+			Result.Message = FinalReason;
+		}
+		else
+		{
+			Result.Message = Reason;
+		}
+		Result.Compute();
+		return Result;
+	}
+	
+	template<typename U, typename... TArgs>
+	static TSSOperationResult<U> BuildSuccessWithData(const U& InData, const FText& Reason, TArgs&&... FormatArgs)
+	{
+		TSSOperationResult<U> Result = TSSOperationResult<U>::Success();
+		
+		if constexpr (sizeof...(FormatArgs) > 0)
+		{
+			FText FinalReason = FText::Format(Reason, FText::FromString(FormatArgs)...);
+			Result.SetSuccess(FinalReason);
+		}
+		else
+		{
+			Result.SetSuccess(Reason);
+		}
+		
+		Result.Data = InData;
+		Result.Compute();
+		return Result;
+	}
+}

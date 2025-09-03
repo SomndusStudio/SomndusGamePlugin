@@ -32,6 +32,6 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void UpdateButtonText(const FText& InText);
 	
-	UPROPERTY(EditAnywhere, Category="Button", meta=( editcondition="bOverride_ButtonText" ))
+	UPROPERTY(EditAnywhere, Category="Button")
 	FText ButtonText;
 };
