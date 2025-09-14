@@ -129,7 +129,7 @@ public:
 	void OnDelayCheckPool();
 	
 	void RemoveTooltipWidget(USSTooltipWidgetBase* TooltipWidget);
-	void RemoveTooltipPool(const TSubclassOf<USSTooltipWidgetBase>& Class, UUserWidget* Invoker);
+	void RemoveTooltipPool(const TSubclassOf<USSTooltipWidgetBase>& Class, UUserWidget* Invoker, bool bForceCurrentTick=false);
 	void ShowTooltipWidget(USSTooltipWidgetBase* TooltipWidget, UUserWidget* Invoker, UObject* DataObject, bool Active=true);
 	
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "UI", meta=(WorldContext="WorldContextObject", DeterminesOutputType = "TooltipClass"))

@@ -44,7 +44,7 @@ void USSTooltipManager::ClearTooltip()
 {
 	if (IsValid(CurrentTooltip))
 	{
-		CurrentTooltip->RemoveFromParent();
+		RemoveTooltipPool(CurrentTooltip->GetClass(), TooltipInvoker, true);
 	}
 }
 
@@ -172,14 +172,21 @@ void USSTooltipManager::RemoveTooltipWidget(USSTooltipWidgetBase* TooltipWidget)
 	TooltipWidget->RemoveFromParent();
 }
 
-void USSTooltipManager::RemoveTooltipPool(const TSubclassOf<USSTooltipWidgetBase>& Class, UUserWidget* Invoker)
+void USSTooltipManager::RemoveTooltipPool(const TSubclassOf<USSTooltipWidgetBase>& Class, UUserWidget* Invoker, bool bForceCurrentTick)
 {
 	TooltipPools.RemoveAll([Invoker](const FSSTooltipPool& Value) {
 		return Value.WidgetToken == Invoker;
 	});
-	// If tooltips widget class no exist
-	GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &USSTooltipManager::OnDelayCheckPool, 0.1f, false);
+	if (bForceCurrentTick)
+	{
+		OnDelayCheckPool();
+	}
+	else
+	{
+		// If tooltips widget class no exist
+		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &USSTooltipManager::OnDelayCheckPool, 0.1f, false);
+	}
 }
 
 void USSTooltipManager::ShowTooltipWidget(USSTooltipWidgetBase* TooltipWidget, UUserWidget* Invoker,
@@ -231,7 +238,8 @@ USSTooltipWidgetBase* USSTooltipManager::ShowTooltip(TSubclassOf<USSTooltipWidge
 
 void USSTooltipManager::HideCurrentTooltip()
 {
-	ShowTooltipWidget(CurrentTooltip, TooltipInvoker, nullptr, false);
+	RemoveTooltipPool(CurrentTooltip->GetClass(), TooltipInvoker);
+	//ShowTooltipWidget(CurrentTooltip, TooltipInvoker, nullptr, false);
 }
 
 USSTooltipWidgetBase* USSTooltipManager::GetTooltipByClass(TSubclassOf<USSTooltipWidgetBase> TooltipClass)

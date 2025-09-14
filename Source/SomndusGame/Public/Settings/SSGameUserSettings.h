@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SSLog.h"
 #include "SSSubUserSettings.h"
 #include "GameFramework/GameUserSettings.h"
 
@@ -38,11 +39,21 @@ public:
 	{
 		static_assert(TIsDerivedFrom<T, USSSubUserSettings>::IsDerived, "T must inherit from USSSubUserSettings");
 
-		T* NewSubSettings = NewObject<T>(this);
+		UObject* Outer = HasAnyFlags(RF_ClassDefaultObject) ? (UObject*) GetTransientPackage() : this;
+		
+		T* NewSubSettings = NewObject<T>(Outer);
+
+		UE_LOG(LogSomndusGame, Log, TEXT("Creating sub-settings %s"), *T::StaticClass()->GetName());
+		
+		if (HasAnyFlags(RF_ClassDefaultObject))
+		{
+			NewSubSettings->AddToRoot();
+			UE_LOG(LogSomndusGame, Log, TEXT("Attach sub-settings %s to Root cause RF_ClassDefaultObject"), *T::StaticClass()->GetName());
+		}
+		
 		NewSubSettings->SetToDefaults();
 		SubSettings.Add(NewSubSettings);
 
-		UE_LOG(LogTemp, Log, TEXT("Creating sub-settings %s"), *T::StaticClass()->GetName());
 		
 		return NewSubSettings;
 	}

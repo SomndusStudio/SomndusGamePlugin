@@ -7,6 +7,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Setting/SSSettingDataObject.h"
 #include "Tooltip/SSTooltipWidgetBase.h"
@@ -89,4 +90,10 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
 	static bool IsScrollBoxScrollable(UScrollBox* ScrollBox);
+
+	UFUNCTION(BlueprintCallable, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
+	static bool CheckPlatformTraitActive(UObject* WorldContextObject, const FGameplayTag VisibilityTag);
+
+	UFUNCTION(BlueprintCallable, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
+	static bool CheckContainsPlatformTrait(UObject* WorldContextObject, const TArray<FGameplayTag>& VisibilityTags);
 };

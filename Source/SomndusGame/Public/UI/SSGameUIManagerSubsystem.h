@@ -43,4 +43,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	USSWidgetTransitionMgr* GetWidgetTransitionMgr();
+
+	UFUNCTION(BlueprintCallable)
+	USSTooltipManager* GetTooltipManager() const { return TooltipManager; }
 };

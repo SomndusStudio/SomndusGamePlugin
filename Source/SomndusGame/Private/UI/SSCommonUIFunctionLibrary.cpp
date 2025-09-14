@@ -7,6 +7,8 @@
 
 #include "UI/SSCommonUIFunctionLibrary.h"
 
+#include "CommonUIVisibilitySubsystem.h"
+#include "SSLog.h"
 #include "Animation/WidgetAnimation.h"
 #include "Blueprint/SlateBlueprintLibrary.h"
 #include "Blueprint/UserWidget.h"
@@ -270,4 +272,31 @@ bool USSCommonUIFunctionLibrary::IsScrollBoxScrollable(UScrollBox* ScrollBox)
 	if (ViewportHeight <= 0.0f) return false;
 	
 	return ContentHeight > 0.f;
+}
+
+bool USSCommonUIFunctionLibrary::CheckPlatformTraitActive(UObject* WorldContextObject, const FGameplayTag VisibilityTag)
+{
+	// Retrieve the local player controller from the context object
+	auto* PlayerController = GetLocalPlayerControllerFromContext(WorldContextObject);
+    
+	// Ensure the subsystem is valid and check if the visibility tag is active
+	const bool bHasTag = UCommonUIVisibilitySubsystem::GetChecked(PlayerController->GetLocalPlayer())->HasVisibilityTag(VisibilityTag);
+
+	UE_LOG(LogSomndusGame, Verbose, TEXT("CheckPlatformTraitActive: Tag [%s] is %sactive."), *VisibilityTag.ToString(), bHasTag ? TEXT("") : TEXT("not "));
+
+	return bHasTag;
+}
+
+bool USSCommonUIFunctionLibrary::CheckContainsPlatformTrait(UObject* WorldContextObject, const TArray<FGameplayTag>& VisibilityTags)
+{
+	// Iterate through each visibility tag and ensure all are active
+	for (const auto& VisibilityTag : VisibilityTags)
+	{
+		if (!CheckPlatformTraitActive(WorldContextObject, VisibilityTag))
+		{
+			UE_LOG(LogSomndusGame, Verbose, TEXT("CheckContainsPlatformTrait: Tag [%s] is not active. Returning false."), *VisibilityTag.ToString());
+			return false;
+		}
+	}
+	return true;
 }
