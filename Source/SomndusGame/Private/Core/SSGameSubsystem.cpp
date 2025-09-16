@@ -9,6 +9,8 @@
 
 #include "Templates/SubclassOf.h"
 
+const FName USSGameSubsystem::LoadStateGameCore(TEXT("GameCore"));
+
 USSGameModule* USSGameSubsystem::GetGameModule(TSubclassOf<USSGameModule> GameModuleClass)
 {
 	for (auto* GameModule : GameModules)

@@ -123,7 +123,14 @@ FKey USSInputStaticsLibrary::GetFirstKeyForInputType(const USSInputLocalPlayerSu
 		return FoundKey;
 	}
 
-	FName MappedKeyName = InputAction->GetPlayerMappableKeySettings()->Name;
+	FName MappedKeyName;
+	
+	auto& PlayerMappableKeySettings = InputAction->GetPlayerMappableKeySettings();
+	if (PlayerMappableKeySettings)
+	{
+		MappedKeyName = PlayerMappableKeySettings->Name;
+	}
+	
 	for (const auto& Mapping : SSInputLocalPlayer->KeyMappingRows)
 	{
 		if (Mapping.GetMappingName() != MappedKeyName)

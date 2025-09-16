@@ -29,6 +29,10 @@ class SOMNDUSGAME_API USSGameSubsystem : public UGameInstanceSubsystem
 
 public:
 
+	/** State/Bundle to always load on clients */
+	static const FName LoadStateGameCore;
+
+	
 	/** Internal list of game module instances, stored and reused after creation. */
 	UPROPERTY(BlueprintReadOnly)
 	TArray<USSGameModule*> GameModules;

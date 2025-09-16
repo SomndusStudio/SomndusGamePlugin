@@ -27,6 +27,7 @@ public class SomndusGameEditor : ModuleRules
                 "BlueprintGraph",
                 "KismetCompiler", 
                 "UnrealEd",
+                "EnhancedInput"
             }
         );
     }

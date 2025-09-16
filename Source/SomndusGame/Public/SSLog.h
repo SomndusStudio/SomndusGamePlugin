@@ -10,3 +10,4 @@
 #include "UObject/Object.h"
 
 SOMNDUSGAME_API DECLARE_LOG_CATEGORY_EXTERN(LogSomndusGame, Log, All);
+SOMNDUSGAME_API DECLARE_LOG_CATEGORY_EXTERN(LogSomndusInput, Log, All);

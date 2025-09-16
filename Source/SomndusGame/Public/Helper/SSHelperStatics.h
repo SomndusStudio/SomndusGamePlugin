@@ -27,13 +27,13 @@ class SOMNDUSGAME_API USSHelperStatics : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, Category="SomndusStudio|Helper|String")
 	static TArray<FName> ConvertGTagsToFTags(const TArray<FGameplayTag>& InGameplayTags);
-	
+
 	UFUNCTION(BlueprintPure)
 	static int GetPlayInEditorID();
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Reflection")
 	static bool CallFunctionByName(UObject* Target, const FString& FunctionName);
-	
+
 	template <class T>
 	static bool GetDataTableRow(const UDataTable* InDataTable, FName Identifier, T& OutData)
 	{
@@ -126,6 +126,26 @@ public:
 		}
 	}
 
+	template <typename ElementType>
+	static void AppendUniqueValue(TArray<ElementType>& Array, const TArray<ElementType>& OtherArray)
+	{
+		for (const auto& OtherValue : OtherArray)
+		{
+			if (Array.Contains(OtherValue)) continue;
+
+			Array.AddUnique(OtherValue);
+		}
+	}
+
+	template <typename ElementType>
+	static void UnmergeFromArray(TArray<ElementType>& Array, TArray<ElementType>& OtherArray)
+	{
+		for (const auto& OtherValue : OtherArray)
+		{
+			Array.Remove(OtherValue);
+		}
+	}
+
 	/**
 	 * Attempts to retrieve an asset from a TSoftObjectPtr.
 	 *
@@ -153,9 +173,9 @@ public:
 
 		// Asset not loaded: log warning
 		UE_LOG(LogTemp, Warning,
-			TEXT("[%s] Asset '%s' was not preloaded asynchronously. Falling back to LoadSynchronous()."),
-			*Context, *SoftPtr.ToString());
-		
+		       TEXT("[%s] Asset '%s' was not preloaded asynchronously. Falling back to LoadSynchronous()."),
+		       *Context, *SoftPtr.ToString());
+
 		return SoftPtr.LoadSynchronous();
 	}
 
@@ -185,8 +205,8 @@ public:
 		}
 
 		UE_LOG(LogTemp, Warning,
-			TEXT("[%s] Class '%s' was not preloaded asynchronously. Falling back to LoadSynchronous()."),
-			*Context, *SoftClassPtr.ToString());
+		       TEXT("[%s] Class '%s' was not preloaded asynchronously. Falling back to LoadSynchronous()."),
+		       *Context, *SoftClassPtr.ToString());
 
 		return SoftClassPtr.LoadSynchronous();
 	}
@@ -210,5 +230,4 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category="SomndusGame|Asset", meta=(DisplayName="TryGetClass"))
 	static UClass* BP_TryGetClass(const TSoftClassPtr<UObject>& SoftClass, const FString& Context = TEXT("SomndusGame"));
-	
 };

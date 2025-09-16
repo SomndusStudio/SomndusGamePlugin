@@ -8,3 +8,4 @@
 #include "SSLog.h"
 
 DEFINE_LOG_CATEGORY(LogSomndusGame);
+DEFINE_LOG_CATEGORY(LogSomndusInput);
