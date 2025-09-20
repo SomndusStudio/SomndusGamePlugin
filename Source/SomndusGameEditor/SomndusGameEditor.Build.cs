@@ -12,7 +12,7 @@ public class SomndusGameEditor : ModuleRules
         PublicDependencyModuleNames.AddRange(
             new string[]
             {
-                "Core", "SomndusGame"
+                "Core", "SomndusGame", "EditorWidgets", "EditorStyle", "AssetTools"
             }
         );
 
@@ -20,14 +20,34 @@ public class SomndusGameEditor : ModuleRules
             new string[]
             {
                 "CoreUObject",
+                "InputCore",
                 "Engine",
+                
+                // UI / Slate
                 "Slate",
                 "SlateCore",
-                "Kismet",
+                "EditorStyle",
+                "ToolMenus",
+                "EditorWidgets",
+                
+                // Blueprint / Kismet
                 "BlueprintGraph",
-                "KismetCompiler", 
+                "Kismet",
+                "KismetCompiler",
+                "KismetWidgets",
+                
+                
+                // Editor Tools / Systems
                 "UnrealEd",
-                "EnhancedInput"
+                "AssetTools",
+                "ClassViewer",
+                "DeveloperSettings",
+                "GameplayTags",
+                "Projects",
+                "PropertyEditor",
+                "GraphEditor",
+                
+                "EnhancedInput",
             }
         );
     }

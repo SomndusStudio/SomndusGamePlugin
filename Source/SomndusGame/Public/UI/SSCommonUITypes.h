@@ -12,7 +12,9 @@
 #include "SSCommonUITypes.generated.h"
 
 class UTexture2D;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSCommonMessagingResultMCDelegate, ECommonMessagingResult, Result);
+DECLARE_DYNAMIC_DELEGATE_OneParam(FSSInputActionExecutedDelegate, FName, ActionName);
 
 UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_SS_LAYER_MODAL);
 

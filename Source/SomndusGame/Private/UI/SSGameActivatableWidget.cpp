@@ -10,6 +10,7 @@
 #include "CommonUITypes.h"
 #include "TimerManager.h"
 #include "Editor/WidgetCompilerLog.h"
+#include "Input/CommonUIInputTypes.h"
 #include "Input/SSInputLocalPlayerSubsystem.h"
 
 #define LOCTEXT_NAMESPACE "FSomndusGameModule"
@@ -104,8 +105,48 @@ void USSGameActivatableWidget::NativeOnDeactivated()
 
 void USSGameActivatableWidget::NativeDestruct()
 {
+	for (FUIActionBindingHandle& Handle : BindingHandles)
+	{
+		if (Handle.IsValid())
+		{
+			Handle.Unregister();
+		}
+	}
+	BindingHandles.Empty();
+	
 	OnDelayDeactivatedFinished();
+
 	Super::NativeDestruct();
+}
+
+void USSGameActivatableWidget::RegisterBinding(FDataTableRowHandle InputAction, const FSSInputActionExecutedDelegate& Callback, FUIActionBindingHandle& BindingHandle)
+{
+	FBindUIActionArgs BindArgs(InputAction, FSimpleDelegate::CreateLambda([InputAction, Callback]()
+	{
+		Callback.ExecuteIfBound(InputAction.RowName);
+	}));
+	BindArgs.bDisplayInActionBar = true;
+	
+	BindingHandle = RegisterUIActionBinding(BindArgs);
+	BindingHandles.Add(BindingHandle);
+}
+
+void USSGameActivatableWidget::UnregisterBinding(FUIActionBindingHandle BindingHandle)
+{
+	if (BindingHandle.IsValid())
+	{
+		BindingHandle.Unregister();
+		BindingHandles.Remove(BindingHandle);
+	}
+}
+
+void USSGameActivatableWidget::UnregisterAllBindings()
+{
+	for (FUIActionBindingHandle& Handle : BindingHandles)
+	{
+		Handle.Unregister();
+	}
+	BindingHandles.Empty();
 }
 
 #undef LOCTEXT_NAMESPACE

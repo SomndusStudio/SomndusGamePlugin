@@ -8,6 +8,8 @@
 
 #include "CoreMinimal.h"
 #include "CommonActivatableWidget.h"
+#include "SSCommonUITypes.h"
+#include "Engine/DataTable.h"
 #include "SSGameActivatableWidget.generated.h"
 
 struct FUIInputConfig;
@@ -20,7 +22,6 @@ enum class ESSWidgetInputMode : uint8
 	Game,
 	Menu
 };
-
 /**
  * 
  */
@@ -59,4 +60,17 @@ protected:
 	/** The desired mouse behavior when the game gets input. */
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	EMouseCaptureMode GameMouseCaptureMode = EMouseCaptureMode::CapturePermanently;
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void RegisterBinding(FDataTableRowHandle InputAction, const FSSInputActionExecutedDelegate& Callback, FUIActionBindingHandle& BindingHandle);
+
+	UFUNCTION(BlueprintCallable)
+	void UnregisterBinding(FUIActionBindingHandle BindingHandle);
+
+	UFUNCTION(BlueprintCallable)
+	void UnregisterAllBindings();
+	
+private:
+	TArray<FUIActionBindingHandle> BindingHandles;
 };
