@@ -5,7 +5,11 @@
 */
 
 
-#include "UI/SSCommonWidgetSlotEntry.h"
+#include "UI/Entry/SSCommonWidgetSlotEntry.h"
+
+#include "UI/SSBackgroundSlotWidget.h"
+#include "UI/SSCommonFocusWidget.h"
+#include "UI/SSWidgetObjectEntry.h"
 
 
 USSCommonWidgetSlotEntry::USSCommonWidgetSlotEntry()
@@ -42,9 +46,9 @@ void USSCommonWidgetSlotEntry::PerformOnClick()
 	OnClickEvent.Broadcast(this);
 }
 
-void USSCommonWidgetSlotEntry::PerformOnHover(bool bActive)
+void USSCommonWidgetSlotEntry::PerformOnHover(bool bInActive)
 {
-	OnHoverEvent.Broadcast(this, bActive);
+	OnHoverEvent.Broadcast(this, bInActive);
 }
 
 void USSCommonWidgetSlotEntry::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)

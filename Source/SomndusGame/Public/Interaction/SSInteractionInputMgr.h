@@ -30,7 +30,7 @@ public:
 	bool RemoveInteractionContext(const FSSInteractionContext& InteractionContext);
 	
 	UFUNCTION(BlueprintCallable)
-	bool CheckInputInteraction(UInputAction* EnhancedInputAction);
+	bool CheckInputInteraction(const UInputAction* EnhancedInputAction);
 	
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="EventDispatchers")
 	FSSInteractionContextEvent OnInteractionContextPush;

@@ -13,6 +13,8 @@
 #include "UObject/Class.h"
 #include "SSCommonTypes.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSObjectEventDelegate, UObject*, Object);
+
 USTRUCT(BlueprintType)
 struct SOMNDUSGAME_API FSSCommonIdInfo : public FTableRowBase
 {

@@ -67,5 +67,24 @@ protected:
 
 public:
 
+	USSInputHandlerContext* GetActiveHandler() { return ActiveHandler; }
+	
 	TArray<TObjectPtr<USSInputHandlerContext>> GetActiveInputHandlerContexts();
+
+	template<typename T>
+	T* FindHandlerByClass() const
+	{
+
+		static_assert(TIsDerivedFrom<T, UObject>::IsDerived, "T must derive from UObject");
+
+		for (const TObjectPtr<USSInputHandlerContext>& Handler : ActiveInputHandlerContexts)
+		{
+			if (T* TypedHandler = Cast<T>(Handler))
+			{
+				return TypedHandler;
+			}
+		}
+
+		return nullptr;
+	}
 };

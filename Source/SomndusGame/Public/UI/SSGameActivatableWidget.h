@@ -29,6 +29,7 @@ UCLASS()
 class SOMNDUSGAME_API USSGameActivatableWidget : public UCommonActivatableWidget
 {
 	GENERATED_BODY()
+	
 public:
 	
 	USSGameActivatableWidget();
@@ -50,8 +51,15 @@ public:
 	virtual void NativeOnDeactivated() override;
 
 	virtual void NativeDestruct() override;
+
+	UPROPERTY(EditDefaultsOnly)
+	bool bUseAutoShowAnimation = true;
+
 	
 protected:
+
+	UPROPERTY(BlueprintReadOnly, Transient, meta = (BindWidgetAnimOptional, BlueprintProtected = true, AllowPrivateAccess = true))
+	TObjectPtr<UWidgetAnimation> ShowAnimation;
 	
 	/** The desired input mode to use while this UI is activated, for example do you want key presses to still reach the game/player controller? */
 	UPROPERTY(EditDefaultsOnly, Category = Input)
@@ -72,5 +80,7 @@ public:
 	void UnregisterAllBindings();
 	
 private:
+
+	UPROPERTY()
 	TArray<FUIActionBindingHandle> BindingHandles;
 };

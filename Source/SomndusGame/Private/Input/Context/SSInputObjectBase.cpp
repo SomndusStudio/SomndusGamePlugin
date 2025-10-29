@@ -3,6 +3,7 @@
 
 #include "Input/Context/SSInputObjectBase.h"
 
+#include "GameFramework/Character.h"
 #include "GameFramework/PlayerController.h"
 #include "Input/Context/SSInputContextComponent.h"
 
@@ -19,6 +20,11 @@ APlayerController* USSInputObjectBase::GetPlayerController()
 APawn* USSInputObjectBase::GetControlledPawn()
 {
 	return GetPlayerController()->GetPawn();
+}
+
+ACharacter* USSInputObjectBase::GetControlledCharacter()
+{
+	return Cast<ACharacter>(GetControlledPawn());
 }
 
 USSInputContextComponent* USSInputObjectBase::GetNativeInputComponent()

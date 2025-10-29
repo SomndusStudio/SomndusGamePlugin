@@ -9,7 +9,7 @@
 #include "CoreMinimal.h"
 #include "SSCursorHandler.h"
 #include "SSCursorWidgetCapture.h"
-#include "UI/SSCommonWidgetSlotEntry.h"
+#include "UI/Entry/SSCommonWidgetSlotEntry.h"
 #include "SSWidgetSlotEntry_WithCursor.generated.h"
 
 /**

@@ -38,25 +38,27 @@ void USSTabListWidget::HandleTabRemoval_Implementation(FName TabNameID, UCommonB
 	StoredButtons.Remove(TabNameID);
 }
 
+void USSTabListWidget::NativeNotifyTabInfoSelected(FName TabId)
+{
+	if (const FInstancedStruct* Info = PendingTabInfoMap.Find(TabId))
+	{
+		OnTabInfoSelected.Broadcast(this, TabId, *Info);
+	}
+}
+
 void USSTabListWidget::OnNativeTabSelected(FName TabId)
 {
 	// only while construction not processing
 	if (!bIsDeferredProcess)
 	{
-		if (const FInstancedStruct* Info = PendingTabInfoMap.Find(TabId))
-		{
-			OnTabInfoSelected.Broadcast(this, TabId, *Info);
-		}
+		NativeNotifyTabInfoSelected(TabId);
 	}
 }
 
 void USSTabListWidget::ForceCallTabSelected(FName TabId)
 {
 	SelectTabByID(TabId, true);
-	if (const FInstancedStruct* Info = PendingTabInfoMap.Find(TabId))
-	{
-		OnTabInfoSelected.Broadcast(this, TabId, *Info);
-	}
+	NativeNotifyTabInfoSelected(TabId);
 }
 
 void USSTabListWidget::BP_NextAction()

@@ -13,8 +13,7 @@
 #include "KismetCompiler.h"
 #include "Engine/BlueprintGeneratedClass.h"
 #include "Kismet2/BlueprintEditorUtils.h"
-#include "UI/SSCommonWidgetSlotEntry.h"
-#include "UObject/UnrealTypePrivate.h"
+#include "UI/Entry/SSCommonWidgetSlotEntry.h"
 
 void UK2Node_SSGetWidgetEntryItemObject::AllocateDefaultPins()
 {

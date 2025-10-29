@@ -66,6 +66,7 @@ FString USSGameActivatableWidget::GetInputToken()
 void USSGameActivatableWidget::NativeOnActivated()
 {
 	Super::NativeOnActivated();
+	
 	if (CommonUI::IsEnhancedInputSupportEnabled())
 	{
 		if (const ULocalPlayer* LocalPlayer = GetOwningLocalPlayer())
@@ -74,6 +75,14 @@ void USSGameActivatableWidget::NativeOnActivated()
 			{
 				InputSystem->PullGlobalMappingContext(GetInputToken());
 			}
+		}
+	}
+
+	if (bUseAutoShowAnimation)
+	{
+		if (ShowAnimation)
+		{
+			PlayAnimationForward(ShowAnimation);
 		}
 	}
 }
@@ -105,14 +114,7 @@ void USSGameActivatableWidget::NativeOnDeactivated()
 
 void USSGameActivatableWidget::NativeDestruct()
 {
-	for (FUIActionBindingHandle& Handle : BindingHandles)
-	{
-		if (Handle.IsValid())
-		{
-			Handle.Unregister();
-		}
-	}
-	BindingHandles.Empty();
+	UnregisterAllBindings();
 	
 	OnDelayDeactivatedFinished();
 

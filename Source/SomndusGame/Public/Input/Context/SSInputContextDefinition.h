@@ -35,12 +35,13 @@ class SOMNDUSGAME_API USSInputContextDefinition : public UPrimaryDataAsset
 	USSInputContextDefinition();
 
 protected:
-	//~UPrimaryDataAsset interface
+	
 #if WITH_EDITORONLY_DATA
+	//~UPrimaryDataAsset interface
 	virtual void UpdateAssetBundleData() override;
 	virtual void AddAdditionalAssetBundleData();
-#endif
 	//~End of UPrimaryDataAsset interface
+#endif
 	
 public:
 	

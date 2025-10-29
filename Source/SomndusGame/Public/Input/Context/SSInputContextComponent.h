@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameplayTagContainer.h"
+#include "SSInputAxisMgr.h"
 #include "SSInputContextTypes.h"
 #include "SSPawnInputContext.h"
 #include "Components/ActorComponent.h"
@@ -26,13 +27,29 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	TArray<TObjectPtr<USSPawnData>> LoadedPawnsData;
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<TObjectPtr<UObject>> SharedObjects;
+
+	UFUNCTION(BlueprintCallable, Category="Somndus Studio", meta = (DeterminesOutputType = "InClass"))
+	UObject* GetOrCreateSharedObject(TSubclassOf<UObject> InClass);
+	
+	template<typename T>
+	T* GetSharedObjectByClass()
+	{
+		static_assert(TIsDerivedFrom<T, UObject>::IsDerived, "T must derive from UObject");
+		
+		return Cast<T>(GetOrCreateSharedObject(T::StaticClass()));
+	}
 	
 	// Adds a Pawn Input Context to the system
 	UFUNCTION(BlueprintCallable, Category="Input")
 	void RegisterPawnInputContext(const FGameplayTag& ContextTag, USSPawnInputContext* InputContext);
 
 	USSPawnInputContext* GetOrCreatePawnInputContext(const FGameplayTag& ContextTag);
-
+	USSPawnInputContext* GetActivePawnInputContext() { return ActivePawnInputContext; }
+	USSInputAxisMgr* GetInputAxisMgr() { return InputAxisMgr; }
+	
 	bool RegisteringPawnData(const TObjectPtr<USSPawnData> PawnData);
 	
 	// Called when the controlled pawn changes
@@ -69,6 +86,9 @@ public:
 protected:
 
 	// Currently active context
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<USSInputAxisMgr> InputAxisMgr;
+	
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<USSPawnInputContext> ActivePawnInputContext;
 	

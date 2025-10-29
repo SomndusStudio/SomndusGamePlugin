@@ -9,16 +9,19 @@
 #include "CoreMinimal.h"
 #include "CommonButtonBase.h"
 #include "CommonUserWidget.h"
-#include "SSCommonFocusWidget.h"
-#include "SSWidgetObjectEntry.h"
+#include "UI/SSCommonFocusWidget.h"
+#include "UI/SSWidgetObjectEntry.h"
 
 #include "SSCommonWidgetSlotEntry.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSWidgetSlotEntryEvent, class USSCommonWidgetSlotEntry*, SlotEntry);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSSWidgetSlotEntryBoolEvent, class USSCommonWidgetSlotEntry*, SlotEntry, bool, bActive);
 
+class USSBackgroundSlotWidget;
+
 /**
- * 
+ * Represents a common widget slot entry that holds an associated object and manages widget focus and interaction.
+ * Extends functionality from UCommonUserWidget, ISSCommonFocusWidget, and ISSWidgetObjectEntry.
  */
 UCLASS()
 class SOMNDUSGAME_API USSCommonWidgetSlotEntry : public UCommonUserWidget, public ISSCommonFocusWidget, public ISSWidgetObjectEntry
@@ -36,7 +39,7 @@ public:
 	UObject* ItemObject;
 
 	UFUNCTION(BlueprintPure)
-	UObject* GetItemObject() { return ItemObject; }
+	UObject* GetItemObject() const { return ItemObject; }
 	
 	virtual void OnItemObjectSet_Implementation(UObject* InItemObject) override;
 	
@@ -52,7 +55,7 @@ public:
 	void PerformOnClick();
 
 	UFUNCTION(BlueprintCallable)
-	void PerformOnHover(bool bActive);
+	void PerformOnHover(bool bInActive);
 
 	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
@@ -69,5 +72,6 @@ public:
 
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="Default")
 	FSSWidgetSlotEntryBoolEvent OnHoverEvent;
+	
 };
 

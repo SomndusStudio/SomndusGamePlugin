@@ -43,7 +43,7 @@ bool USSInteractionInputMgr::RemoveInteractionContext(const FSSInteractionContex
 	return false;
 }
 
-bool USSInteractionInputMgr::CheckInputInteraction(UInputAction* EnhancedInputAction)
+bool USSInteractionInputMgr::CheckInputInteraction(const UInputAction* EnhancedInputAction)
 {
 	for (const auto& AwaitInteractionContext: AwaitInteractionContexts)
 	{

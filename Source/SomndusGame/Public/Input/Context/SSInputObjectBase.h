@@ -6,6 +6,8 @@
 #include "SSContextObject.h"
 #include "SSInputObjectBase.generated.h"
 
+class ACharacter;
+class AController;
 class USSInputContextComponent;
 /**
  * 
@@ -28,6 +30,9 @@ public:
 	
 	UFUNCTION(BlueprintPure)
 	APawn* GetControlledPawn();
+
+	UFUNCTION(BlueprintCallable)
+	ACharacter* GetControlledCharacter();
 	
 	virtual USSInputContextComponent* GetNativeInputComponent();
 	

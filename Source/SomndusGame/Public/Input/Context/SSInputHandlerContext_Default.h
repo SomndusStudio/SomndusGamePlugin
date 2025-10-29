@@ -23,4 +23,20 @@ public:
 	virtual bool OnInputActionStarted(const FInputActionInstance& InputActionInstance) override;
 	virtual bool OnInputActionTrigger(const FInputActionInstance& InputActionInstance) override;
 	virtual bool OnInputActionCompleted(const FInputActionInstance& InputActionInstance) override;
+
+	template <typename T>
+	T* GetInputActionHandlerByClass()
+	{
+		static_assert(TIsDerivedFrom<T, USSInputActionHandler>::IsDerived, "T must derive from USSInputActionHandler");
+
+		for (const FSSInputActionHandlerSpec& Spec : InputActionHandlerSpecs)
+		{
+			if (T* Casted = Cast<T>(Spec.InputActionHandler))
+			{
+				return Casted;
+			}
+		}
+
+		return nullptr;
+	}
 };

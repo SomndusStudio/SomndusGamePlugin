@@ -11,6 +11,7 @@ USSInputContextDefinition::USSInputContextDefinition()
 	InputHandlerContextClass = USSInputHandlerContext_Default::StaticClass();
 }
 
+#if WITH_EDITORONLY_DATA
 void USSInputContextDefinition::UpdateAssetBundleData()
 {
 	Super::UpdateAssetBundleData();
@@ -28,3 +29,4 @@ void USSInputContextDefinition::AddAdditionalAssetBundleData()
 		AssetBundleData.AddBundleAsset(USSGameSubsystem::LoadStateGameCore, Entry.InputActionHandlerClass.ToSoftObjectPath().GetAssetPath());
 	}
 }
+#endif

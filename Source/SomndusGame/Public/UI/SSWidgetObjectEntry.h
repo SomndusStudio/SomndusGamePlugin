@@ -7,7 +7,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SSCommonUITypes.h"
 #include "UObject/Interface.h"
 #include "SSWidgetObjectEntry.generated.h"
 

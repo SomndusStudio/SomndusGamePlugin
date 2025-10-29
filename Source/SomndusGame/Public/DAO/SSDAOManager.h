@@ -25,7 +25,7 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	TArray<USSDAOObjectBase*> DAOObjects;
 
-	UFUNCTION(BlueprintCallable, Category="AFT", meta = (DeterminesOutputType = "DAOClass", CompactNodeTitle="GetDAO"))
+	UFUNCTION(BlueprintCallable, Category="Somndus Studio", meta = (DeterminesOutputType = "DAOClass", CompactNodeTitle="GetDAO"))
 	USSDAOObjectBase* GetDAO(TSubclassOf<USSDAOObjectBase> DAOClass);
 	
 	template<class T>

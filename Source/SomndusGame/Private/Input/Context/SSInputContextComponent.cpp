@@ -23,6 +23,8 @@ void USSInputContextComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	InputAxisMgr = NewObject<USSInputAxisMgr>(this);
+	
 	OwnerController = Cast<APlayerController>(GetOwner());
 
 	if (!OwnerController)
@@ -37,6 +39,21 @@ void USSInputContextComponent::BeginPlay()
 	{
 		OnPawnChanged(ControlledPawn.Get());
 	}
+}
+
+UObject* USSInputContextComponent::GetOrCreateSharedObject(TSubclassOf<UObject> InClass)
+{
+	for (UObject* Obj : SharedObjects)
+	{
+		if (Obj->IsA(InClass))
+		{
+			return Obj;
+		}
+	}
+	
+	UObject* NewObj = NewObject<UObject>(this, InClass);
+	SharedObjects.Add(NewObj);
+	return NewObj;
 }
 
 void USSInputContextComponent::RegisterPawnInputContext(const FGameplayTag& ContextTag, USSPawnInputContext* InputContext)

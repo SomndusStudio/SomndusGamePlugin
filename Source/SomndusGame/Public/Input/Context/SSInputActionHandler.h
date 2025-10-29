@@ -20,7 +20,7 @@ class SOMNDUSGAME_API USSInputActionHandler : public USSInputObjectBase
 
 public:
 
-	void Init(USSInputContextComponent* InInputComponent);
+	virtual void Init(USSInputContextComponent* InInputComponent);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void OnInit();

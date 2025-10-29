@@ -21,7 +21,7 @@ struct SOMNDUSGAME_API FSSTransitionParams : public FTableRowBase
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AFT")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Somndus Studio")
 	float PlayRate = 1.0f;
 };
 

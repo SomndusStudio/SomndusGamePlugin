@@ -9,6 +9,7 @@ USSModalBaseWidget::USSModalBaseWidget()
 {
 	// -- override default value
 	bIsModal = true;
+	bUseAutoShowAnimation = true;
 
 	InputConfig = ESSWidgetInputMode::Menu;
 	
@@ -27,11 +28,6 @@ void USSModalBaseWidget::NativePreConstruct()
 void USSModalBaseWidget::NativeOnActivated()
 {
 	Super::NativeOnActivated();
-
-	if (ShowAnimation)
-	{
-		PlayAnimationForward(ShowAnimation);
-	}
 }
 
 void USSModalBaseWidget::NativeOnDeactivated()

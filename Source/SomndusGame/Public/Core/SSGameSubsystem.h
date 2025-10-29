@@ -46,7 +46,7 @@ public:
 	 * @param GameModuleClass	The class of the game module to retrieve or create.
 	 * @return					A valid instance of the requested module class.
 	 */
-	UFUNCTION(BlueprintCallable, Category="AFT", meta = (DeterminesOutputType = "GameModuleClass", CompactNodeTitle="GetGameModule"))
+	UFUNCTION(BlueprintCallable, Category="Somndus Studio", meta = (DeterminesOutputType = "GameModuleClass", CompactNodeTitle="GetGameModule"))
 	USSGameModule* GetGameModule(TSubclassOf<USSGameModule> GameModuleClass);
 	
 	/**

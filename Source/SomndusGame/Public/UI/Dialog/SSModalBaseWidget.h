@@ -23,9 +23,6 @@ protected:
 	virtual void NativeOnDeactivated() override;
 	
 protected:
-	UPROPERTY(BlueprintReadOnly, Transient, meta = (BindWidgetAnimOptional, BlueprintProtected = true, AllowPrivateAccess = true))
-	TObjectPtr<UWidgetAnimation> ShowAnimation;
-
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget, BlueprintProtected = true, AllowPrivateAccess = true))
 	TObjectPtr<UWidget> OverlayModalRoot;
 };

@@ -47,8 +47,9 @@ public:
 	FSSNavigationEventSignature OnChange;
 
 	virtual void HandleTabCreation_Implementation(FName TabNameID, UCommonButtonBase* TabButton) override;
-
 	virtual void HandleTabRemoval_Implementation(FName TabNameID, UCommonButtonBase* TabButton) override;
+
+	virtual void NativeNotifyTabInfoSelected(FName TabId);
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	TArray<UWidget*> GetChildItems();
