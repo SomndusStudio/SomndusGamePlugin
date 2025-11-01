@@ -18,7 +18,7 @@ public class SomndusGame : ModuleRules
 				"InputCore", "EnhancedInput", "DeveloperSettings",
 				"StructUtils",
 				"CommonUI", "CommonInput", "CommonUser", "CommonGame", "GameSettings",
-				"MovieScene", "LevelSequence", "Niagara"
+				"MovieScene", "LevelSequence", "Niagara", "MediaAssets",
 			}
 		);
 

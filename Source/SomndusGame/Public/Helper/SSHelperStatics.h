@@ -230,4 +230,29 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category="SomndusGame|Asset", meta=(DisplayName="TryGetClass"))
 	static UClass* BP_TryGetClass(const TSoftClassPtr<UObject>& SoftClass, const FString& Context = TEXT("SomndusGame"));
+
+	/**
+	 * Efficiently concatenates multiple FString arguments using variadic templates.
+	 *
+	 * This function calculates the total length of all input strings to preallocate memory,
+	 * minimizing reallocations during concatenation.
+	 *
+	 * @param First  The first FString to concatenate (required).
+	 * @param Rest   Additional FStrings to concatenate (zero or more).
+	 * @return       A single FString containing all input strings concatenated in order.
+	 */
+	template<typename... FStringArgs>
+	static FString ConcatStrings(const FString& First, const FStringArgs&... Rest)
+	{
+		// Calculate total length of all strings for efficient preallocation.
+		int32 TotalLen = First.Len() + (Rest.Len() + ... + 0);
+	 
+		FString Result;
+		Result.Empty(TotalLen + 1); // Preallocate memory (+1 for safety)
+	 
+		Result += First;            // Append the first string
+		((Result += Rest), ...);    // Append each additional string
+	 
+		return Result;
+	}
 };
