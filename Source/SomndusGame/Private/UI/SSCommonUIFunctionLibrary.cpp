@@ -300,3 +300,11 @@ bool USSCommonUIFunctionLibrary::CheckContainsPlatformTrait(UObject* WorldContex
 	}
 	return true;
 }
+
+void USSCommonUIFunctionLibrary::ClearChildrenExceptFirst(UPanelWidget* PanelWidget)
+{
+	for (int32 ChildIndex = PanelWidget->GetChildrenCount() - 1; ChildIndex >= 1; --ChildIndex)
+	{
+		PanelWidget->RemoveChildAt(ChildIndex);
+	}
+}

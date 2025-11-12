@@ -23,8 +23,11 @@ class SOMNDUSGAME_API USSCommonButton : public UCommonButtonBase
 	GENERATED_BODY()
 
 public:
-	
+
+	virtual void NativeOnInitialized() override;
 	virtual void NativeOnClicked() override;
+	
+	UFUNCTION()
 	virtual void OnClickFXFinished();
 
 protected:
@@ -32,11 +35,21 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Button|Click")
 	bool bUseClickFXDelay = false;
 
+	UPROPERTY(EditAnywhere, Category="Button|Click")
+	bool bUseClickAnimation = false;
+	
 	UPROPERTY(EditAnywhere, Category="Button|Click", meta=(editcondition="bUseClickFXDelay"))
 	float ClickFXDelay = 0.1f;
 	
 	UPROPERTY(EditAnywhere, Category="Button|Click", meta=(editcondition="bUseClickFXDelay"))
 	bool bSuspendInputClickFX = false;
 
+	UPROPERTY()
 	FTimerHandle ClickFXHandle;
+
+	UPROPERTY()
+	FWidgetAnimationDynamicEvent ClickAnimEndDelegate;
+	
+	UPROPERTY(Transient, meta = (BindWidgetAnimOptional), BlueprintReadOnly)
+	UWidgetAnimation* ClickAnimation;
 };

@@ -96,4 +96,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
 	static bool CheckContainsPlatformTrait(UObject* WorldContextObject, const TArray<FGameplayTag>& VisibilityTags);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI")
+	static void ClearChildrenExceptFirst(UPanelWidget* PanelWidget);
 };

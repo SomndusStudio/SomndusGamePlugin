@@ -12,6 +12,17 @@ namespace SSGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Tag_Input_Token_UI_Button, "Input.Token.UIButton");
 }
 
+void USSCommonButton::NativeOnInitialized()
+{
+	Super::NativeOnInitialized();
+
+	if (ClickAnimation)
+	{
+		ClickAnimEndDelegate.BindDynamic(this, &ThisClass::OnClickFXFinished);
+		BindToAnimationFinished(ClickAnimation, ClickAnimEndDelegate);
+	}
+}
+
 void USSCommonButton::NativeOnClicked()
 {
 	if (!GetLocked())
@@ -23,9 +34,20 @@ void USSCommonButton::NativeOnClicked()
 			{
 				USSInputStaticsLibrary::SetGameSuspendInput(this, SSGameplayTags::Tag_Input_Token_UI_Button, true);
 			}
-			// Simulate wait ClickFXDelay before trigger on click event for UX Polish Feedback
-			GetWorld()->GetTimerManager().SetTimer(
-				ClickFXHandle, this, &ThisClass::OnClickFXFinished, ClickFXDelay, false);
+			// Only if we want handle the fx finished custom (for animation or ignore set timer cause game paused)
+			if (bUseClickAnimation)
+			{
+				if (ClickAnimation)
+				{
+					PlayAnimationForward(ClickAnimation);
+				}
+			}
+			else
+			{
+				// Simulate wait ClickFXDelay before trigger on click event for UX Polish Feedback
+				GetWorld()->GetTimerManager().SetTimer(
+					ClickFXHandle, this, &ThisClass::OnClickFXFinished, ClickFXDelay, false);
+			}
 		}
 		else
 		{

@@ -30,4 +30,6 @@ public:
 	// Fonction à appeler à chaque tick d'input
 	void UpdateMoveInputFromIA(const FVector2D& InputAxis, APawn* ControlledPawn);
 
+	bool MoveInputIsZero() const;
+
 };

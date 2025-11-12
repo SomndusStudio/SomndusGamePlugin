@@ -48,3 +48,8 @@ void USSInputAxisMgr::UpdateMoveInputFromIA(const FVector2D& InputAxis, APawn* C
 		InputAngleDegrees = 0.f;
 	}
 }
+
+bool USSInputAxisMgr::MoveInputIsZero() const
+{
+	return CachedMoveInput.IsNearlyZero();
+}

@@ -446,6 +446,11 @@ void USSInputContextComponent::UnbindInputActions()
 	BoundCompletedInputActions.Empty();
 }
 
+void USSInputContextComponent::SetBlockInput(bool bInBlockInput)
+{
+	bBlockInput = bInBlockInput;
+}
+
 void USSInputContextComponent::OnInputActionStarted(const FInputActionInstance& InputActionInstance)
 {
 	// Store in pressed input id
@@ -474,6 +479,9 @@ void USSInputContextComponent::OnInputActionStarted(const FInputActionInstance& 
 	}
 	*/
 
+	// pass if blocked
+	if (bBlockInput) return;
+	
 	// Priority 2 : Active Pawn Input Context
 	if (ActivePawnInputContext)
 	{
@@ -489,6 +497,9 @@ void USSInputContextComponent::OnInputActionStarted(const FInputActionInstance& 
 
 void USSInputContextComponent::OnInputActionTrigger(const FInputActionInstance& InputActionInstance)
 {
+	// pass if blocked
+	if (bBlockInput) return;
+	
 	if (ActivePawnInputContext)
 	{
 		for (const auto& InputActionHandler : ActivePawnInputContext->GetActiveInputHandlerContexts())
@@ -525,6 +536,9 @@ void USSInputContextComponent::OnInputActionCompleted(const FInputActionInstance
 
 	//OnGameInputActionReleased.Broadcast(InputActionInstance.GetSourceAction(), InputId);
 
+	// pass if blocked
+	if (bBlockInput) return;
+	
 	if (ActivePawnInputContext)
 	{
 		for (const auto& InputActionHandler : ActivePawnInputContext->GetActiveInputHandlerContexts())

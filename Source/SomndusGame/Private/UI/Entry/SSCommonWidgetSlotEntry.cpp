@@ -46,8 +46,13 @@ void USSCommonWidgetSlotEntry::PerformOnClick()
 	OnClickEvent.Broadcast(this);
 }
 
+void USSCommonWidgetSlotEntry::OnHover_Implementation(bool bInActive)
+{
+}
+
 void USSCommonWidgetSlotEntry::PerformOnHover(bool bInActive)
 {
+	OnHover(bInActive);
 	OnHoverEvent.Broadcast(this, bInActive);
 }
 

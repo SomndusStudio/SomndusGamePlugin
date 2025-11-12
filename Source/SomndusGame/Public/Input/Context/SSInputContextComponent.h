@@ -83,8 +83,13 @@ public:
 	void BindInputAction(const UInputAction* InputAction, FKey Key);
 	void UnbindInputActions();
 
+	void SetBlockInput(bool bInBlockInput=true);
+
 protected:
 
+	UPROPERTY(BlueprintReadOnly)
+	bool bBlockInput = false;
+	
 	// Currently active context
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<USSInputAxisMgr> InputAxisMgr;

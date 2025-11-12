@@ -54,6 +54,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void PerformOnClick();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnHover(bool bInActive);
+	
 	UFUNCTION(BlueprintCallable)
 	void PerformOnHover(bool bInActive);
 
