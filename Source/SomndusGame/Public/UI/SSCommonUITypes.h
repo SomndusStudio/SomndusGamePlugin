@@ -60,6 +60,12 @@ struct SOMNDUSGAME_API FSSMenuInfo : public FTableRowBase
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FName Value;
+
+	/**
+	 * Platform visibility traits
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<FGameplayTag> VisibilityTraits;
 };
 
 /**
