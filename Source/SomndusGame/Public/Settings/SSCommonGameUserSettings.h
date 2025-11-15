@@ -94,4 +94,25 @@ public:
 public:
 	
 	virtual void CheckSubSettings() override;
+
+	////////////////////////////////////////////////////////
+	/// Dirty and Change Reporting
+protected:
+	template <typename T>
+	bool ChangeValueAndDirty(T& CurrentValue, const T& NewValue)
+	{
+		if (CurrentValue != NewValue)
+		{
+			CurrentValue = NewValue;
+			bIsDirty = true;
+
+			//OnSettingChanged.Broadcast(this);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	bool bIsDirty = false;
 };
