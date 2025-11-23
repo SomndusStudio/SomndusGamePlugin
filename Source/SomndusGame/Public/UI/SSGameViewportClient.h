@@ -10,7 +10,8 @@ class UGameInstance;
 class UObject;
 
 /**
- * 
+ * USSGameViewportClient is a custom game viewport client derived from UCommonGameViewportClient.
+ * This class provides additional initialization logic specific to the SOMNDUSGAME project.
  */
 UCLASS()
 class SOMNDUSGAME_API USSGameViewportClient : public UCommonGameViewportClient

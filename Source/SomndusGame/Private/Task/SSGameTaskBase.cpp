@@ -10,10 +10,10 @@
 #include "TimerManager.h"
 #include "Engine/TimerHandle.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 
 void USSGameTaskBase::OnStart_Implementation()
 {
-	
 }
 
 void USSGameTaskBase::OnFinish_Implementation()
@@ -48,4 +48,11 @@ void USSGameTaskBase::TimerElapsed()
 	{
 		PerformFinish(ESSGameTaskResult::Timeout);
 	}
+}
+
+ULocalPlayer* USSGameTaskBase::GetOwningLocalPlayer() const
+{
+	auto* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (!PlayerController) return nullptr;
+	return PlayerController->GetLocalPlayer();
 }

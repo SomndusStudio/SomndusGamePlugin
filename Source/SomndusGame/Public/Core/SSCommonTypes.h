@@ -13,6 +13,22 @@
 #include "UObject/Class.h"
 #include "SSCommonTypes.generated.h"
 
+/**
+ * Conditionally initializes a TObjectPtr member with NewObject if it is nullptr.
+ *
+ * Usage:
+ *   UE_OBJECT_PTR_INITIALIZE(MemberVar, Type, Outer)
+ *
+ * Example:
+ *   UE_OBJECT_PTR_INITIALIZE(MyManager, UMyManager, this)
+ *
+ * @param MemberVar The TObjectPtr member variable to initialize.
+ * @param Type      The UObject-derived class type to instantiate.
+ * @param Outer     The outer UObject for the new instance (usually 'this').
+ */
+#define UE_OBJECT_PTR_INITIALIZE(MemberVar, Type, Outer) \
+if (!MemberVar) { MemberVar = NewObject<Type>(Outer); }
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSObjectEventDelegate, UObject*, Object);
 
 USTRUCT(BlueprintType)
@@ -27,6 +43,18 @@ struct SOMNDUSGAME_API FSSCommonIdInfo : public FTableRowBase
 	{
 		return Id > 0;
 	}
+};
+
+USTRUCT(BlueprintType)
+struct SOMNDUSGAME_API FSSObjectWrapper 
+{
+	GENERATED_BODY()
+
+	FSSObjectWrapper() : Object(nullptr) {}
+	FSSObjectWrapper(UObject* InObject) : Object(InObject) {}
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UObject* Object = nullptr;
 };
 
 namespace SSOperationCode
@@ -149,6 +177,14 @@ struct TSSOperationResult
 		return Result;
 	}
 	
+	static TSSOperationResult<T> SuccessWithData(const T& InData)
+	{
+		TSSOperationResult<T> Result;
+		Result.Code = SSOperationCode::CD_SUCCESS;
+		Result.SetData(InData);
+		return Result;
+	}
+	
 	/**
 	 * Creates an error result without a data payload.
 	 *
@@ -190,6 +226,7 @@ struct TSSOperationResult
 				*Message.ToString()
 			);
 	}
+	
 	/**
 	 * Converts the templated C++ operation result into a Blueprint-compatible result.
 	 * 
@@ -200,10 +237,30 @@ struct TSSOperationResult
 		FSSOperationResult BPResult;
 		BPResult.Code = Code;
 		BPResult.Message = Message;
-
-		static_assert(TSSIsUStruct<T>::Value, "T must be a USTRUCT to convert to FInstancedStruct");
-
-		BPResult.Data = FInstancedStruct::Make(Data);
+		
+		// Check if T is a raw UObject pointer
+		constexpr bool bIsRawUObjectPtr = std::is_pointer<T>::value &&
+			std::is_base_of<UObject, typename std::remove_pointer<T>::type>::value;
+	 
+		// Check if T is a TObjectPtr (UE5 smart pointer for UObject)
+		constexpr bool bIsTObjectPtr = TIsTObjectPtr<T>::Value;
+	 
+		if constexpr (bIsRawUObjectPtr)
+		{
+			UObject* Object = Data;
+			BPResult.Data = FInstancedStruct::Make(FSSObjectWrapper(Object));
+		}
+		else if constexpr (bIsTObjectPtr)
+		{
+			UObject* Object = Data.Get();
+			BPResult.Data = FInstancedStruct::Make(FSSObjectWrapper(Object));
+		}
+		else
+		{
+			static_assert(TSSIsUStruct<T>::Value, "T must be a USTRUCT to convert to FInstancedStruct");
+			
+			BPResult.Data = FInstancedStruct::Make(Data);
+		}
 
 		return BPResult;
 	}

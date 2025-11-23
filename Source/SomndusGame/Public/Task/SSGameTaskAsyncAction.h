@@ -52,6 +52,8 @@ public:
 	virtual class UWorld* GetWorld() const override;
 
 private:
+
+	UPROPERTY()
 	const UObject* WorldContextObject;
 	
 	/**

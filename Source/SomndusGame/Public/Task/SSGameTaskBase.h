@@ -10,6 +10,7 @@
 #include "SSContextObject.h"
 #include "SSGameTaskBase.generated.h"
 
+class ULocalPlayer;
 // Show Modal Type
 UENUM(BlueprintType)
 enum class ESSGameTaskResult : uint8
@@ -36,7 +37,6 @@ struct SOMNDUSGAME_API FSSGameTaskSetting
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxTimeout = 14.0f;
 };
-
 
 /**
  * Base class for creating game tasks in the SS system.
@@ -77,4 +77,9 @@ public:
 	
 	UPROPERTY(BlueprintAssignable)
 	FSSGameTaskResultSignature OnFinishSignature;
+
+protected:
+	
+	ULocalPlayer* GetOwningLocalPlayer() const;
+	
 };

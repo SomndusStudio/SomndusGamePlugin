@@ -31,7 +31,6 @@ public:
 
 	/** State/Bundle to always load on clients */
 	static const FName LoadStateGameCore;
-
 	
 	/** Internal list of game module instances, stored and reused after creation. */
 	UPROPERTY(BlueprintReadOnly)

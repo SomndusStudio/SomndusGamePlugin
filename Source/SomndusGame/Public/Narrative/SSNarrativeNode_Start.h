@@ -15,6 +15,7 @@ class SOMNDUSGAME_API USSNarrativeNode_Start : public USSNarrativeNode
 	GENERATED_BODY()
 
 public:
+	
 	USSNarrativeNode_Start();
 
 	virtual FText GetDisplayName_Implementation() const override;

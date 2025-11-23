@@ -8,7 +8,6 @@
 
 #include "CoreMinimal.h"
 #include "NativeGameplayTags.h"
-#include "UObject/Object.h"
 #include "SSCommonUITypes.generated.h"
 
 class UTexture2D;
@@ -16,7 +15,24 @@ class UTexture2D;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSCommonMessagingResultMCDelegate, ECommonMessagingResult, Result);
 DECLARE_DYNAMIC_DELEGATE_OneParam(FSSInputActionExecutedDelegate, FName, ActionName);
 
-UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_SS_LAYER_MODAL);
+namespace SSGameplayTags
+{
+	SOMNDUSGAME_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_SS_LAYER_MODAL);
+}
+
+/** TextSplashInfo : Used in splash text screen */
+USTRUCT(BlueprintType)
+struct SOMNDUSGAME_API FSSTextSplashInfo
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FText Message;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float Duration = 1.0f;
+};
+
 
 /**
  * Encapsulates information required to define the cursor's appearance and behavior.

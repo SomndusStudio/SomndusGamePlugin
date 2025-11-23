@@ -5,6 +5,7 @@
 
 #include "CommonUISubsystemBase.h"
 #include "TimerManager.h"
+#include "Animation/UMGSequencePlayer.h"
 #include "Input/SSInputStaticsLibrary.h"
 
 namespace SSGameplayTags
