@@ -164,6 +164,8 @@ void USSInputPlatformWidgetSwitcher::OnGamepadWidgetLoaded(FName GamepadName)
 		
 		UE_LOG(LogSomndusGame, Log, TEXT("[%s] Successfully loaded and created widget for %s"), *GetNameSafe(this), *GamepadName.ToString());
 	}
+	
+	BP_OnGamepadWidgetLoaded(GamepadName);
 }
 
 void USSInputPlatformWidgetSwitcher::OnGamepadWidgetLoaded_Fail(FName Name)

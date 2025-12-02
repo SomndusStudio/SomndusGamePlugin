@@ -14,12 +14,16 @@
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetBlueprintGeneratedClass.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Components/GridPanel.h"
+#include "Components/GridSlot.h"
 #include "Components/ScrollBox.h"
 #include "Engine/GameInstance.h"
+#include "Framework/Application/SlateApplication.h"
 #include "Kismet/GameplayStatics.h"
 #include "UI/SSGameUIManagerSubsystem.h"
 #include "UI/SSWidgetObjectEntry.h"
 #include "UI/Notification/SSGameNotificationManager.h"
+#include "UObject/UObjectIterator.h"
 
 USSGameNotificationManager* USSCommonUIFunctionLibrary::GetNotificationManager(UObject* WorldContextObject)
 {
@@ -93,21 +97,21 @@ FVector2D USSCommonUIFunctionLibrary::GetWidgetInvokerPosition(UUserWidget* Widg
 {
 	// Get desired position
 	FGeometry WidgetGeometry = Invoker->GetTickSpaceGeometry();
-	WidgetGeometry.GetLocalSize(); 
+	WidgetGeometry.GetLocalSize();
 
 	// Convertir la position locale en coordonnées écran
 	FVector2D AbsolutePosition;
 	FVector2D PixelPosition;
 	FVector2D LocalPosition(0, 0); // On prend l'origine du widget
-	
+
 
 	auto* PlayerController = UGameplayStatics::GetPlayerController(Invoker, 0);
 	UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition(PlayerController, FVector(0, 0, 0), AbsolutePosition, false);
-	
+
 	USlateBlueprintLibrary::LocalToViewport(Invoker, WidgetGeometry, LocalPosition, PixelPosition, AbsolutePosition);
-	
+
 	FVector2D WidgetPosition = AbsolutePosition;
-	
+
 	// Size offset
 	WidgetPosition.X += WidgetGeometry.GetLocalSize().X;
 
@@ -123,7 +127,7 @@ FVector2D USSCommonUIFunctionLibrary::HardPositionWidgetToInvoker(UUserWidget* W
 	}
 	// Visibility
 	Widget->SetVisibility(ESlateVisibility::HitTestInvisible);
-	
+
 	// Set position
 	Widget->SetPositionInViewport(WidgetPosition, false);
 
@@ -133,7 +137,7 @@ FVector2D USSCommonUIFunctionLibrary::HardPositionWidgetToInvoker(UUserWidget* W
 FVector2D USSCommonUIFunctionLibrary::PositionWidgetToInvoker(UUserWidget* Widget, UUserWidget* Invoker)
 {
 	const FVector2D WidgetPosition = GetWidgetInvokerPosition(Widget, Invoker);
-	
+
 	return HardPositionWidgetToInvoker(Widget, Invoker, WidgetPosition);
 }
 
@@ -179,6 +183,14 @@ void USSCommonUIFunctionLibrary::HideCursor(UObject* WorldContextObject, UUserWi
 	}
 }
 
+void USSCommonUIFunctionLibrary::StoreCacheFocusedWidget(UObject* WorldContextObject, UWidget* Widget)
+{
+	if (auto* UISubsystem = UGameplayStatics::GetGameInstance(WorldContextObject)->GetSubsystem<USSGameUIManagerSubsystem>())
+	{
+		UISubsystem->CacheFocusedWidget = Widget;
+	}
+}
+
 FVector2D USSCommonUIFunctionLibrary::GetAbsolutePosition(UUserWidget* UserWidget)
 {
 	FGeometry Geometry = UserWidget->GetCachedGeometry();
@@ -187,7 +199,7 @@ FVector2D USSCommonUIFunctionLibrary::GetAbsolutePosition(UUserWidget* UserWidge
 }
 
 void USSCommonUIFunctionLibrary::AbsoluteToViewport(UUserWidget* UserWidget, FVector2D AbsoluteDesktopCoordinate,
-	FVector2D& PixelPosition, FVector2D& ViewportPosition)
+                                                    FVector2D& PixelPosition, FVector2D& ViewportPosition)
 {
 	USlateBlueprintLibrary::AbsoluteToViewport(UserWidget, AbsoluteDesktopCoordinate, PixelPosition, ViewportPosition);
 }
@@ -195,7 +207,7 @@ void USSCommonUIFunctionLibrary::AbsoluteToViewport(UUserWidget* UserWidget, FVe
 UWidgetAnimation* USSCommonUIFunctionLibrary::TryGetWidgetAnimation(UUserWidget* UserWidget, FName InAnimationName)
 {
 	UWidgetBlueprintGeneratedClass* WidgetClass = UserWidget->GetWidgetTreeOwningClass();
-	
+
 	// Try to play reject animation dynamically 
 	for (int i = 0; i < WidgetClass->Animations.Num(); i++)
 	{
@@ -219,7 +231,7 @@ FVector2D USSCommonUIFunctionLibrary::GetTopLeftPosition(UUserWidget* UserWidget
 		return FVector2D();
 	}
 	*/
-	
+
 	FGeometry Geometry = UserWidget->GetCachedGeometry();
 
 	FVector2D AbsoluteTopLeftPosition = Geometry.GetAbsolutePosition();
@@ -233,7 +245,7 @@ FVector2D USSCommonUIFunctionLibrary::GetTopLeftPosition(UUserWidget* UserWidget
 }
 
 USSSettingDataObject* USSCommonUIFunctionLibrary::BP_TryResolveData(USSSettingDataObject* Target, FName InIdentifier, TSubclassOf<USSSettingDataObject> DataClass,
-	bool& bValid)
+                                                                    bool& bValid)
 {
 	bValid = false;
 	if (!Target)
@@ -265,12 +277,12 @@ void USSCommonUIFunctionLibrary::CommonModalNavigationRules(UWidget* Widget)
 bool USSCommonUIFunctionLibrary::IsScrollBoxScrollable(UScrollBox* ScrollBox)
 {
 	if (!ScrollBox) return false;
-	
+
 	float ContentHeight = ScrollBox->GetScrollOffsetOfEnd();
 	float ViewportHeight = ScrollBox->GetCachedGeometry().GetLocalSize().Y;
 
 	if (ViewportHeight <= 0.0f) return false;
-	
+
 	return ContentHeight > 0.f;
 }
 
@@ -278,7 +290,7 @@ bool USSCommonUIFunctionLibrary::CheckPlatformTraitActive(UObject* WorldContextO
 {
 	// Retrieve the local player controller from the context object
 	auto* PlayerController = GetLocalPlayerControllerFromContext(WorldContextObject);
-    
+
 	// Ensure the subsystem is valid and check if the visibility tag is active
 	const bool bHasTag = UCommonUIVisibilitySubsystem::GetChecked(PlayerController->GetLocalPlayer())->HasVisibilityTag(VisibilityTag);
 
@@ -307,4 +319,80 @@ void USSCommonUIFunctionLibrary::ClearChildrenExceptFirst(UPanelWidget* PanelWid
 	{
 		PanelWidget->RemoveChildAt(ChildIndex);
 	}
+}
+
+void USSCommonUIFunctionLibrary::CollapseAllChildren(UPanelWidget* PanelWidget)
+{
+	for (const auto& ChildWidget : PanelWidget->GetAllChildren())
+	{
+		ChildWidget->SetVisibility(ESlateVisibility::Collapsed);
+	}
+}
+
+UWidget* USSCommonUIFunctionLibrary::GetOrCreateChildWidget(UPanelWidget* PanelWidget,
+                                                            TSubclassOf<UUserWidget> WidgetClass, int32 Index)
+{
+	if (auto* ChildWidget = PanelWidget->GetChildAt(Index))
+	{
+		if (ChildWidget->IsA(WidgetClass))
+		{
+			return ChildWidget;
+		}
+	}
+
+	auto* ChildWidget = CreateWidget(PanelWidget, WidgetClass);
+	PanelWidget->AddChild(ChildWidget);
+
+	return ChildWidget;
+}
+
+UWidget* USSCommonUIFunctionLibrary::GetOrCreateGridChildWidget(
+	UGridPanel* GridPanel,
+	TSubclassOf<UUserWidget> WidgetClass,
+	int32 Index,
+	int32 MaxColumn
+)
+{
+	if (!GridPanel || !WidgetClass)
+	{
+		return nullptr;
+	}
+
+	if (GridPanel->GetChildrenCount() > Index)
+	{
+		UWidget* ExistingChild = GridPanel->GetChildAt(Index);
+		if (ExistingChild && ExistingChild->IsA(WidgetClass))
+		{
+			return ExistingChild;
+		}
+	}
+
+	UUserWidget* NewWidget = CreateWidget<UUserWidget>(GridPanel, WidgetClass);
+	if (!NewWidget)
+	{
+		return nullptr;
+	}
+
+	// Calculate row and col
+	int32 Row = Index / MaxColumn;
+	int32 Column = Index % MaxColumn;
+
+	// Add to grid panel
+	UPanelSlot* PanelSlot = GridPanel->AddChild(NewWidget);
+	if (UGridSlot* GridSlot = Cast<UGridSlot>(PanelSlot))
+	{
+		GridSlot->SetRow(Row);
+		GridSlot->SetColumn(Column);
+	}
+
+	return NewWidget;
+}
+
+UWidget* USSCommonUIFunctionLibrary::GetFocusedWidget(UObject* WorldContextObject, int32 UserIndex)
+{
+	if (auto* UISubsystem = UGameplayStatics::GetGameInstance(WorldContextObject)->GetSubsystem<USSGameUIManagerSubsystem>())
+	{
+		return UISubsystem->CacheFocusedWidget;
+	}
+	return nullptr;
 }

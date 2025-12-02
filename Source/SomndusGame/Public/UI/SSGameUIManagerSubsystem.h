@@ -47,6 +47,9 @@ private:
 	
 public:
 	UPROPERTY()
+	TObjectPtr<UWidget> CacheFocusedWidget;
+
+	UPROPERTY()
 	TObjectPtr<USSTooltipManager> TooltipManager;
 	
 	UPROPERTY()

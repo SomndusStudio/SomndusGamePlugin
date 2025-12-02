@@ -40,6 +40,16 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	UObject* GetItemObject() const { return ItemObject; }
+
+protected:
+	
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	bool bShouldStoreLastFocusedWidget = false;
+
+public:
+	
+	UFUNCTION(BlueprintCallable, meta = (DeterminesOutputType = "Class"))
+	UObject* GetCheckedItemObjectAs(TSubclassOf<UObject> Class) const;
 	
 	virtual void OnItemObjectSet_Implementation(UObject* InItemObject) override;
 	

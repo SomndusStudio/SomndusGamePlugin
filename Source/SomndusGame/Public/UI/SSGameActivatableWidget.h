@@ -55,6 +55,8 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	bool bUseAutoShowAnimation = true;
 
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UWidget> LastFocusedWidget = nullptr;
 	
 protected:
 
@@ -69,6 +71,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	EMouseCaptureMode GameMouseCaptureMode = EMouseCaptureMode::CapturePermanently;
 
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	bool bShouldStoreLastFocusedWidget = false;
+
 public:
 	UFUNCTION(BlueprintCallable)
 	void RegisterBinding(FDataTableRowHandle InputAction, const FSSInputActionExecutedDelegate& Callback, FUIActionBindingHandle& BindingHandle);
@@ -78,6 +83,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void UnregisterAllBindings();
+
+	UFUNCTION(BlueprintCallable)
+	void StoreLastFocusedWidget();
+
+	UFUNCTION(BlueprintCallable)
+	void StoreAsLastFocusedWidget(UWidget* InWidget);
 	
 private:
 

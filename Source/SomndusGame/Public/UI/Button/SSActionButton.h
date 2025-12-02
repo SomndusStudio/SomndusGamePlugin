@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "CommonButtonBase.h"
+#include "SSCommonButtonBase.h"
 #include "SSActionButton.generated.h"
 
 class UTextBlock;
@@ -12,7 +13,7 @@ class UCommonTextBlock;
  * 
  */
 UCLASS()
-class SOMNDUSGAME_API USSActionButton : public UCommonButtonBase
+class SOMNDUSGAME_API USSActionButton : public USSCommonButtonBase
 {
 	GENERATED_BODY()
 	

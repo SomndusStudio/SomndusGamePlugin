@@ -10,6 +10,7 @@
 #include "CommonInputSubsystem.h"
 #include "GameplayTagContainer.h"
 #include "InputAction.h"
+#include "Input/Events.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "SSInputStaticsLibrary.generated.h"
 
@@ -116,4 +117,9 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI")
 	static bool InterpretLeftAnalogMoveDZ(const FAnalogInputEvent& AnalogInputEvent, float Sensibility, float DeadZone, FVector2D& OutValue);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI")
+	static bool InterpretRightAnalogMove(const FAnalogInputEvent& AnalogInputEvent, float Sensibility, FVector2D& OutValue);
+	
+	static bool InterpretAnalogMoveDZ(const FAnalogInputEvent& AnalogInputEvent, bool bRight, float Sensibility, float DeadZone, FVector2D& OutValue);
 };

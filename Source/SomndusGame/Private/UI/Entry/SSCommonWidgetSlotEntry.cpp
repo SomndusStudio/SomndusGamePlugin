@@ -9,12 +9,18 @@
 
 #include "UI/SSBackgroundSlotWidget.h"
 #include "UI/SSCommonFocusWidget.h"
+#include "UI/SSCommonUIFunctionLibrary.h"
 #include "UI/SSWidgetObjectEntry.h"
 
 
 USSCommonWidgetSlotEntry::USSCommonWidgetSlotEntry()
 {
 	ObjectDataType = UObject::StaticClass();
+}
+
+UObject* USSCommonWidgetSlotEntry::GetCheckedItemObjectAs(TSubclassOf<UObject> Class) const
+{
+	return ItemObject;
 }
 
 void USSCommonWidgetSlotEntry::OnItemObjectSet_Implementation(UObject* InItemObject)
@@ -52,6 +58,11 @@ void USSCommonWidgetSlotEntry::OnHover_Implementation(bool bInActive)
 
 void USSCommonWidgetSlotEntry::PerformOnHover(bool bInActive)
 {
+	// Store
+	if (bShouldStoreLastFocusedWidget)
+	{
+		USSCommonUIFunctionLibrary::StoreCacheFocusedWidget(this, bInActive ? this : nullptr);
+	}
 	OnHover(bInActive);
 	OnHoverEvent.Broadcast(this, bInActive);
 }

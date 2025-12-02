@@ -49,6 +49,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetInputAction(const UInputAction* InInputAction);
 
+	void ClearInputAction();
+	
 	/** Returns the primary attached key (the first in the AttachedKeys array). */
 	FKey GetPrimaryAttachedKey() const;
 

@@ -8,6 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "Components/GridPanel.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Setting/SSSettingDataObject.h"
 #include "Tooltip/SSTooltipWidgetBase.h"
@@ -15,6 +16,8 @@
 
 class USSGameNotificationManager;
 class UScrollBox;
+class UGridPanel;
+
 /**
  * A utility function library for common UI-related operations in the SOMNDUS game.
  * Provides functionalities such as tooltip management, cursor control, widget manipulation,
@@ -65,6 +68,9 @@ public:
 	static void HideCursor(UObject* WorldContextObject, UUserWidget* Invoker);
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
+	static void StoreCacheFocusedWidget(UObject* WorldContextObject, UWidget* Widget);
+	
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
 	static FVector2D GetAbsolutePosition(UUserWidget* UserWidget);
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
@@ -99,4 +105,23 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI")
 	static void ClearChildrenExceptFirst(UPanelWidget* PanelWidget);
+	
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI",  meta=(DeterminesOutputType = "WidgetClass"))
+	static void CollapseAllChildren(UPanelWidget* PanelWidget);
+	
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI",  meta=(DeterminesOutputType = "WidgetClass"))
+	static UWidget* GetOrCreateChildWidget(UPanelWidget* PanelWidget, TSubclassOf<UUserWidget> WidgetClass, int32 Index = 0);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI",  meta=(DeterminesOutputType = "WidgetClass"))
+	static UWidget* GetOrCreateGridChildWidget(UGridPanel* GridPanel, TSubclassOf<UUserWidget> WidgetClass, int32 Index, int32 MaxColumn);
+
+	/**
+	 * Returns the currently focused UMG widget for a given user index (default is 0).
+	 * Returns nullptr if no widget is focused or if the focused widget is not a UWidget.
+	 *
+	 * @param UserIndex The Slate user index, usually 0.
+	 * @return The focused UWidget or nullptr.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
+	static UWidget* GetFocusedWidget(UObject* WorldContextObject, int32 UserIndex = 0);
 };

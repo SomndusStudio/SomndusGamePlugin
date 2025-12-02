@@ -100,6 +100,9 @@ public:
 	UFUNCTION()
 	void OnGamepadWidgetLoaded(FName Name);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnGamepadWidgetLoaded(FName Name);
+
 	/**
 	 * Called if widget loading fails.
 	 * Handles input resumption and error feedback.

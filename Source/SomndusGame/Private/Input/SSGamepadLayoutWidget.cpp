@@ -12,6 +12,8 @@ void USSGamepadLayoutWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 
+	CaptureGameButtonWidgets();
+	
 	if (!DefaultMappingContexts.IsEmpty())
 	{
 		UpdateFromMappingContexts(DefaultMappingContexts);
@@ -21,9 +23,15 @@ void USSGamepadLayoutWidget::NativeOnInitialized()
 void USSGamepadLayoutWidget::UpdateFromMappingContexts(const TArray<UInputMappingContext*>& InInputMappingContexts)
 {
 	MappingContexts = InInputMappingContexts;
-
-	CaptureGameButtonWidgets();
-
+	
+	// Clear
+	for (const auto& Pair : GamepadButtonWidgets)
+	{
+		auto* ButtonWidget = Pair.Value;
+		ButtonWidget->ClearInputAction();
+	}
+	
+	// Update
 	for (const auto& MappingContext : MappingContexts)
 	{
 		for (const auto& Mapping : MappingContext->GetMappings())

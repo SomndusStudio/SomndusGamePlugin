@@ -12,6 +12,7 @@
 #include "Editor/WidgetCompilerLog.h"
 #include "Input/CommonUIInputTypes.h"
 #include "Input/SSInputLocalPlayerSubsystem.h"
+#include "UI/SSCommonUIFunctionLibrary.h"
 
 #define LOCTEXT_NAMESPACE "FSomndusGameModule"
 
@@ -103,12 +104,22 @@ void USSGameActivatableWidget::OnDelayDeactivatedFinished()
 
 void USSGameActivatableWidget::NativeOnDeactivated()
 {
-	Super::NativeOnDeactivated();
-	if (GetWorld())
+	// Store focused widget as last if possible
+	if (bShouldStoreLastFocusedWidget)
 	{
-		FTimerHandle TimerHandle;
+		LastFocusedWidget = nullptr;
+	}
+	
+	Super::NativeOnDeactivated();
+	
+	if (CommonUI::IsEnhancedInputSupportEnabled())
+	{
+		if (GetWorld())
+		{
+			FTimerHandle TimerHandle;
 		
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &USSGameActivatableWidget::OnDelayDeactivatedFinished, 0.1f, false);
+			GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &USSGameActivatableWidget::OnDelayDeactivatedFinished, 0.1f, false);
+		}
 	}
 }
 
@@ -149,6 +160,16 @@ void USSGameActivatableWidget::UnregisterAllBindings()
 		Handle.Unregister();
 	}
 	BindingHandles.Empty();
+}
+
+void USSGameActivatableWidget::StoreLastFocusedWidget()
+{
+	LastFocusedWidget = USSCommonUIFunctionLibrary::GetFocusedWidget(this);
+}
+
+void USSGameActivatableWidget::StoreAsLastFocusedWidget(UWidget* InWidget)
+{
+	LastFocusedWidget = InWidget;
 }
 
 #undef LOCTEXT_NAMESPACE

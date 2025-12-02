@@ -47,7 +47,7 @@ void USSGamepadButtonCaptureWidget::NativeRefreshSlot()
 	}
 	else
 	{
-		NameSlotWidget->SetText(FText::FromString("???"));
+		NameSlotWidget->SetText(FText::FromString(""));
 	}
 }
 
@@ -80,6 +80,14 @@ void USSGamepadButtonCaptureWidget::SetInputAction(const UInputAction* InInputAc
 		InputAction = InInputAction;
 	}
 
+	Refresh();
+}
+
+void USSGamepadButtonCaptureWidget::ClearInputAction()
+{
+	ExtraInputActions.Empty();
+	InputAction = nullptr;
+	
 	Refresh();
 }
 

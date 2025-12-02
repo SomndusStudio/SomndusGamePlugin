@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "CommonButtonBase.h"
 #include "NativeGameplayTags.h"
+#include "SSCommonButtonBase.h"
 #include "SSCommonButton.generated.h"
 
 namespace SSGameplayTags
@@ -18,7 +19,7 @@ namespace SSGameplayTags
  * and input suspension during click effects.
  */
 UCLASS()
-class SOMNDUSGAME_API USSCommonButton : public UCommonButtonBase
+class SOMNDUSGAME_API USSCommonButton : public USSCommonButtonBase
 {
 	GENERATED_BODY()
 

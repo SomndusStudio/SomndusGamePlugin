@@ -356,5 +356,52 @@ bool USSInputStaticsLibrary::InterpretLeftAnalogMoveDZ(const FAnalogInputEvent& 
 		return true;
 	}
 
+	return InterpretAnalogMoveDZ(AnalogInputEvent, false, Sensibility, DeadZone, OutValue);
+}
+
+bool USSInputStaticsLibrary::InterpretRightAnalogMove(const FAnalogInputEvent& AnalogInputEvent, float Sensibility, FVector2D& OutValue)
+{
+	return InterpretAnalogMoveDZ(AnalogInputEvent, true, Sensibility, 0.01f, OutValue);
+}
+
+bool USSInputStaticsLibrary::InterpretAnalogMoveDZ(const FAnalogInputEvent& AnalogInputEvent, bool bRight, float Sensibility, float DeadZone, FVector2D& OutValue)
+{
+	// Initialize output to zeroed vector
+	OutValue = FVector2D();
+
+	// Check if the key corresponds to either X or Y axis of the left stick
+	FKey LeftKey = (bRight) ?  EKeys::Gamepad_RightX : EKeys::Gamepad_LeftX;
+	bool bValidKey = false;
+	if (bRight)
+	{
+		bValidKey = (AnalogInputEvent.GetKey() == EKeys::Gamepad_RightX || AnalogInputEvent.GetKey() == EKeys::Gamepad_RightY);
+	}
+	else
+	{
+		bValidKey = (AnalogInputEvent.GetKey() == EKeys::Gamepad_LeftX || AnalogInputEvent.GetKey() == EKeys::Gamepad_LeftY);
+	}
+	
+	if (bValidKey)
+	{
+		const float AnalogValue = AnalogInputEvent.GetAnalogValue();
+
+		// Ignore input if under deadzone threshold
+		if (FMath::Abs(AnalogValue) < DeadZone)
+			return false;
+
+		const float Value = AnalogValue * Sensibility;
+
+		// Assign to correct axis in output vector
+		if (AnalogInputEvent.GetKey() == LeftKey)
+		{
+			OutValue.X = Value;
+			return true;
+		}
+
+		// Invert Y axis to match common forward/up conventions
+		OutValue.Y = -Value;
+		return true;
+	}
+
 	return false;
 }
