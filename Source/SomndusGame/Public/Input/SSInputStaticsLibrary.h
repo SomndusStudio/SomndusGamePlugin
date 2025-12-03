@@ -122,4 +122,16 @@ public:
 	static bool InterpretRightAnalogMove(const FAnalogInputEvent& AnalogInputEvent, float Sensibility, FVector2D& OutValue);
 	
 	static bool InterpretAnalogMoveDZ(const FAnalogInputEvent& AnalogInputEvent, bool bRight, float Sensibility, float DeadZone, FVector2D& OutValue);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|Input", meta=(WorldContext="WidgetContextObject"))
+	static bool IsPlayGamepadFromWidget(const UUserWidget* WidgetContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|Input", DisplayName="IsPlayGamepadWidget (Branch)", meta=(WorldContext="WidgetContextObject", ExpandBoolAsExecs = "ReturnValue"))
+	static bool BranchIsPlayGamepadFromWidget(const UUserWidget* WidgetContextObject);
+	
+	UFUNCTION(BlueprintPure, Category="SS|Input", meta=(WorldContext="WorldContextObject"))
+	static bool IsPlayGamepad(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category="SS|Input", DisplayName="IsPlayGamepad", meta=(WorldContext="WorldContextObject", ExpandBoolAsExecs = "ReturnValue"))
+	static bool BranchIsPlayGamepad(const UObject* WorldContextObject);
 };

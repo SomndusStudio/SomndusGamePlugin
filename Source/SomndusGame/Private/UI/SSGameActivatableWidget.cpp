@@ -162,6 +162,15 @@ void USSGameActivatableWidget::UnregisterAllBindings()
 	BindingHandles.Empty();
 }
 
+bool USSGameActivatableWidget::IsBindingUsed(FUIActionBindingHandle BindingHandle)
+{
+	if (BindingHandle.IsValid())
+	{
+		return BindingHandles.Contains(BindingHandle);
+	}
+	return false;
+}
+
 void USSGameActivatableWidget::StoreLastFocusedWidget()
 {
 	LastFocusedWidget = USSCommonUIFunctionLibrary::GetFocusedWidget(this);

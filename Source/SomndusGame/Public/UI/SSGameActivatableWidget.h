@@ -80,10 +80,13 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void UnregisterBinding(FUIActionBindingHandle BindingHandle);
-
+	
 	UFUNCTION(BlueprintCallable)
 	void UnregisterAllBindings();
-
+	
+	UFUNCTION(BlueprintCallable)
+	bool IsBindingUsed(FUIActionBindingHandle BindingHandle);
+	
 	UFUNCTION(BlueprintCallable)
 	void StoreLastFocusedWidget();
 

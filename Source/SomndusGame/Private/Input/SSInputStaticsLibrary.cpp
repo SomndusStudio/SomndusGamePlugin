@@ -7,6 +7,7 @@
 
 #include "Input/SSInputStaticsLibrary.h"
 
+#include "CommonUIExtensions.h"
 #include "CommonUITypes.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/Texture2D.h"
@@ -404,4 +405,35 @@ bool USSInputStaticsLibrary::InterpretAnalogMoveDZ(const FAnalogInputEvent& Anal
 	}
 
 	return false;
+}
+
+bool USSInputStaticsLibrary::IsPlayGamepadFromWidget(const UUserWidget* WidgetContextObject)
+{
+	return (UCommonUIExtensions::GetOwningPlayerInputType(WidgetContextObject) == ECommonInputType::Gamepad);
+}
+
+bool USSInputStaticsLibrary::BranchIsPlayGamepadFromWidget(const UUserWidget* WidgetContextObject)
+{
+	return (UCommonUIExtensions::GetOwningPlayerInputType(WidgetContextObject) == ECommonInputType::Gamepad);
+}
+
+bool USSInputStaticsLibrary::IsPlayGamepad(const UObject* WorldContextObject)
+{
+	if (const APlayerController* PlayerController = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
+	{
+		if (const ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
+		{
+			if (const UCommonInputSubsystem* CommonInputSubsystem = UCommonInputSubsystem::Get(LocalPlayer))
+			{
+				return CommonInputSubsystem->GetCurrentInputType() == ECommonInputType::Gamepad;
+			}
+		}
+	}
+
+	return false;
+}
+
+bool USSInputStaticsLibrary::BranchIsPlayGamepad(const UObject* WorldContextObject)
+{
+	return IsPlayGamepad(WorldContextObject);
 }
