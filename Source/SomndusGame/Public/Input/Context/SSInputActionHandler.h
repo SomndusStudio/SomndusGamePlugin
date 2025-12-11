@@ -30,6 +30,9 @@ public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool HandleInputActionStarted(const FInputActionInstance& InputActionInstance);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool HandleInputActionCancel(const FInputActionInstance& InputActionInstance);
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool HandleInputActionCompleted(const FInputActionInstance& InputActionInstance);

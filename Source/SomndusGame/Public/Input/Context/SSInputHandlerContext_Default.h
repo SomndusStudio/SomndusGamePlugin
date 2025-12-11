@@ -22,6 +22,7 @@ public:
 	
 	virtual bool OnInputActionStarted(const FInputActionInstance& InputActionInstance) override;
 	virtual bool OnInputActionTrigger(const FInputActionInstance& InputActionInstance) override;
+	virtual bool OnInputActionCancel(const FInputActionInstance& InputActionInstance) override;
 	virtual bool OnInputActionCompleted(const FInputActionInstance& InputActionInstance) override;
 
 	template <typename T>

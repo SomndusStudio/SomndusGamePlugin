@@ -129,10 +129,12 @@ protected:
 	
 	TArray<FEnhancedInputActionEventBinding*> BoundTriggeredInputActions;
 	TArray<FEnhancedInputActionEventBinding*> BoundStartedInputActions;
+	TArray<FEnhancedInputActionEventBinding*> BoundCancelInputActions;
 	TArray<FEnhancedInputActionEventBinding*> BoundCompletedInputActions;
 
 	void OnInputActionStarted(const FInputActionInstance& InputActionInstance);
 	void OnInputActionTrigger(const FInputActionInstance& InputActionInstance);
+	void OnInputActionCancel(const FInputActionInstance& InputActionInstance);
 	void OnInputActionCompleted(const FInputActionInstance& InputActionInstance);
 	
 protected:

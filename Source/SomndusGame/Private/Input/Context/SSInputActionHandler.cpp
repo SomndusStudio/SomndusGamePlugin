@@ -24,6 +24,11 @@ bool USSInputActionHandler::HandleInputActionStarted_Implementation(const FInput
 	return false;
 }
 
+bool USSInputActionHandler::HandleInputActionCancel_Implementation(const FInputActionInstance& InputActionInstance)
+{
+	return false;
+}
+
 bool USSInputActionHandler::HandleInputActionCompleted_Implementation(const FInputActionInstance& InputActionInstance)
 {
 	return false;

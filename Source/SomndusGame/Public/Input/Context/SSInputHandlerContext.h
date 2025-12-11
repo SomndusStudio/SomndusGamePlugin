@@ -78,10 +78,12 @@ public:
 
 	bool InternalInputActionStarted(const FInputActionInstance& InputActionInstance);
 	bool InternalInputActionTrigger(const FInputActionInstance& InputActionInstance);
+	bool InternalInputActionCancel(const FInputActionInstance& InputActionInstance);
 	bool InternalInputActionCompleted(const FInputActionInstance& InputActionInstance);
 	
 	virtual bool OnInputActionStarted(const FInputActionInstance& InputActionInstance);
 	virtual bool OnInputActionTrigger(const FInputActionInstance& InputActionInstance);
+	virtual bool OnInputActionCancel(const FInputActionInstance& InputActionInstance);
 	virtual bool OnInputActionCompleted(const FInputActionInstance& InputActionInstance);
 
 };

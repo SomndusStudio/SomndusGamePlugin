@@ -69,6 +69,12 @@ bool USSInputHandlerContext::InternalInputActionTrigger(const FInputActionInstan
 	return OnInputActionTrigger(InputActionInstance);
 }
 
+bool USSInputHandlerContext::InternalInputActionCancel(const FInputActionInstance& InputActionInstance)
+{
+	UE_LOG(LogSomndusGame, Verbose, TEXT("[%s] Input Action Cancel: %s"), *GetNameSafe(this), *InputActionInstance.GetSourceAction()->GetName());
+	return OnInputActionCancel(InputActionInstance);
+}
+
 bool USSInputHandlerContext::InternalInputActionCompleted(const FInputActionInstance& InputActionInstance)
 {
 	UE_LOG(LogSomndusGame, Verbose, TEXT("[%s] Input Action Completed: %s"), *GetNameSafe(this), *InputActionInstance.GetSourceAction()->GetName());
@@ -81,6 +87,11 @@ bool USSInputHandlerContext::OnInputActionStarted(const FInputActionInstance& In
 }
 
 bool USSInputHandlerContext::OnInputActionTrigger(const FInputActionInstance& InputActionInstance)
+{
+	return false;
+}
+
+bool USSInputHandlerContext::OnInputActionCancel(const FInputActionInstance& InputActionInstance)
 {
 	return false;
 }

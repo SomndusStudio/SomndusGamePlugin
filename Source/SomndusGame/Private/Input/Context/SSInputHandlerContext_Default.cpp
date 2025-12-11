@@ -77,6 +77,22 @@ bool USSInputHandlerContext_Default::OnInputActionTrigger(const FInputActionInst
 	return false;
 }
 
+bool USSInputHandlerContext_Default::OnInputActionCancel(const FInputActionInstance& InputActionInstance)
+{
+	for (const auto& Spec: InputActionHandlerSpecs)
+	{
+		if (Spec.InputAction != InputActionInstance.GetSourceAction())
+		{
+			continue;
+		}
+		if (Spec.InputActionHandler->HandleInputActionCancel(InputActionInstance))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 bool USSInputHandlerContext_Default::OnInputActionCompleted(const FInputActionInstance& InputActionInstance)
 {
 	for (const auto& Spec: InputActionHandlerSpecs)

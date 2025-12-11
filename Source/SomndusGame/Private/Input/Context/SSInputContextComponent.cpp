@@ -412,6 +412,7 @@ void USSInputContextComponent::BindInputAction(const UInputAction* InputAction, 
 	// Bind
 	BoundTriggeredInputActions.Add(&EIC->BindAction(InputAction, ETriggerEvent::Triggered, this, &ThisClass::OnInputActionTrigger));
 	BoundStartedInputActions.Add(&EIC->BindAction(InputAction, ETriggerEvent::Started, this, &ThisClass::OnInputActionStarted));
+	BoundCancelInputActions.Add(&EIC->BindAction(InputAction, ETriggerEvent::Canceled, this, &ThisClass::OnInputActionCancel));
 	BoundCompletedInputActions.Add(&EIC->BindAction(InputAction, ETriggerEvent::Completed, this, &ThisClass::OnInputActionCompleted));
 
 	BoundInputActions.AddUnique(InputAction);
@@ -433,6 +434,13 @@ void USSInputContextComponent::UnbindInputActions()
 			EIC->RemoveBinding(*TmpInputAction);
 		}
 	}
+	for (const auto& TmpInputAction : BoundCancelInputActions)
+	{
+		if (TmpInputAction)
+		{
+			EIC->RemoveBinding(*TmpInputAction);
+		}
+	}
 	for (const auto& TmpInputAction : BoundCompletedInputActions)
 	{
 		if (TmpInputAction)
@@ -443,6 +451,7 @@ void USSInputContextComponent::UnbindInputActions()
 	//InputActionIdMap.Empty();
 	BoundTriggeredInputActions.Empty();
 	BoundStartedInputActions.Empty();
+	BoundCancelInputActions.Empty();
 	BoundCompletedInputActions.Empty();
 }
 
@@ -505,6 +514,23 @@ void USSInputContextComponent::OnInputActionTrigger(const FInputActionInstance& 
 		for (const auto& InputActionHandler : ActivePawnInputContext->GetActiveInputHandlerContexts())
 		{
 			if (InputActionHandler->InternalInputActionTrigger(InputActionInstance))
+			{
+				break;
+			}
+		}
+	}
+}
+
+void USSInputContextComponent::OnInputActionCancel(const FInputActionInstance& InputActionInstance)
+{
+	// pass if blocked
+	if (bBlockInput) return;
+	
+	if (ActivePawnInputContext)
+	{
+		for (const auto& InputActionHandler : ActivePawnInputContext->GetActiveInputHandlerContexts())
+		{
+			if (InputActionHandler->InternalInputActionCancel(InputActionInstance))
 			{
 				break;
 			}
