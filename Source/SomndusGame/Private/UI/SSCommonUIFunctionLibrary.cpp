@@ -191,6 +191,17 @@ void USSCommonUIFunctionLibrary::StoreCacheFocusedWidget(UObject* WorldContextOb
 	}
 }
 
+void USSCommonUIFunctionLibrary::ClearCacheFocusedWidget(UObject* WorldContextObject, UWidget* Widget)
+{
+	if (auto* UISubsystem = UGameplayStatics::GetGameInstance(WorldContextObject)->GetSubsystem<USSGameUIManagerSubsystem>())
+	{
+		if (UISubsystem->CacheFocusedWidget == Widget)
+		{
+			UISubsystem->CacheFocusedWidget = nullptr;
+		}
+	}
+}
+
 FVector2D USSCommonUIFunctionLibrary::GetAbsolutePosition(UUserWidget* UserWidget)
 {
 	FGeometry Geometry = UserWidget->GetCachedGeometry();

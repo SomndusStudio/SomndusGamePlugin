@@ -11,6 +11,8 @@ public class SomndusGame : ModuleRules
 		
 		PrivatePCHHeaderFile = "Public/SomndusGame.h";
 
+		PublicDefinitions.Add("SUPPORT_OVERRIDE_GAMEPAD_TYPE=1");
+		
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{

@@ -52,9 +52,20 @@ public:
 
 	virtual void NativeDestruct() override;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category="Animation")
 	bool bUseAutoShowAnimation = true;
 
+	/**
+	 * Used for closing animation delay
+	 */
+	UPROPERTY(EditDefaultsOnly, Category="Animation")
+	bool bUseAutoReverseShowAnimation = false;
+	
+	UPROPERTY(EditAnywhere, Category="Button|Animation", meta=(editcondition="bUseAutoReverseShowAnimation"))
+	float ReverseShowAnimationSpeed = 2.f;
+	
+	bool bProcessCloseAnimation = false;
+	
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UWidget> LastFocusedWidget = nullptr;
 	
@@ -74,6 +85,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	bool bShouldStoreLastFocusedWidget = false;
 
+	virtual void OnAnimationFinished_Implementation(const UWidgetAnimation* Animation) override;
+	
 public:
 	UFUNCTION(BlueprintCallable)
 	void RegisterBinding(FDataTableRowHandle InputAction, const FSSInputActionExecutedDelegate& Callback, FUIActionBindingHandle& BindingHandle);

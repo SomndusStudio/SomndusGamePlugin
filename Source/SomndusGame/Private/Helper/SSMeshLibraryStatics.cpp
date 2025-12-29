@@ -25,7 +25,7 @@ TArray<UMaterialInstanceDynamic*> USSMeshLibraryStatics::GetDynamicMaterials(USk
 	return MaterialInstances;
 }
 
-UMaterialInstanceDynamic* USSMeshLibraryStatics::GetDynamicMaterial(USkinnedMeshComponent* Mesh, UMaterialInterface* MaterialInterface, const int32 MaterialIndex)
+UMaterialInstanceDynamic* USSMeshLibraryStatics::GetDynamicMaterial(UPrimitiveComponent* Mesh, UMaterialInterface* MaterialInterface, const int32 MaterialIndex)
 {
 	if (UMaterialInstanceDynamic* DynamicMaterial = Cast<UMaterialInstanceDynamic>(MaterialInterface))
 	{

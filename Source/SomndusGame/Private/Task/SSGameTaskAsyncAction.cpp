@@ -53,6 +53,6 @@ void USSGameTaskAsyncAction::OnLoadComplete()
 	OnInit.Broadcast(GameTaskObject, ESSGameTaskResult::Unknown);
 	
 	// Start
-	GameTaskObject->NativeOnStart();
+	GameTaskObject->InternalRequestStart();
 	OnStart.Broadcast(GameTaskObject, ESSGameTaskResult::Unknown);
 }

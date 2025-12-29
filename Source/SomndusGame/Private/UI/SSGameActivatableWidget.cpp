@@ -12,6 +12,7 @@
 #include "Editor/WidgetCompilerLog.h"
 #include "Input/CommonUIInputTypes.h"
 #include "Input/SSInputLocalPlayerSubsystem.h"
+#include "Input/SSInputStaticsLibrary.h"
 #include "UI/SSCommonUIFunctionLibrary.h"
 
 #define LOCTEXT_NAMESPACE "FSomndusGameModule"
@@ -109,8 +110,21 @@ void USSGameActivatableWidget::NativeOnDeactivated()
 	{
 		LastFocusedWidget = nullptr;
 	}
-	
-	Super::NativeOnDeactivated();
+
+	// If should reverse show animation when closing
+	if (bUseAutoReverseShowAnimation)
+	{
+		if (ShowAnimation)
+		{
+			bProcessCloseAnimation = true;
+			USSInputStaticsLibrary::GetInputLocalPlayerSubsystem(this)->SuspendInputForUIAnimation();
+			PlayAnimationReverse(ShowAnimation, ReverseShowAnimationSpeed);
+		}
+	}
+	else
+	{
+		Super::NativeOnDeactivated();
+	}
 	
 	if (CommonUI::IsEnhancedInputSupportEnabled())
 	{
@@ -130,6 +144,20 @@ void USSGameActivatableWidget::NativeDestruct()
 	OnDelayDeactivatedFinished();
 
 	Super::NativeDestruct();
+}
+
+void USSGameActivatableWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)
+{
+	Super::OnAnimationFinished_Implementation(Animation);
+	if (Animation == ShowAnimation)
+	{
+		if (bProcessCloseAnimation)
+		{
+			bProcessCloseAnimation = false;
+			USSInputStaticsLibrary::GetInputLocalPlayerSubsystem(this)->ResumeInputForUIAnimation();
+			Super::NativeOnDeactivated();
+		}
+	}
 }
 
 void USSGameActivatableWidget::RegisterBinding(FDataTableRowHandle InputAction, const FSSInputActionExecutedDelegate& Callback, FUIActionBindingHandle& BindingHandle)

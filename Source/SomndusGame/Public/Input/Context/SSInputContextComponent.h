@@ -11,6 +11,8 @@
 #include "Components/ActorComponent.h"
 #include "SSInputContextComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSSOnInputActionEventSignature, class USSInputContextComponent*, InputContextComponent, const FInputActionInstance&, InputActionInstance);
+
 class UInputMappingContext;
 class USSPawnData;
 
@@ -136,6 +138,12 @@ protected:
 	void OnInputActionTrigger(const FInputActionInstance& InputActionInstance);
 	void OnInputActionCancel(const FInputActionInstance& InputActionInstance);
 	void OnInputActionCompleted(const FInputActionInstance& InputActionInstance);
+
+	UPROPERTY(BlueprintAssignable, Category = "Events")
+	FSSOnInputActionEventSignature OnInputActionStartedEvent;
+
+	UPROPERTY(BlueprintAssignable, Category = "Events")
+	FSSOnInputActionEventSignature OnInputActionCompletedEvent;
 	
 protected:
 	virtual void BeginPlay() override;

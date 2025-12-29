@@ -10,6 +10,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "SSMeshLibraryStatics.generated.h"
 
+class UMaterialInterface;
+class UMaterialInstanceDynamic;
 /**
  * Utility class that provides functions to manipulate and retrieve materials on a skinned mesh component.
  */
@@ -24,7 +26,7 @@ public:
 	static TArray<UMaterialInstanceDynamic*> GetDynamicMaterials(USkinnedMeshComponent* Mesh);
 	
 	UFUNCTION(BlueprintCallable, Category = "SS|Rendering|Material")
-	static UMaterialInstanceDynamic* GetDynamicMaterial(USkinnedMeshComponent* Mesh, UMaterialInterface* MaterialInterface, const int32 MaterialIndex);
+	static UMaterialInstanceDynamic* GetDynamicMaterial(UPrimitiveComponent* Mesh, UMaterialInterface* MaterialInterface, const int32 MaterialIndex);
 
 	/** Set all occurrences of Vector Material Parameters with ParameterName in the set of materials of the SkeletalMesh to ParameterValue */
 	UFUNCTION(BlueprintCallable, Category = "SS|Rendering|Material")

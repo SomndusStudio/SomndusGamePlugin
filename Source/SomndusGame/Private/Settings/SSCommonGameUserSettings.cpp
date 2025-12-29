@@ -3,6 +3,13 @@
 
 #include "Settings/SSCommonGameUserSettings.h"
 
+#include "Engine/Engine.h"
+
+USSCommonGameUserSettings* USSCommonGameUserSettings::Get()
+{
+	return GEngine ? CastChecked<USSCommonGameUserSettings>(GEngine->GetGameUserSettings()) : nullptr;
+}
+
 void USSCommonGameUserSettings::CheckSubSettings()
 {
 	Super::CheckSubSettings();

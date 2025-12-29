@@ -20,13 +20,40 @@ void USSGameTaskBase::OnFinish_Implementation()
 {
 }
 
+void USSGameTaskBase::InternalRequestStart()
+{
+	NativeOnPreStart();
+	
+	if (FakeDelay <= 0.0f)
+	{
+		NativeOnStart();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Log, TEXT("USSGameTaskBase: Fake delay of %f seconds before starting task."), FakeDelay);
+	 
+		GetWorld()->GetTimerManager().SetTimer(
+			PreStartTimerHandle, this, &USSGameTaskBase::OnPreStartEnd, FakeDelay, false);
+	}
+}
+
+void USSGameTaskBase::OnPreStartEnd()
+{
+	NativeOnStart();
+}
+
+void USSGameTaskBase::NativeOnPreStart()
+{
+	UE_LOG(LogTemp, Log, TEXT("USSGameTaskBase::NativeOnPreStart"));
+}
+
 void USSGameTaskBase::NativeOnStart()
 {
+	UE_LOG(LogTemp, Log, TEXT("USSGameTaskBase::NativeOnStart"));
+	
 	bRunning = true;
 	
-	FTimerHandle UnusedHandle;
-	GetWorld()->GetTimerManager().SetTimer(
-		UnusedHandle, this, &USSGameTaskBase::TimerElapsed, GameTaskSetting.MaxTimeout, false);
+	GetWorld()->GetTimerManager().SetTimer(MaxTimeoutHandle, this, &USSGameTaskBase::TimerElapsed, GameTaskSetting.MaxTimeout, false);
 	
 	OnStart();
 }

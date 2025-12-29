@@ -58,6 +58,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FSSGameTaskSetting GameTaskSetting;
 
+	void InternalRequestStart();
+	
+	virtual void NativeOnPreStart();
 	virtual void NativeOnStart();
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
@@ -79,6 +82,21 @@ public:
 	FSSGameTaskResultSignature OnFinishSignature;
 
 protected:
+	
+	/**
+	 * Fake delay before starting the task (user experience like save game)
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="GameTask|Delay")
+	float FakeDelay = 0.0f;
+	
+	UPROPERTY()
+	FTimerHandle PreStartTimerHandle;
+	
+	UPROPERTY()
+	FTimerHandle MaxTimeoutHandle;
+
+	UFUNCTION()
+	void OnPreStartEnd();
 	
 	ULocalPlayer* GetOwningLocalPlayer() const;
 	

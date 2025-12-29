@@ -69,6 +69,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
 	static void StoreCacheFocusedWidget(UObject* WorldContextObject, UWidget* Widget);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
+	static void ClearCacheFocusedWidget(UObject* WorldContextObject, UWidget* Widget);
 	
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
 	static FVector2D GetAbsolutePosition(UUserWidget* UserWidget);

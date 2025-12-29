@@ -55,6 +55,9 @@ class SOMNDUSGAME_API USSCommonGameUserSettings : public USSGameUserSettings
 	GENERATED_BODY()
 
 public:
+
+	static USSCommonGameUserSettings* Get();
+	
 	UPROPERTY()
 	TObjectPtr<USSGamepadUserSettings> GamepadSettings;
 

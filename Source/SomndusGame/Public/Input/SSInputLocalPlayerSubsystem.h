@@ -38,8 +38,12 @@ class SOMNDUSGAME_API USSInputLocalPlayerSubsystem : public ULocalPlayerSubsyste
 
 public:
 
+	USSInputLocalPlayerSubsystem();
+	
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
+	void AfterSettingsLoaded();
+	
 protected:
 	/**
 	 * Allows identifying which generated token is responsible for suspending player inputs during a UI animation
@@ -113,4 +117,17 @@ public:
 	 */
 	UPROPERTY(config, EditAnywhere)
 	TSoftObjectPtr<UInputMappingContext> GenericUIMappingContextSoft;
+	
+	////////////////////////////////////////////////////////
+	// Override Gamepad Type
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FName> GamepadTypeNames;
+
+	/**
+	 * To know if we should restore fallback or not
+	 */
+	bool bOverrideGamepadUsed;
+	
+	UFUNCTION()
+	void ApplyOverrideGamepadName();
 };

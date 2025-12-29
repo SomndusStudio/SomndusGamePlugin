@@ -7,12 +7,26 @@
 
 #include "Input/SSInputLocalPlayerSubsystem.h"
 
+#include "CommonInputSubsystem.h"
 #include "CommonUIExtensions.h"
 #include "CommonUITypes.h"
 #include "EnhancedInputSubsystems.h"
 #include "SSLog.h"
 #include "Engine/LocalPlayer.h"
 #include "Input/SSEnhancedPlayerInput.h"
+#include "Settings/SSCommonGameUserSettings.h"
+
+USSInputLocalPlayerSubsystem::USSInputLocalPlayerSubsystem()
+{
+	GamepadTypeNames = {
+		"XSX",
+		"PS4",
+		"PS5",
+		"SwitchPro"
+	};
+
+	bOverrideGamepadUsed = false;
+}
 
 void USSInputLocalPlayerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -20,6 +34,24 @@ void USSInputLocalPlayerSubsystem::Initialize(FSubsystemCollectionBase& Collecti
 
 	// Load global mapping context
 	GenericUIMappingContext = GenericUIMappingContextSoft.LoadSynchronous();
+
+	// Listen gamepad user settings change
+	auto* GameUserSettings = USSCommonGameUserSettings::Get();
+	if (GameUserSettings)
+	{
+		GameUserSettings->GetGamepadSettings()->OnGamepadInputNeedsUpdate.AddUniqueDynamic(this, &ThisClass::ApplyOverrideGamepadName);
+	}
+	else
+	{
+		UE_LOG(LogSomndusGame, Error, TEXT("Invalid GameUserSetting (should inherit of USSCommonGameUserSettings)"));
+	}
+
+	AfterSettingsLoaded();
+}
+
+void USSInputLocalPlayerSubsystem::AfterSettingsLoaded()
+{
+	ApplyOverrideGamepadName();
 }
 
 void USSInputLocalPlayerSubsystem::UpdateKeyMappingCache(const UEnhancedInputLocalPlayerSubsystem* EISubsystem)
@@ -221,4 +253,38 @@ void USSInputLocalPlayerSubsystem::ResumeInputForTag(FGameplayTag Tag)
 	GameSuspendTokens.Remove(Tag);
 
 	UE_LOG(LogSomndusGame, Log, TEXT("SSInput: ResumeInputForTag -> %s"), *Tag.GetTagName().ToString());
+}
+
+void USSInputLocalPlayerSubsystem::ApplyOverrideGamepadName()
+{
+#if SUPPORT_OVERRIDE_GAMEPAD_TYPE
+	if (auto* CommonInputSubsystem = UCommonInputSubsystem::Get(GetLocalPlayer()))
+	{
+		auto* GameUserSettings = USSCommonGameUserSettings::Get();
+		if (GameUserSettings->GetGamepadSettings()->GetOverrideGamepadInputType())
+		{
+			FName GamepadName = GamepadTypeNames[GameUserSettings->GetGamepadSettings()->GetGamepadInputTypeIndex()];
+
+			UE_LOG(LogSomndusInput, Log, TEXT("Enable overriden gamepad input type to %s"), *GamepadName.ToString());
+			
+			CommonInputSubsystem->SetGamepadInputTypeOverridden(true, GamepadName);
+
+			bOverrideGamepadUsed = true;
+		}
+		else
+		{
+			if (!bOverrideGamepadUsed)
+			{
+				UE_LOG(LogSomndusInput, Log, TEXT("Overriden gamepad not used yet, no fallback needed"));
+				return;
+			}
+			// restore
+			UE_LOG(LogSomndusInput, Log, TEXT("Disable overriden gamepad input type"));
+			
+			CommonInputSubsystem->SetGamepadInputTypeOverridden(false, "");
+			
+			bOverrideGamepadUsed = false;
+		}
+	}
+#endif
 }

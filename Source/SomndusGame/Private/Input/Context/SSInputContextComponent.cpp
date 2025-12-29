@@ -462,6 +462,7 @@ void USSInputContextComponent::SetBlockInput(bool bInBlockInput)
 
 void USSInputContextComponent::OnInputActionStarted(const FInputActionInstance& InputActionInstance)
 {
+	OnInputActionStartedEvent.Broadcast(this, InputActionInstance);
 	// Store in pressed input id
 	/*
 	int32 InputId = -1;
@@ -540,6 +541,7 @@ void USSInputContextComponent::OnInputActionCancel(const FInputActionInstance& I
 
 void USSInputContextComponent::OnInputActionCompleted(const FInputActionInstance& InputActionInstance)
 {
+	OnInputActionCompletedEvent.Broadcast(this, InputActionInstance);
 	// Store in pressed input id
 	/*
 	int32 InputId = -1;
