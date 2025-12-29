@@ -21,6 +21,17 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FSSInteractionContext> AwaitInteractionContexts;
 
+	/**
+	 * Micro delay when interaction activated to avoid other input conflict (eg: attack holding)
+	 */
+	UPROPERTY()
+	FTimerHandle InteractionSuspendDelay;
+
+	UFUNCTION()
+	void OnInteractionSuspendDelayEnd();
+
+	bool bInteractionIsActive = false;
+	
 public:
 
 	UFUNCTION(BlueprintCallable)
@@ -28,9 +39,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool RemoveInteractionContext(const FSSInteractionContext& InteractionContext);
-	
+
 	UFUNCTION(BlueprintCallable)
 	bool CheckInputInteraction(const UInputAction* EnhancedInputAction);
+
+	bool IsInteractionIsActive() const;
 	
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category="EventDispatchers")
 	FSSInteractionContextEvent OnInteractionContextPush;

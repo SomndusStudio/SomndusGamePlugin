@@ -3,8 +3,15 @@
 
 #include "Interaction/SSInteractionInputMgr.h"
 
+#include "TimerManager.h"
+#include "Engine/World.h"
 #include "Interaction/SSInteractable.h"
 
+
+void USSInteractionInputMgr::OnInteractionSuspendDelayEnd()
+{
+	bInteractionIsActive = false;
+}
 
 bool USSInteractionInputMgr::PushInteractionContext(const FSSInteractionContext& InteractionContext)
 {
@@ -53,6 +60,12 @@ bool USSInteractionInputMgr::CheckInputInteraction(const UInputAction* EnhancedI
 			{
 				if (AwaitInteractionContext.Object->Implements<USSInteractable>())
 				{
+					if (GetWorld())
+					{
+						bInteractionIsActive = true;
+						GetWorld()->GetTimerManager().ClearTimer(InteractionSuspendDelay);
+						GetWorld()->GetTimerManager().SetTimer(InteractionSuspendDelay, this, &ThisClass::OnInteractionSuspendDelayEnd, 0.1f, false);
+					}
 					ISSInteractable::Execute_OnInteract(AwaitInteractionContext.Object, AwaitInteractionContext);
 				}
 			}
@@ -60,5 +73,10 @@ bool USSInteractionInputMgr::CheckInputInteraction(const UInputAction* EnhancedI
 		}
 	}
 	return false;
+}
+
+bool USSInteractionInputMgr::IsInteractionIsActive() const
+{
+	return bInteractionIsActive;
 }
 
