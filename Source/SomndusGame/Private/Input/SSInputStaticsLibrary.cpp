@@ -12,6 +12,7 @@
 #include "Engine/LocalPlayer.h"
 #include "Engine/Texture2D.h"
 #include "EnhancedInput/Public/PlayerMappableKeySettings.h"
+#include "Input/SSGameInputData.h"
 #include "Input/SSInputLocalPlayerSubsystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "Styling/StyleDefaults.h"
@@ -436,4 +437,34 @@ bool USSInputStaticsLibrary::IsPlayGamepad(const UObject* WorldContextObject)
 bool USSInputStaticsLibrary::BranchIsPlayGamepad(const UObject* WorldContextObject)
 {
 	return IsPlayGamepad(WorldContextObject);
+}
+
+const USSGameInputData* USSInputStaticsLibrary::GetGameInputData(TObjectPtr<ULocalPlayer> LocalPlayer)
+{
+	auto* InputLocalPlayerSubsystem = LocalPlayer->GetSubsystem<USSInputLocalPlayerSubsystem>();
+	return InputLocalPlayerSubsystem->GetGameInputData();
+}
+
+void USSInputStaticsLibrary::SyncInputMapping(TObjectPtr<ULocalPlayer> LocalPlayer, const FName& ActionMappingName, EPlayerMappableKeySlot KeySlot, const FKey& NewKey,
+                                              UEnhancedInputUserSettings* Settings)
+{
+	// Try to sync an input binding like Weapon Ability -> Spirit Ability
+	const USSGameInputData* GameInputData = GetGameInputData(LocalPlayer);
+	for (const auto& KeyboardSyncInputSetting : GameInputData->KeyboardSyncInputSettings_New)
+	{
+		const FName SourceActionName = KeyboardSyncInputSetting.SourceInputAction->GetPlayerMappableKeySettings()->GetMappingName();
+			
+		if (SourceActionName == ActionMappingName)
+		{
+			const FName TargetActionName = KeyboardSyncInputSetting.TargetInputAction->GetPlayerMappableKeySettings()->GetMappingName();
+				
+			FGameplayTagContainer SyncFailureReason;
+			FMapPlayerKeyArgs SyncKeyArgs = {};
+			SyncKeyArgs.MappingName = TargetActionName;
+			SyncKeyArgs.Slot = KeySlot;
+			SyncKeyArgs.NewKey = NewKey;
+
+			Settings->MapPlayerKey(SyncKeyArgs, SyncFailureReason);
+		}
+	}
 }

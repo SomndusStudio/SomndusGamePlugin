@@ -44,7 +44,10 @@ struct SOMNDUSGAME_API FSSGameNotificationInfo
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSSGameNotificationEvent, const FSSGameNotificationInfo&, Info);
 
 /**
- * 
+ * USSGameNotificationManager
+ *
+ * Singleton manager responsible for handling game notifications and routing them to UI widgets.
+ * Provides global access to add notifications and broadcasts events when notifications are requested.
  */
 UCLASS()
 class SOMNDUSGAME_API USSGameNotificationManager : public USSContextObject

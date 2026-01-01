@@ -13,7 +13,9 @@
 #include "EnhancedInputSubsystems.h"
 #include "SSLog.h"
 #include "Engine/LocalPlayer.h"
+#include "Helper/SSHelperStatics.h"
 #include "Input/SSEnhancedPlayerInput.h"
+#include "Input/SSGameInputData.h"
 #include "Settings/SSCommonGameUserSettings.h"
 
 USSInputLocalPlayerSubsystem::USSInputLocalPlayerSubsystem()
@@ -253,6 +255,57 @@ void USSInputLocalPlayerSubsystem::ResumeInputForTag(FGameplayTag Tag)
 	GameSuspendTokens.Remove(Tag);
 
 	UE_LOG(LogSomndusGame, Log, TEXT("SSInput: ResumeInputForTag -> %s"), *Tag.GetTagName().ToString());
+}
+
+USSGameInputData* USSInputLocalPlayerSubsystem::GetGameInputData()
+{
+	return USSHelperStatics::TryGetAsset(GameInputData);
+}
+
+bool USSInputLocalPlayerSubsystem::MappingNameIsInGameModeControl(FName MappingName, FGameplayTag GameModeControlTag)
+{
+	for (const auto& InputMappingGameMode: InputMappingGameModeAssets)
+	{
+		if (InputMappingGameMode->GameModeTag == GameModeControlTag)
+		{
+			for (const auto& SoftMappingContext : InputMappingGameMode->MappingContexts)
+			{
+				auto MappingContext = USSHelperStatics::TryGetAsset(SoftMappingContext);
+				for (const auto& ActionKeyMapping : MappingContext->GetMappings())
+				{
+					if (MappingName == ActionKeyMapping.GetMappingName())
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
+}
+
+void USSInputLocalPlayerSubsystem::ResolveInputMappingGameModeAssets()
+{
+	UE_LOG(LogSomndusInput, Log, TEXT("USSInputLocalPlayerSubsystem: ResolveInputMappingGameModeAssets"));
+
+	UEnhancedInputLocalPlayerSubsystem* EISubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
+	if (!EISubsystem) return;
+	
+	UEnhancedInputUserSettings* Settings = EISubsystem->GetUserSettings();
+	if (!Settings) return;
+			
+	for (const auto& InputMappingGameModeSoftAsset : GetGameInputData()->InputMappingGameModeAssets)
+	{
+		// Load input mapping context
+		auto* InputMappingGameModeAsset = USSHelperStatics::TryGetAsset(InputMappingGameModeSoftAsset);
+		InputMappingGameModeAssets.AddUnique(InputMappingGameModeAsset);
+				
+		for (const auto& SoftMappingContext : InputMappingGameModeAsset->MappingContexts)
+		{
+			auto MappingContext = USSHelperStatics::TryGetAsset(SoftMappingContext);
+			Settings->RegisterInputMappingContext(MappingContext);
+		}
+	}
 }
 
 void USSInputLocalPlayerSubsystem::ApplyOverrideGamepadName()

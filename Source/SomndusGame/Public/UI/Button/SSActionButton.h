@@ -9,8 +9,11 @@
 
 class UTextBlock;
 class UCommonTextBlock;
+
 /**
- * 
+ * USSActionButton
+ *
+ * A button widget class extending USSCommonButtonBase with support for displaying an input action name.
  */
 UCLASS()
 class SOMNDUSGAME_API USSActionButton : public USSCommonButtonBase

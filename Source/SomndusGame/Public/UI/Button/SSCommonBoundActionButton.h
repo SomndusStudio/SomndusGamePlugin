@@ -3,35 +3,38 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CommonButtonBase.h"
-#include "SSCommonButtonBase.generated.h"
+#include "Input/CommonBoundActionButton.h"
+#include "SSCommonBoundActionButton.generated.h"
 
-class USoundBase;
 class UAudioComponent;
 
 /**
- * USSCommonButtonBase
+ * USSCommonBoundActionButton
  *
- * A UI button class derived from UCommonButtonBase that provides enhanced support 
+ * A UI button class derived from UCommonBoundActionButton that provides enhanced support 
  * for input action interactions, including audio feedback during hold states.
  * Designed for advanced user interface implementations requiring contextual action responses.
  */
 UCLASS()
-class SOMNDUSGAME_API USSCommonButtonBase : public UCommonButtonBase
+class SOMNDUSGAME_API USSCommonBoundActionButton : public UCommonBoundActionButton
 {
 	GENERATED_BODY()
 
 protected:
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<USoundBase> HoldingSound;
 
 	UPROPERTY()
 	TObjectPtr<UAudioComponent> HoldingAudioComp;
 
+	bool bHoldingSoundIsPlaying = false;
+	
 	virtual void HoldReset() override;
-	virtual void NativeOnPressed() override;
+
+	virtual void NativeOnActionProgress(float HeldPercent) override;
+	
 	virtual void NativeOnReleased() override;
 	
-	void StopHoldingAudio() const;
+	void StopHoldingAudio();
 };

@@ -93,6 +93,9 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category = "SS|Settings")
 	USSCultureUserSettings* GetCultureUserSettings() const { return CultureUserSettings; }
+
+	UPROPERTY(BlueprintAssignable)
+	FOnGameUserSettingsUINeedsUpdate OnInputNeedsUpdate;
 	
 public:
 	

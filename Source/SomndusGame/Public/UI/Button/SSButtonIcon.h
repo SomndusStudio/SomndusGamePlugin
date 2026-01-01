@@ -7,8 +7,11 @@
 #include "SSButtonIcon.generated.h"
 
 class UImage;
+
 /**
- * 
+ * USSButtonIcon
+ *
+ * A button widget class that extends USSButtonText to include optional icon display functionality.
  */
 UCLASS()
 class SOMNDUSGAME_API USSButtonIcon : public USSButtonText

@@ -12,6 +12,8 @@
 #include "UserSettings/EnhancedInputUserSettings.h"
 #include "SSInputLocalPlayerSubsystem.generated.h"
 
+class USSInputMappingGameModeAsset;
+class USSGameInputData;
 class UEnhancedInputLocalPlayerSubsystem;
 
 USTRUCT(BlueprintType)
@@ -108,15 +110,30 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	void ResumeInputForTag(FGameplayTag Tag);
+
+	USSGameInputData* GetGameInputData();
+
+	bool MappingNameIsInGameModeControl(FName MappingName, FGameplayTag GameModeControlTag);
 	
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<UInputMappingContext> GenericUIMappingContext;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<TSoftObjectPtr<USSInputMappingGameModeAsset>> InputMappingGameModeAssets;
+
+	void ResolveInputMappingGameModeAssets();
 	
 	/**
 	 * To use in every activatable widget instead specific one by one
 	 */
 	UPROPERTY(config, EditAnywhere)
 	TSoftObjectPtr<UInputMappingContext> GenericUIMappingContextSoft;
+
+	/**
+	 * Contain game input data (azerty/qwerty template, binding seting ,etc)
+	 */
+	UPROPERTY(config, EditAnywhere)
+	TSoftObjectPtr<USSGameInputData> GameInputData;
 	
 	////////////////////////////////////////////////////////
 	// Override Gamepad Type

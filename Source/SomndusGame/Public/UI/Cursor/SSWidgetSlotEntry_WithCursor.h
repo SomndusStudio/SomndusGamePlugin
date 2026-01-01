@@ -13,7 +13,10 @@
 #include "SSWidgetSlotEntry_WithCursor.generated.h"
 
 /**
- * 
+ * USSWidgetSlotEntry_WithCursor
+ *
+ * A widget slot entry class that integrates cursor handling functionality via ISSCursorHandler,
+ * providing cursor request information and mouse enter/leave event overrides.
  */
 UCLASS()
 class SOMNDUSGAME_API USSWidgetSlotEntry_WithCursor : public USSCommonWidgetSlotEntry, public ISSCursorHandler

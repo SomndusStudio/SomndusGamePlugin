@@ -10,8 +10,10 @@
 #include "CommonInputSubsystem.h"
 #include "GameplayTagContainer.h"
 #include "InputAction.h"
+#include "SSGameInputData.h"
 #include "Input/Events.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "UserSettings/EnhancedInputUserSettings.h"
 #include "SSInputStaticsLibrary.generated.h"
 
 class USSInputLocalPlayerSubsystem;
@@ -29,11 +31,10 @@ class SOMNDUSGAME_API USSInputStaticsLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-
 	static ULocalPlayer* GetLocalPlayer(const UObject* WorldContextObject);
 	static const UCommonInputSubsystem* GetCommonInputSubsystem(const UObject* WorldContextObject);
 	static USSInputLocalPlayerSubsystem* GetInputLocalPlayerSubsystem(const UObject* WorldContextObject);
-	
+
 	UFUNCTION(BlueprintCallable)
 	static FText GetKeyNameForEnhancedInputAction(const UCommonInputSubsystem* CommonInputSubsystem, const UInputAction* InputAction);
 
@@ -65,7 +66,7 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Input", meta=(WorldContext="WorldContextObject"))
 	static UTexture2D* GetInputIconFromInputTypeKey(const UObject* WorldContextObject, ECommonInputType InputType, const FKey& Key);
-	
+
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, meta=(WorldContext="WorldContextObject"))
 	static void SetGameSuspendInput(const UObject* WorldContextObject, FGameplayTag Tag, bool bSuspend = true);
 
@@ -105,7 +106,7 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI")
 	static bool InterpretLeftAnalogMove(const FAnalogInputEvent& AnalogInputEvent, float Sensibility, FVector2D& OutValue);
-	
+
 	/**
 	 * Interprets a left analog stick movement using X and Y axes with deadzone handling and sensitivity scaling.
 	 *
@@ -120,18 +121,24 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "SS|UI")
 	static bool InterpretRightAnalogMove(const FAnalogInputEvent& AnalogInputEvent, float Sensibility, FVector2D& OutValue);
-	
+
 	static bool InterpretAnalogMoveDZ(const FAnalogInputEvent& AnalogInputEvent, bool bRight, float Sensibility, float DeadZone, FVector2D& OutValue);
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|Input", meta=(WorldContext="WidgetContextObject"))
 	static bool IsPlayGamepadFromWidget(const UUserWidget* WidgetContextObject);
 
-	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|Input", DisplayName="IsPlayGamepadWidget (Branch)", meta=(WorldContext="WidgetContextObject", ExpandBoolAsExecs = "ReturnValue"))
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category="SS|Input", DisplayName="IsPlayGamepadWidget (Branch)",
+		meta=(WorldContext="WidgetContextObject", ExpandBoolAsExecs = "ReturnValue"))
 	static bool BranchIsPlayGamepadFromWidget(const UUserWidget* WidgetContextObject);
-	
+
 	UFUNCTION(BlueprintPure, Category="SS|Input", meta=(WorldContext="WorldContextObject"))
 	static bool IsPlayGamepad(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable, Category="SS|Input", DisplayName="IsPlayGamepad", meta=(WorldContext="WorldContextObject", ExpandBoolAsExecs = "ReturnValue"))
 	static bool BranchIsPlayGamepad(const UObject* WorldContextObject);
+
+	static const USSGameInputData* GetGameInputData(TObjectPtr<ULocalPlayer> LocalPlayer);
+	
+	static void SyncInputMapping(TObjectPtr<ULocalPlayer> LocalPlayer, const FName& ActionMappingName, EPlayerMappableKeySlot KeySlot, const FKey& NewKey,
+	                             UEnhancedInputUserSettings* Settings);
 };
