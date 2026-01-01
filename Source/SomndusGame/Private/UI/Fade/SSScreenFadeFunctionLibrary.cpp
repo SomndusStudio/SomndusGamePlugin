@@ -1,4 +1,8 @@
-﻿// ©2025 Schartier Isaac. All rights reserved.
+﻿/**
+* Copyright (C) Schartier Isaac
+*
+* Official Documentation: https://www.somndus-studio.com
+*/
 
 
 // Copyright 2023-2024 Metaseven. All Rights Reserved.
