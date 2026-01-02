@@ -127,4 +127,7 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category = "SS|UI", meta=(WorldContext="WorldContextObject"))
 	static UWidget* GetFocusedWidget(UObject* WorldContextObject, int32 UserIndex = 0);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic, Category = "UI|Mouse")
+	static bool ScrollBox_MouseWheelScroll(const FPointerEvent& InMouseEvent, UScrollBox* ScrollBox, float Sensitivity = 30.f);
 };

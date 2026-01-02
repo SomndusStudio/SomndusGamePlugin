@@ -9,30 +9,41 @@
 
 #include "FileMediaSource.h"
 #include "MediaPlayer.h"
-#include "TimerManager.h"
 #include "Components/Image.h"
 #include "Components/Overlay.h"
 #include "Helper/SSHelperStatics.h"
+
+EActiveTimerReturnType USSVideoPlayerWidget::OnTimerDelayedOnMediaOpened(double InCurrentTime, float InDeltaTime)
+{
+	StopSlateTimer();
+
+	DelayedOnMediaOpened();
+
+	return EActiveTimerReturnType::Stop;
+}
+
+void USSVideoPlayerWidget::StopSlateTimer()
+{
+	if (ActiveTimerHandle.IsValid())
+	{
+		TakeWidget()->UnRegisterActiveTimer(ActiveTimerHandle.Pin().ToSharedRef());
+		ActiveTimerHandle.Reset();
+	}
+}
 
 void USSVideoPlayerWidget::OnMediaOpened(FString OpenedUrl)
 {
 	LastOpenedUrl = OpenedUrl;
 
-	if (UWorld* World = GetWorld())
-	{
-		World->GetTimerManager().SetTimerForNextTick(this, &USSVideoPlayerWidget::DelayedOnMediaOpened);
-	}
-	else
-	{
-		// Fallback if GetWorld() are null
-		DelayedOnMediaOpened();
-	}
+	ActiveTimerHandle = TakeWidget()->RegisterActiveTimer(
+		0.f, FWidgetActiveTimerDelegate::CreateUObject(this, &USSVideoPlayerWidget::OnTimerDelayedOnMediaOpened)
+	);
 }
 
 void USSVideoPlayerWidget::DelayedOnMediaOpened()
 {
 	RefreshVideo();
-	
+
 	BP_OnMediaOpened();
 }
 
@@ -55,7 +66,7 @@ void USSVideoPlayerWidget::Reload()
 void USSVideoPlayerWidget::RefreshVideo()
 {
 	const FIntPoint VideoDimension = MediaPlayer->GetVideoTrackDimensions(0, 0);
-	
+
 	ImageVideo->SetDesiredSizeOverride(VideoDimension);
 
 	MediaPlayer->SetLooping(true);
@@ -66,7 +77,7 @@ void USSVideoPlayerWidget::RefreshVideo()
 void USSVideoPlayerWidget::PlayVideo(FString Filename)
 {
 	LastVideoFileName = Filename;
-	
+
 	FString Path = USSHelperStatics::ConcatStrings("./Movies/", LastVideoFileName);
 	FileMediaSource->SetFilePath(Path);
 
@@ -78,9 +89,9 @@ void USSVideoPlayerWidget::PlayVideo(FString Filename)
 void USSVideoPlayerWidget::StopVideo()
 {
 	MediaPlayer->Close();
-	
+
 	ImageVideo->SetColorAndOpacity(FLinearColor::Black);
-	
+
 	RefreshNoData(false);
 }
 

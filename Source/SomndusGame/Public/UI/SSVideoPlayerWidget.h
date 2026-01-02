@@ -32,6 +32,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UFileMediaSource> FileMediaSource;
 
+	TWeakPtr<FActiveTimerHandle> ActiveTimerHandle;
+	
 	/**
 	 * Actually used as fix for console (one video file loop)
 	 */
@@ -49,6 +51,10 @@ protected:
 	
 	UPROPERTY(meta=(BindWidget))
 	UOverlay* OverlayNoData;
+
+	EActiveTimerReturnType OnTimerDelayedOnMediaOpened(double InCurrentTime, float InDeltaTime);
+	 
+	void StopSlateTimer();
 	
 public:
 	

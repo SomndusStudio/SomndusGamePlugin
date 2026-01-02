@@ -15,7 +15,7 @@
 #include "Input/SSInputStaticsLibrary.h"
 #include "UI/SSCommonUIFunctionLibrary.h"
 
-#define LOCTEXT_NAMESPACE "FSomndusGameModule"
+#define LOCTEXT_NAMESPACE "SomndusGame"
 
 USSGameActivatableWidget::USSGameActivatableWidget()
 {

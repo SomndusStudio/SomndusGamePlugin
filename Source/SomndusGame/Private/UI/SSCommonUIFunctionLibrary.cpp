@@ -407,3 +407,23 @@ UWidget* USSCommonUIFunctionLibrary::GetFocusedWidget(UObject* WorldContextObjec
 	}
 	return nullptr;
 }
+
+bool USSCommonUIFunctionLibrary::ScrollBox_MouseWheelScroll(const FPointerEvent& InMouseEvent, UScrollBox* ScrollBox, float Sensitivity)
+{
+	float ScrollValue = 0.f;
+
+	const float Value = InMouseEvent.GetWheelDelta();
+	
+	ScrollValue = Value * Sensitivity;
+	
+	// Calculate the new scroll offset, subtracting the input value
+	float NewScrollOffset = ScrollBox->GetScrollOffset() - ScrollValue;
+
+	// Clamp the new offset between 0 and the max scrollable range
+	NewScrollOffset = FMath::Clamp(NewScrollOffset, 0.f, ScrollBox->GetScrollOffsetOfEnd());
+	
+	// Apply the new scroll offset
+	ScrollBox->SetScrollOffset(NewScrollOffset);
+
+	return true;
+}

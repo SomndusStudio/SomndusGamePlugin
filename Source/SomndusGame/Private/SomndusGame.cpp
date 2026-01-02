@@ -2,7 +2,7 @@
 
 #include "SomndusGame.h"
 
-#define LOCTEXT_NAMESPACE "FSomndusGameModule"
+#define LOCTEXT_NAMESPACE "SomndusGame"
 
 void FSomndusGameModule::StartupModule()
 {

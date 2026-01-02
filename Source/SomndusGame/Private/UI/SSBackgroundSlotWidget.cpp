@@ -9,7 +9,7 @@
 
 void USSBackgroundSlotWidget::SetSelected(bool InSelected)
 {
-	if (bSelected == InSelected) return;
+	//if (bSelected == InSelected) return;
 	
 	bSelected = InSelected;
 	OnSelectedChange(bSelected);
@@ -37,6 +37,11 @@ void USSBackgroundSlotWidget::OnHoverActive_Implementation(bool InActive)
 	// Todo : Add possibility to choice if we can do different anim for selected state
 	if (bSelected)
 	{
+		if (InActive)
+		{
+			if (IsAnimationPlaying(HoverAnimation)) return;
+		}
+
 		return;
 	}
 	

@@ -15,7 +15,7 @@
 #include "Widgets/Misc/GameSettingPressAnyKey.h"
 #include "Widgets/Misc/KeyAlreadyBoundWarning.h"
 
-#define LOCTEXT_NAMESPACE "DUSettings"
+#define LOCTEXT_NAMESPACE "SomndusGame"
 
 void USSKeyInputSettingWidget::SetSetting(UGameSetting* InSetting)
 {

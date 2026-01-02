@@ -14,7 +14,7 @@
 #include "UI/SSCommonUITypes.h"
 #include "UI/Dialog/SSLoadingModal.h"
 
-#define LOCTEXT_NAMESPACE "FSomndusGameModule"
+#define LOCTEXT_NAMESPACE "SomndusGame"
 
 class FSubsystemCollectionBase;
 

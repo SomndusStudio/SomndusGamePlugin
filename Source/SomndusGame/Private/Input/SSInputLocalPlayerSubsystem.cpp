@@ -44,8 +44,11 @@ void USSInputLocalPlayerSubsystem::Initialize(FSubsystemCollectionBase& Collecti
 			InputSettings->LoadOrCreateSettings(LocalPlayer);
 			
 			// Registre all imc
-			for (const auto& InputMappingGameMode: GetGameInputData()->InputMappingGameModeAssets)
+			auto* GameInputDataRef = GetGameInputData();
+			for (const auto& SoftInputMappingGameMode: GameInputDataRef->InputMappingGameModeAssets)
 			{
+				auto* InputMappingGameMode= USSHelperStatics::TryGetAsset(SoftInputMappingGameMode);
+				
 				for (const auto& MappingContext : InputMappingGameMode->MappingContexts)
 				{
 					UInputMappingContext* IMC = USSHelperStatics::TryGetAsset(MappingContext);
