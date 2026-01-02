@@ -17,7 +17,9 @@ UCLASS()
 class SOMNDUSGAME_API USSModalBaseWidget : public USSGameActivatableWidget
 {
 	GENERATED_BODY()
-
+	
+public:
+	
 	USSModalBaseWidget();
 
 protected:

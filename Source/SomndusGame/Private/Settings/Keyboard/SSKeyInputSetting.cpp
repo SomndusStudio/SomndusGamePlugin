@@ -40,7 +40,7 @@ bool USSKeyInputSetting::InitializeInputData(const UEnhancedPlayerMappableKeyPro
 		
 		ActionMappingName = Mapping.GetMappingName();
 		InitialKeyMappings.Add(Mapping.GetSlot(), Mapping.GetCurrentKey());
-		const FText& MappingDisplayName =Mapping.GetDisplayName();
+		const FText& MappingDisplayName = Mapping.GetDisplayName();
 		
 		if (!MappingDisplayName.IsEmpty())
 		{
@@ -191,19 +191,19 @@ bool USSKeyInputSetting::ChangeBinding(int32 InKeyBindSlot, FKey NewKey)
 void USSKeyInputSetting::GetAllMappedActionsFromKey(int32 InKeyBindSlot, FKey Key,
 	TArray<FName>& OutActionNames) const
 {
-	if (const UEnhancedPlayerMappableKeyProfile* Profile = FindMappableKeyProfile())
-	{
-		// Only in good Game Mode Control
-		TArray<FName> MappingNames;
-		Profile->GetMappingNamesForKey(Key, MappingNames);
+	const UEnhancedPlayerMappableKeyProfile* Profile = FindMappableKeyProfile();
+	if (!Profile) return;
+	
+	// Only in good Game Mode Control
+	TArray<FName> MappingNames;
+	Profile->GetMappingNamesForKey(Key, MappingNames);
 
-		auto* InputLocalPlayer = USSInputStaticsLibrary::GetInputLocalPlayerSubsystem(this);
-		for (const auto& MappingName : MappingNames)
+	auto* InputLocalPlayer = USSInputStaticsLibrary::GetInputLocalPlayerSubsystem(this);
+	for (const auto& MappingName : MappingNames)
+	{
+		if (InputLocalPlayer->MappingNameIsInGameModeControl(MappingName, GameModeControlTag))
 		{
-			if (InputLocalPlayer->MappingNameIsInGameModeControl(MappingName, GameModeControlTag))
-			{
-				OutActionNames.AddUnique(MappingName);
-			}
+			OutActionNames.AddUnique(MappingName);
 		}
 	}
 }

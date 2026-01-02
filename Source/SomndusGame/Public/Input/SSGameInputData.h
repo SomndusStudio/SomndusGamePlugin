@@ -40,10 +40,14 @@ struct SOMNDUSGAME_API FSSDefaultInputSetting : public FTableRowBase
 	int32 InputId = -1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName MappingName;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FKey Key;
 };
 
 class UInputMappingContext;
+
 /**
  * 
  */
@@ -94,6 +98,15 @@ public:
 	TArray<FSSDefaultInputSetting> DefaultInputSettings;
 };
 
+USTRUCT(BlueprintType)
+struct SOMNDUSGAME_API FSSMappableSettings : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<FName> OrderKeyNames;
+};
+
 
 /**
  * 
@@ -113,4 +126,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<TSoftObjectPtr<USSInputMappingGameModeAsset>> InputMappingGameModeAssets;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FSSMappableSettings MappableSettings;
 };

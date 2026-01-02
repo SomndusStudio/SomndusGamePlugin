@@ -32,6 +32,9 @@ private:
 	UPROPERTY(Config)
 	bool bInvertMouse;
 
+	UPROPERTY(Config)
+	bool bInvertMouseX;
+	
 	/** Holds the mouse horizontal sensitivity */
 	UPROPERTY(Config)
 	double MouseSensitivityX;
@@ -56,6 +59,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Settings|Mouse")
 	void SetInvertMouse(bool NewValue) { ChangeValueAndDirty(bInvertMouse, NewValue);}
 
+	UFUNCTION(BlueprintPure, Category = "Settings|Mouse")
+	bool GetInvertMouseX() const { return bInvertMouseX; }
+
+	UFUNCTION(BlueprintCallable, Category = "Settings|Mouse")
+	void SetInvertMouseX(bool NewValue) { ChangeValueAndDirty(bInvertMouseX, NewValue);}
+	
 	UFUNCTION(BlueprintPure)
 	double GetMouseSensitivityX() const { return MouseSensitivityX; }
 	UFUNCTION()

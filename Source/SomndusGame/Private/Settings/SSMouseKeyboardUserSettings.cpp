@@ -15,6 +15,7 @@ void USSMouseKeyboardUserSettings::SetToDefaults()
 	
 	MouseSensitivity = 0.5f;
 	bInvertMouse = false;
+	bInvertMouseX = false;
 	
 	MouseSensitivityX = 1.0f;
 	MouseSensitivityY = 1.0f;

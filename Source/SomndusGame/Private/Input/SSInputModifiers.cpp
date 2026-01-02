@@ -130,6 +130,8 @@ FLinearColor USSInputModifierDeadZone::GetVisualizationColor_Implementation(FInp
 	return FLinearColor((FinalValue.Get<FVector2D>().X == 0.f ? 0.5f : 0.f) + (FinalValue.Get<FVector2D>().Y == 0.f ? 0.5f : 0.f), 0.f, 0.f);
 }
 
+////////////////////////////////////////////////////////////////////
+// USSInputModifierGamepadSensitivity
 FInputActionValue USSInputModifierGamepadSensitivity::ModifyRaw_Implementation(const UEnhancedPlayerInput* PlayerInput,
                                                                                FInputActionValue CurrentValue, float DeltaTime)
 {
@@ -154,6 +156,35 @@ FInputActionValue USSInputModifierGamepadSensitivity::ModifyRaw_Implementation(c
 	return CurrentValue.Get<FVector>() * Scalar;
 }
 
+////////////////////////////////////////////////////////////////////
+// USSInputModifierMouseSensitivity
+FInputActionValue USSInputModifierMouseSensitivity::ModifyRaw_Implementation(const UEnhancedPlayerInput* PlayerInput, FInputActionValue CurrentValue, float DeltaTime)
+{
+	// You can't scale a boolean action type
+	const USSLocalPlayer* LocalPlayer = SSInputModifiersHelpers::GetLocalPlayer(PlayerInput);
+	
+	if (CurrentValue.GetValueType() == EInputActionValueType::Boolean || !LocalPlayer)
+	{
+		return CurrentValue;
+	}
+
+	if (!MouseKeyboardUserSettings)
+	{
+		auto* GameUserSettings = USSCommonGameUserSettings::Get();
+		ensure(GameUserSettings);
+		MouseKeyboardUserSettings = GameUserSettings->GetMouseKeyboardUserSettings();
+	}
+
+	FVector NewValue = CurrentValue.Get<FVector>();
+
+	NewValue.X *= MouseKeyboardUserSettings->GetMouseSensitivityX();
+	NewValue.Y *= MouseKeyboardUserSettings->GetMouseSensitivityY();
+
+	return NewValue;
+}
+
+////////////////////////////////////////////////////////////////////
+// USSInputModifierInversion
 FInputActionValue USSInputModifierInversion::ModifyRaw_Implementation(const UEnhancedPlayerInput* PlayerInput,
                                                                       FInputActionValue CurrentValue, float DeltaTime)
 {
@@ -163,22 +194,45 @@ FInputActionValue USSInputModifierInversion::ModifyRaw_Implementation(const UEnh
 		return CurrentValue;
 	}
 
-	if (!GamepadSettings)
-	{
-		auto* GameUserSettings = USSCommonGameUserSettings::Get();
-		ensure(GameUserSettings);
-		GamepadSettings = GameUserSettings->GetGamepadSettings();
-	}
 	FVector NewValue = CurrentValue.Get<FVector>();
-	
-	if (GamepadSettings->GetInvertVerticalAxis())
+
+	// Gamepad
+	if (bIsGamepad)
 	{
-		NewValue.Y *= -1.0f;
+		if (!GamepadSettings)
+		{
+			auto* GameUserSettings = USSCommonGameUserSettings::Get();
+			ensure(GameUserSettings);
+			GamepadSettings = GameUserSettings->GetGamepadSettings();
+		}
+	
+		if (GamepadSettings->GetInvertVerticalAxis())
+		{
+			NewValue.Y *= -1.0f;
+		}
+	
+		if (GamepadSettings->GetInvertHorizontalAxis())
+		{
+			NewValue.X *= -1.0f;
+		}
 	}
-	
-	if (GamepadSettings->GetInvertHorizontalAxis())
+	// keyboard
+	else
 	{
-		NewValue.X *= -1.0f;
+		if (!MouseKeyboardUserSettings)
+		{
+			auto* GameUserSettings = USSCommonGameUserSettings::Get();
+			ensure(GameUserSettings);
+			MouseKeyboardUserSettings = GameUserSettings->GetMouseKeyboardUserSettings();
+		}
+		if (MouseKeyboardUserSettings->GetInvertMouse())
+		{
+			NewValue.Y *= -1.0f;
+		}
+		if (MouseKeyboardUserSettings->GetInvertMouseX())
+		{
+			NewValue.X *= -1.0f;
+		}
 	}
 	
 	return NewValue * FVector(1.f, bY ? -1.f : 1.f, 1.f);

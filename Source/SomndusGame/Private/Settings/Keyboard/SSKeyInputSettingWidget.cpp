@@ -131,8 +131,8 @@ void USSKeyInputSettingWidget::ChangeBinding(int32 InKeyBindSlot, FKey InKey)
 		Args.Add(TEXT("InKey"), InKey.GetDisplayName());
 		Args.Add(TEXT("ActionNames"), FText::FromString(ActionNames));
 
-		KeyAlreadyBoundWarning->SetWarningText(FText::Format(LOCTEXT("WarningText", "{InKey} is already bound to {ActionNames} are you sure you want to rebind it?"), Args));
-		KeyAlreadyBoundWarning->SetCancelText(FText::Format(LOCTEXT("CancelText", "Press escape to cancel, or press {InKey} again to confirm rebinding."), Args));
+		KeyAlreadyBoundWarning->SetWarningText(FText::Format(LOCTEXT("Msg_KeyBinding_WarningText", "<Accent>[{InKey}]</> is already bound to <Accent>{ActionNames}</> are you sure you want to rebind it?"), Args));
+		KeyAlreadyBoundWarning->SetCancelText(FText::Format(LOCTEXT("Msg_KeyBinding_CancelText", "Press escape to cancel, or press <Accent>[{InKey}]</> again to confirm rebinding."), Args));
 
 		KeyAlreadyBoundWarning->OnKeySelected.AddUObject(this, &ThisClass::HandleDuplicateKeySelected, KeyAlreadyBoundWarning);
 		

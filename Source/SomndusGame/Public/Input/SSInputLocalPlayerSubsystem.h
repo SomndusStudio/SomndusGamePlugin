@@ -130,7 +130,7 @@ public:
 	TSoftObjectPtr<UInputMappingContext> GenericUIMappingContextSoft;
 
 	/**
-	 * Contain game input data (azerty/qwerty template, binding seting ,etc)
+	 * Contain game input data (azerty/qwerty template, binding setting ,etc)
 	 */
 	UPROPERTY(config, EditAnywhere)
 	TSoftObjectPtr<USSGameInputData> GameInputData;

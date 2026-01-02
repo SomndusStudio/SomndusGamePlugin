@@ -34,6 +34,30 @@ void USSInputLocalPlayerSubsystem::Initialize(FSubsystemCollectionBase& Collecti
 {
 	Super::Initialize(Collection);
 
+	// Load or create key mapping settings
+	ULocalPlayer* LocalPlayer = GetLocalPlayer<ULocalPlayer>();
+	if (UEnhancedInputLocalPlayerSubsystem* System = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer))
+	{
+		if (UEnhancedInputUserSettings* InputSettings = System->GetUserSettings())
+		{
+			// Load EI settings
+			InputSettings->LoadOrCreateSettings(LocalPlayer);
+			
+			// Registre all imc
+			for (const auto& InputMappingGameMode: GetGameInputData()->InputMappingGameModeAssets)
+			{
+				for (const auto& MappingContext : InputMappingGameMode->MappingContexts)
+				{
+					UInputMappingContext* IMC = USSHelperStatics::TryGetAsset(MappingContext);
+					if (!IMC) continue;
+					
+					// Register this IMC with the settings!
+					InputSettings->RegisterInputMappingContext(IMC);
+				}
+			}
+		}
+	}
+	
 	// Load global mapping context
 	GenericUIMappingContext = GenericUIMappingContextSoft.LoadSynchronous();
 
@@ -264,7 +288,7 @@ USSGameInputData* USSInputLocalPlayerSubsystem::GetGameInputData()
 
 bool USSInputLocalPlayerSubsystem::MappingNameIsInGameModeControl(FName MappingName, FGameplayTag GameModeControlTag)
 {
-	for (const auto& InputMappingGameMode: InputMappingGameModeAssets)
+	for (const auto& InputMappingGameMode: GetGameInputData()->InputMappingGameModeAssets)
 	{
 		if (InputMappingGameMode->GameModeTag == GameModeControlTag)
 		{

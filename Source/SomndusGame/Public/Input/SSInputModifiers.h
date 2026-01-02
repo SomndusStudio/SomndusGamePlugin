@@ -13,6 +13,7 @@
 #include "SSInputModifiers.generated.h"
 
 
+class USSMouseKeyboardUserSettings;
 class USSGamepadUserSettings;
 /** Represents which stick that this deadzone is for, either the move or the look stick */
 UENUM()
@@ -86,13 +87,29 @@ class USSInputModifierGamepadSensitivity : public UInputModifier
 	GENERATED_BODY()
 public:
 	
-	/** Asset that gives us access to the float scalar value being used for sensitivty */
+	/** Asset that gives us access to the float scalar value being used for sensitivity */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AssetBundles="Client,Server"))
 	TObjectPtr<const USSAimSensitivityData> SensitivityLevelTable;
 
 protected:
 	UPROPERTY()
 	const USSGamepadUserSettings* GamepadSettings;
+	
+	virtual FInputActionValue ModifyRaw_Implementation(const UEnhancedPlayerInput* PlayerInput, FInputActionValue CurrentValue, float DeltaTime) override;
+};
+
+/**
+ *  Applies a scalar modifier based on the current gamepad settings in  game settings.
+ */
+UCLASS(NotBlueprintable, MinimalAPI, meta = (DisplayName = "Mouse Sensitivity"))
+class USSInputModifierMouseSensitivity : public UInputModifier
+{
+	GENERATED_BODY()
+	
+protected:
+
+	UPROPERTY()
+	const USSMouseKeyboardUserSettings* MouseKeyboardUserSettings;
 	
 	virtual FInputActionValue ModifyRaw_Implementation(const UEnhancedPlayerInput* PlayerInput, FInputActionValue CurrentValue, float DeltaTime) override;
 };
@@ -106,6 +123,9 @@ class SOMNDUSGAME_API USSInputModifierInversion : public UInputModifier
 	GENERATED_BODY()
 
 public:
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = Settings)
+	bool bIsGamepad = false;
 	
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = Settings)
 	bool bY = true;
@@ -114,6 +134,9 @@ protected:
 	
 	UPROPERTY()
 	const USSGamepadUserSettings* GamepadSettings;
+
+	UPROPERTY()
+	const USSMouseKeyboardUserSettings* MouseKeyboardUserSettings;
 	
 	virtual FInputActionValue ModifyRaw_Implementation(const UEnhancedPlayerInput* PlayerInput, FInputActionValue CurrentValue, float DeltaTime) override;
 };
