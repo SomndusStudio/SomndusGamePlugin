@@ -30,10 +30,10 @@ void USSEnvironmentComponent::InvalidateFootstepCache()
 {
 	CachedActionTag = FGameplayTag::EmptyTag;
 	CachedSurfaceTag = FGameplayTag::EmptyTag;
-	CachedFootstepSurface = nullptr;
+	CachedFootstepSurface = FSSFootstepSurfaceDefinition::Empty();
 }
 
-const FSSFootstepDefinition* USSEnvironmentComponent::TryGetFootstepDefinition(const USSFootstepDataAsset* FootstepAsset, FGameplayTag ActionTag, FGameplayTag SurfaceTag)
+const FSSFootstepDefinition* USSEnvironmentComponent::TryGetFootstepDefinition(const USSFootstepDataAsset* FootstepAsset, const FGameplayTag& ActionTag, const FGameplayTag& SurfaceTag)
 {
 	const FSSFootstepDefinition* Footstep = FootstepAsset->FindFootstep(ActionTag, SurfaceTag);
 	
@@ -58,54 +58,57 @@ const FSSFootstepDefinition* USSEnvironmentComponent::TryGetFootstepDefinition(c
 	return Footstep;
 }
 
-const FSSFootstepSurfaceDefinition* USSEnvironmentComponent::TryGetFootstepSurfaceDefinition(const USSFootstepDataAsset* FootstepAsset, FGameplayTag ActionTag,
-	FGameplayTag SurfaceTag)
+bool USSEnvironmentComponent::TryGetFootstepSurfaceDefinition(const USSFootstepDataAsset* FootstepAsset, const FGameplayTag& ActionTag,
+	const FGameplayTag& SurfaceTag, FSSFootstepSurfaceDefinition& FootstepSurface)
 {
 	if (!FootstepAsset)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("FootstepAsset is null in %s"), *GetName());
-		return nullptr;
+		return false;
 	}
 
 	// Check cache first
-	if (CachedFootstepSurface && CachedActionTag == ActionTag && CachedSurfaceTag == SurfaceTag)
+	if (FootstepSurface.IsValid() && CachedActionTag == ActionTag && CachedSurfaceTag == SurfaceTag)
 	{
-		return CachedFootstepSurface;
+		FootstepSurface = CachedFootstepSurface;
+		return true;
 	}
 
 	// Try exact match: Action + Surface
-	const FSSFootstepSurfaceDefinition* SurfaceDef = FootstepAsset->FindFootstepSurface(ActionTag, SurfaceTag);
+	FSSFootstepSurfaceDefinition SurfaceDef;
+	
+	bool bValidSurface = FootstepAsset->FindFootstepSurface(ActionTag, SurfaceTag, CachedFootstepSurface);
 
-	if (SurfaceDef)
+	if (bValidSurface)
 	{
 		CachedActionTag = ActionTag;
 		CachedSurfaceTag = SurfaceTag;
-		CachedFootstepSurface = SurfaceDef;
-		return SurfaceDef;
+		FootstepSurface = CachedFootstepSurface;
+		return true;
 	}
 	// Fallback 1: Action + SurfaceFallback
 	if (SurfaceFallback.IsValid())
 	{
-		SurfaceDef = FootstepAsset->FindFootstepSurface(ActionTag, SurfaceFallback);
-		if (SurfaceDef)
+		bValidSurface = FootstepAsset->FindFootstepSurface(ActionTag, SurfaceFallback, CachedFootstepSurface);
+		if (bValidSurface)
 		{
 			CachedActionTag = ActionTag;
 			CachedSurfaceTag = SurfaceFallback;
-			CachedFootstepSurface = SurfaceDef;
-			return SurfaceDef;
+			FootstepSurface = CachedFootstepSurface;
+			return true;
 		}
 	}
 
 	// Final fallback: FootstepFallback + SurfaceFallback
 	if (FootstepFallback.IsValid())
 	{
-		SurfaceDef = FootstepAsset->FindFootstepSurface(FootstepFallback, SurfaceFallback);
-		if (SurfaceDef)
+		bValidSurface = FootstepAsset->FindFootstepSurface(FootstepFallback, SurfaceFallback, CachedFootstepSurface);
+		if (bValidSurface)
 		{
 			CachedActionTag = FootstepFallback;
 			CachedSurfaceTag = SurfaceFallback;
-			CachedFootstepSurface = SurfaceDef;
-			return SurfaceDef;
+			FootstepSurface = CachedFootstepSurface;
+			return true;
 		}
 	}
 
@@ -115,7 +118,7 @@ const FSSFootstepSurfaceDefinition* USSEnvironmentComponent::TryGetFootstepSurfa
 		*SurfaceTag.ToString(),
 		*GetName());
 
-	return nullptr;
+	return false;
 }
 
 bool USSEnvironmentComponent::ExecuteFootstepSurface(FGameplayTag ActionTag, FGameplayTag SurfaceTag)
@@ -132,10 +135,11 @@ bool USSEnvironmentComponent::ExecuteFootstepSurface(FGameplayTag ActionTag, FGa
 		UE_LOG(LogTemp, Warning, TEXT("Failed to load FootstepDataAsset in %s"), *GetName());
 		return false;
 	}
+
+	FSSFootstepSurfaceDefinition FootstepSurface;
+	bool bValidSurface = TryGetFootstepSurfaceDefinition(FootstepAsset, ActionTag, SurfaceTag, FootstepSurface);
 	
-	const FSSFootstepSurfaceDefinition* FootstepSurface = TryGetFootstepSurfaceDefinition(FootstepAsset, ActionTag, SurfaceTag);
-	
-	if (!FootstepSurface)
+	if (!bValidSurface)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No matching footstep surface found for Action [%s] and Surface [%s], even after fallback."),
 			*ActionTag.ToString(),
@@ -144,7 +148,7 @@ bool USSEnvironmentComponent::ExecuteFootstepSurface(FGameplayTag ActionTag, FGa
 	}
 
 	// Get effect asset
-	auto FootstepEffect = USSHelperStatics::TryGetAsset(FootstepSurface->FootstepEffect);
+	auto FootstepEffect = USSHelperStatics::TryGetAsset(FootstepSurface.FootstepEffect);
 	
 	// Play Sound
 	USoundBase* Sound = USSHelperStatics::TryGetAsset(FootstepEffect->Sound);

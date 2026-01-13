@@ -16,7 +16,7 @@
 FText USSCommonFunctionLibrary::LocalizeFromString(FString Key)
 {
 	FText Result;
-	if (FText::FindText(FString("FGameModule"), Key, Result))
+	if (FText::FindTextInLiveTable_Advanced(FString("FGameModule"), Key, Result))
 	{
 		return Result;
 	}

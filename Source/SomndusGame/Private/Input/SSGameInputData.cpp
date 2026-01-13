@@ -9,6 +9,16 @@
 
 #include "Core/SSGameSubsystem.h"
 
+UInputAction* USSInputActionIdRegistry::GetInputAction(int32 InputId)
+{
+	if (const auto* InputActionRef = InputActionIdMap.Find(InputId))
+	{
+		return *InputActionRef;
+	}
+	return nullptr;
+}
+
+
 ////////////////////////////////////////////////////////
 // USSInputMappingGameModeAsset
 #if WITH_EDITORONLY_DATA

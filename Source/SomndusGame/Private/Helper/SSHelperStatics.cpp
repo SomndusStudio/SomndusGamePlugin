@@ -7,6 +7,8 @@
 
 #include "Helper/SSHelperStatics.h"
 
+#include "Editor.h"
+
 TArray<FName> USSHelperStatics::ConvertGTagsToFTags(const TArray<FGameplayTag>& InGameplayTags)
 {
 	TArray<FName> Results;
@@ -18,9 +20,9 @@ TArray<FName> USSHelperStatics::ConvertGTagsToFTags(const TArray<FGameplayTag>& 
 	return Results;
 }
 
-int USSHelperStatics::GetPlayInEditorID()
+int32 USSHelperStatics::GetPlayInEditorID()
 {
-	return GPlayInEditorID;
+	return UE::GetPlayInEditorID();
 }
 
 bool USSHelperStatics::CallFunctionByName(UObject* Target, const FString& FunctionName)

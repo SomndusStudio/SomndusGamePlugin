@@ -29,7 +29,7 @@ public:
 	static TArray<FName> ConvertGTagsToFTags(const TArray<FGameplayTag>& InGameplayTags);
 
 	UFUNCTION(BlueprintPure)
-	static int GetPlayInEditorID();
+	static int32 GetPlayInEditorID();
 
 	UFUNCTION(BlueprintCallable, Category = "Reflection")
 	static bool CallFunctionByName(UObject* Target, const FString& FunctionName);

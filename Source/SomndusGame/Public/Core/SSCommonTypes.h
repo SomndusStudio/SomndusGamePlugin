@@ -7,9 +7,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InstancedStruct.h"
 #include "SSLog.h"
 #include "Engine/DataTable.h"
+#include "StructUtils/InstancedStruct.h"
 #include "UObject/Class.h"
 #include "SSCommonTypes.generated.h"
 

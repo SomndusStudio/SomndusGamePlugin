@@ -31,7 +31,10 @@ public:
 
 	/** State/Bundle to always load on clients */
 	static const FName LoadStateGameCore;
+		
+	static USSGameSubsystem* Get(const UObject* WorldContextObject);
 	
+
 	/** Internal list of game module instances, stored and reused after creation. */
 	UPROPERTY(BlueprintReadOnly)
 	TArray<USSGameModule*> GameModules;

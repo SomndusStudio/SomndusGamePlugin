@@ -9,7 +9,6 @@
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 #include "Engine/DataAsset.h"
-#include "UObject/Object.h"
 #include "SSPawnData.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSSPawnDataEventSignature, class APawn*, Pawn, FGameplayTag, PawnType);
@@ -29,4 +28,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DU|Pawn")
 	FGameplayTag PawnTypeTag;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FText DebugPawnName;
 };

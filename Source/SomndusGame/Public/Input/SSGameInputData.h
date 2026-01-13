@@ -48,6 +48,20 @@ struct SOMNDUSGAME_API FSSDefaultInputSetting : public FTableRowBase
 
 class UInputMappingContext;
 
+UCLASS(Blueprintable)
+class SOMNDUSGAME_API USSInputActionIdRegistry : public UDataAsset
+{
+	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(EditDefaultsOnly)
+	TMap<int32, class UInputAction*> InputActionIdMap;
+
+	UFUNCTION(BlueprintCallable)
+	UInputAction* GetInputAction(int32 InputId);
+};
+
 /**
  * 
  */

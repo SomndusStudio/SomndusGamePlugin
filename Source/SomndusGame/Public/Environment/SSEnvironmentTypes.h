@@ -44,7 +44,15 @@ struct SOMNDUSGAME_API FSSFootstepSurfaceDefinition
 		return SurfaceTag == InSurface;
 	}
 
-	
+	bool IsValid() const
+	{
+		return SurfaceTag.IsValid() && !FootstepEffect.IsNull();
+	}
+
+	static FSSFootstepSurfaceDefinition Empty()
+	{
+		return FSSFootstepSurfaceDefinition();
+	}
 };
 
 /**

@@ -105,7 +105,11 @@ bool USSPawnInputContext::SetActiveInputContextFromTag(const FGameplayTag& InCon
 	// Reorder by priority (higher priority comes first)
 	ActiveInputHandlerContexts.Sort([](const TObjectPtr<USSInputHandlerContext>& A, const TObjectPtr<USSInputHandlerContext>& B)
 	{
-		return A && B ? A->Priority > B->Priority : B != nullptr;
+		if (IsValid(A) && IsValid(B))
+		{
+			return A->Priority > B->Priority;
+		}
+		return IsValid(B);
 	});
 
 	return true;

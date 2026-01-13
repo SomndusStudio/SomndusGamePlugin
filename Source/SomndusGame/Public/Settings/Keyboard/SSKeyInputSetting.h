@@ -58,7 +58,7 @@ protected:
 	FPlayerMappableKeyQueryOptions QueryOptions;
 
 	/** The profile identifier that this key setting is from */
-	FGameplayTag ProfileIdentifier;
+	FString ProfileIdentifierId;
 
 	/** Store the initial key mappings that are set on this for each slot */
 	TMap<EPlayerMappableKeySlot, FKey> InitialKeyMappings;

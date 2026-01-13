@@ -8,7 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "CommonTabListWidgetBase.h"
-#include "InstancedStruct.h"
+#include "StructUtils/InstancedStruct.h"
 #include "SSTabListWidget.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSSNavigationEventSignature, class USSTabListWidget*, Widget, int32, Index, FName, Info);

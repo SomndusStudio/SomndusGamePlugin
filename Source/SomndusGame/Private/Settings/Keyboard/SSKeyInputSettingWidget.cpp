@@ -78,7 +78,7 @@ void USSKeyInputSettingWidget::HandleKeyClicked()
 {
 	UGameSettingPressAnyKey* PressAnyKeyPanel = CastChecked<UGameSettingPressAnyKey>(
 	UCommonUIExtensions::PushContentToLayer_ForPlayer(GetOwningLocalPlayer(), ModalLayer, PressAnyKeyPanelClass));
-	PressAnyKeyPanel->bOnlyGamepad = IsGamepad();
+	//PressAnyKeyPanel->bOnlyGamepad = IsGamepad();
 	PressAnyKeyPanel->OnKeySelected.AddUObject(this, &ThisClass::HandleKeySelected, PressAnyKeyPanel);
 	PressAnyKeyPanel->OnKeySelectionCanceled.AddUObject(this, &ThisClass::HandleKeySelectionCanceled, PressAnyKeyPanel);
 }

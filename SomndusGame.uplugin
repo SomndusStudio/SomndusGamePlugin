@@ -24,6 +24,15 @@
 			]
 		},
 		{
+			"Name": "SomndusGameModular",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [
+				"Win64",
+				"PS5"
+			]
+		},
+		{
 			"Name": "SomndusGameEditor",
 			"Type": "UncookedOnly",
 			"LoadingPhase": "PreDefault",

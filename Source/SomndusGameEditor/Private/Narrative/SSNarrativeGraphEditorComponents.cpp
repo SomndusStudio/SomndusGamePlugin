@@ -271,14 +271,15 @@ FText SSSNarrativeGraphNodeVisual::GetNodeTitle() const
 {
 	if (!GraphNode)
 	{
-		FText::FromString("Unvalid GraphNode");
+		return FText::FromString(TEXT("Invalid GraphNode"));
 	}
+	 
 	auto* NarrativeGraphNode = Cast<USSNarrativeGraphEditorGraphNode>(GraphNode);
-
 	if (!NarrativeGraphNode)
 	{
-		FText::FromString("Unvalid NarrativeGraphNode");
+		return FText::FromString(TEXT("Invalid NarrativeGraphNode"));
 	}
+	 
 	return NarrativeGraphNode->GetDisplayName();
 }
 
@@ -355,7 +356,7 @@ void SSSNarrativeGraphNodeVisual::UpdateGraphNode()
 	CreatePinWidgets();
 }
 
-void SSSNarrativeGraphNodeVisual::MoveTo(const FVector2D& NewPosition, FNodeSet& NodeFilter, bool bMarkDirty)
+void SSSNarrativeGraphNodeVisual::MoveTo(const FVector2f& NewPosition, FNodeSet& NodeFilter, bool bMarkDirty)
 {
 	if (!CanMove()) return;
 	SGraphNode::MoveTo(NewPosition, NodeFilter, bMarkDirty);

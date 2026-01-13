@@ -11,7 +11,7 @@ public class SomndusGame : ModuleRules
 		
 		PrivatePCHHeaderFile = "Public/SomndusGame.h";
 
-		PublicDefinitions.Add("SUPPORT_OVERRIDE_GAMEPAD_TYPE=1");
+		PublicDefinitions.Add("SUPPORT_OVERRIDE_GAMEPAD_TYPE=0");
 		
 		PublicDependencyModuleNames.AddRange(
 			new string[]
@@ -19,6 +19,7 @@ public class SomndusGame : ModuleRules
 				"Core", "UMG",
 				"InputCore", "EnhancedInput", "DeveloperSettings",
 				"StructUtils",
+				
 				"CommonUI", "CommonInput", "CommonUser", "CommonGame", "GameSettings",
 				"MovieScene", "LevelSequence", "Niagara", "MediaAssets",
 			}

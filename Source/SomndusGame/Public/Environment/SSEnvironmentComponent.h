@@ -32,7 +32,7 @@ public:
 	/** Reference to the environment data asset containing all environmental configurations. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<USSEnvironmentDataAsset> EnvironmentDataAsset;
-	
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -44,14 +44,14 @@ protected:
 	FGameplayTag CachedSurfaceTag;
 
 	/** Cached surface definition pointer (not owned). */
-	const FSSFootstepSurfaceDefinition* CachedFootstepSurface = nullptr;
+	FSSFootstepSurfaceDefinition CachedFootstepSurface;
 
 	void InvalidateFootstepCache();
 	
 public:
 
-	const FSSFootstepDefinition* TryGetFootstepDefinition(const USSFootstepDataAsset* FootstepAsset, FGameplayTag ActionTag, FGameplayTag SurfaceTag);
-	const FSSFootstepSurfaceDefinition* TryGetFootstepSurfaceDefinition(const USSFootstepDataAsset* FootstepAsset, FGameplayTag ActionTag, FGameplayTag SurfaceTag);
+	const FSSFootstepDefinition* TryGetFootstepDefinition(const USSFootstepDataAsset* FootstepAsset, const FGameplayTag& ActionTag, const FGameplayTag& SurfaceTag);
+	bool TryGetFootstepSurfaceDefinition(const USSFootstepDataAsset* FootstepAsset, const FGameplayTag& ActionTag, const FGameplayTag& SurfaceTag, FSSFootstepSurfaceDefinition& FootstepSurface);
 	
 	/**
 	 * Executes a footstep effect based on the given action and surface tags.

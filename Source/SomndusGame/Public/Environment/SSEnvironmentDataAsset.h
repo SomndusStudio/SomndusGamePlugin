@@ -73,7 +73,7 @@ public:
 		return nullptr;
 	}
 
-	const FSSFootstepSurfaceDefinition* FindFootstepSurface(FGameplayTag ActionTag, FGameplayTag SurfaceTag) const
+	bool FindFootstepSurface(const FGameplayTag& ActionTag, const FGameplayTag& SurfaceTag, FSSFootstepSurfaceDefinition& FootstepSurfaceDefinition) const
 	{
 		for (const FSSFootstepDefinition& Def : FootstepDefinitions)
 		{
@@ -81,11 +81,12 @@ public:
 			{
 				if (const FSSFootstepSurfaceDefinition* SurfaceDef = Def.FindSurface(SurfaceTag))
 				{
-					return SurfaceDef;
+					FootstepSurfaceDefinition = *SurfaceDef;
+					return true;
 				}
 			}
 		}
-		return nullptr;
+		return false;
 	}
 };
 

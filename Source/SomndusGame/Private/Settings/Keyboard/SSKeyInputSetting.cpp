@@ -21,7 +21,7 @@ bool USSKeyInputSetting::InitializeInputData(const UEnhancedPlayerMappableKeyPro
 	check(KeyProfile);
 
 	GameModeControlTag = InGameModeControlTag;
-	ProfileIdentifier = KeyProfile->GetProfileIdentifer();
+	ProfileIdentifierId = KeyProfile->GetProfileIdString();
 	QueryOptions = InQueryOptions;
 
 	// Store to know i it's gamepad
@@ -223,7 +223,7 @@ UEnhancedPlayerMappableKeyProfile* USSKeyInputSetting::FindMappableKeyProfile() 
 {
 	if (UEnhancedInputUserSettings* Settings = GetUserSettings())
 	{
-		return Settings->GetKeyProfileWithIdentifier(ProfileIdentifier);
+		return Settings->GetKeyProfileWithId(ProfileIdentifierId);
 	}
 	
 	ensure(false);
