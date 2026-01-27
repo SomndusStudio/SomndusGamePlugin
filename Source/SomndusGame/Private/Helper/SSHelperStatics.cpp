@@ -7,8 +7,6 @@
 
 #include "Helper/SSHelperStatics.h"
 
-#include "Editor.h"
-
 TArray<FName> USSHelperStatics::ConvertGTagsToFTags(const TArray<FGameplayTag>& InGameplayTags)
 {
 	TArray<FName> Results;
