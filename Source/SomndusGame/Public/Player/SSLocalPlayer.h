@@ -8,6 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "CommonLocalPlayer.h"
+#include "Settings/SSCommonGameUserSettings.h"
 #include "SSLocalPlayer.generated.h"
 
 class UGameUserSettings;
@@ -31,4 +32,6 @@ public :
 	{
 		return Cast<T>(GetGameUserSettings());
 	}
+	
+	USSCommonGameUserSettings* GetLocalSettings() const { return GetTypedGameUserSettings<USSCommonGameUserSettings>();}
 };

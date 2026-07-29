@@ -14,10 +14,10 @@
 
 #define LOCTEXT_NAMESPACE "FSomndusGameModule"
 
-UE_DEFINE_GAMEPLAY_TAG(TAG_UI_ACTION_ESCAPE, "UI.Action.Escape");
-
-namespace DUGameplayTags
+namespace SSGameplayTags
 {
+	UE_DEFINE_GAMEPLAY_TAG(Tag_UI_Action_Escape, "UI.Action.Escape");
+
 	UE_DEFINE_GAMEPLAY_TAG(Tag_UI_Layer_GamePlayer, "UI.Layer.GamePlayer");
 	UE_DEFINE_GAMEPLAY_TAG(Tag_UI_Layer_GameOverlay, "UI.Layer.GameOverlay");
 	UE_DEFINE_GAMEPLAY_TAG(Tag_UI_Layer_ModeMenu, "UI.Layer.ModeMenu");
@@ -102,7 +102,7 @@ void USSGameHUDLayout::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
 	
-	RegisterUIActionBinding(FBindUIActionArgs(FUIActionTag::ConvertChecked(TAG_UI_ACTION_ESCAPE), false, FSimpleDelegate::CreateUObject(this, &ThisClass::HandleEscapeAction)));
+	RegisterUIActionBinding(FBindUIActionArgs(FUIActionTag::ConvertChecked(SSGameplayTags::Tag_UI_Action_Escape), false, FSimpleDelegate::CreateUObject(this, &ThisClass::HandleEscapeAction)));
 
 	// Listen loading token
 	USSGameMessagingSubsystem* Subsystem = GetOwningLocalPlayer()->GetSubsystem<USSGameMessagingSubsystem>();
@@ -118,7 +118,7 @@ void USSGameHUDLayout::HandleEscapeAction()
 {
 	if (ensure(!EscapeMenuClass.IsNull()) && CanPerformEscapeAction())
 	{
-		UCommonUIExtensions::PushStreamedContentToLayer_ForPlayer(GetOwningLocalPlayer(), DUGameplayTags::Tag_UI_Layer_ModeMenu, EscapeMenuClass);
+		UCommonUIExtensions::PushStreamedContentToLayer_ForPlayer(GetOwningLocalPlayer(), SSGameplayTags::Tag_UI_Layer_ModeMenu, EscapeMenuClass);
 	}
 }
 

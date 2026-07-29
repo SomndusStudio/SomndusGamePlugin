@@ -8,12 +8,11 @@
 #include "UI/SSGameMessagingSubsystem.h"
 #include "SSGameHUDLayout.generated.h"
 
-
-UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_UI_ACTION_ESCAPE);
-
 // For focus / visible manager
 namespace SSGameplayTags
 {
+	SOMNDUSGAME_API	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Tag_UI_Action_Escape);
+	
 	SOMNDUSGAME_API	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Tag_UI_Layer_GamePlayer);
 	SOMNDUSGAME_API	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Tag_UI_Layer_GameOverlay);
 	SOMNDUSGAME_API	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Tag_UI_Layer_ModeMenu);

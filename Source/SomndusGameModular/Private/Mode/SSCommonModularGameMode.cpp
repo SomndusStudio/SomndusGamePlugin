@@ -4,6 +4,7 @@
 #include "Mode/SSCommonModularGameMode.h"
 
 
+#include "CommonPlayerController.h"
 #include "SSAssetManager.h"
 #include "SSGameModularWorldSettings.h"
 #include "SSLog.h"
@@ -12,17 +13,20 @@
 #include "Engine/AssetManager.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
+#include "Mode/SSCommonGameModeState.h"
 #include "Mode/SSGameModeDefinition.h"
 #include "Mode/SSGameModeManagerComponent.h"
 #include "Mode/SSModularPlayerState.h"
 #include "Mode/SSPawnExtensionComponent.h"
 #include "Pawn/SSPawnData.h"
+#include "UI/SSCommonHUD.h"
 
 ASSCommonModularGameMode::ASSCommonModularGameMode(const FObjectInitializer& ObjectInitializer)
 {
-	//GameStateClass = ADUCommonGameState::StaticClass();
-	//PlayerControllerClass = ADUPlayerController::StaticClass();
+	GameStateClass = ASSCommonGameModeState::StaticClass();
+	PlayerControllerClass = ACommonPlayerController::StaticClass();
 	PlayerStateClass = ASSModularPlayerState::StaticClass();
+	HUDClass = ASSCommonHUD::StaticClass();
 	
 	bUseSeamlessTravel = true;
 }

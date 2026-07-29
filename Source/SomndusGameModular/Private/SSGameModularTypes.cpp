@@ -14,6 +14,8 @@ namespace SSGameplayTags
 	
 	UE_DEFINE_GAMEPLAY_TAG(GameMode_Default, "GameMode.Default");
 	UE_DEFINE_GAMEPLAY_TAG(GameMode_Common, "GameMode.Common");
+	
+	UE_DEFINE_GAMEPLAY_TAG(Tag_Input_Token_GameModeLoading, "Input.Token.GameModeLoading");
 }
 
 void SSGameModularHelpers::SendGameFrameworkComponentExtensionEvent(AActor* Receiver, const FName& EventName,

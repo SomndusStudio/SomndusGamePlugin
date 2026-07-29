@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "NativeGameplayTags.h"
-//#include "SSGameModularTypes.generated.h"
 
 namespace SSGameplayTags
 {
@@ -15,9 +14,11 @@ namespace SSGameplayTags
 
 	SOMNDUSGAMEMODULAR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameMode_Default);
 	SOMNDUSGAMEMODULAR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameMode_Common);
+	
+	SOMNDUSGAMEMODULAR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Tag_Input_Token_GameModeLoading);
 }
 
 namespace SSGameModularHelpers
 {
-	static void SendGameFrameworkComponentExtensionEvent(AActor* Receiver, const FName& EventName, bool bOnlyInGameWorlds = true);
+	void SendGameFrameworkComponentExtensionEvent(AActor* Receiver, const FName& EventName, bool bOnlyInGameWorlds = true);
 }

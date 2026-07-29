@@ -18,7 +18,7 @@ public class SomndusGame : ModuleRules
 			{
 				"Core", "UMG",
 				"InputCore", "EnhancedInput", "DeveloperSettings",
-				"StructUtils",
+				"GameplayTags", "StructUtils",
 				
 				"CommonUI", "CommonInput", "CommonUser", "CommonGame", "GameSettings",
 				"MovieScene", "LevelSequence", "Niagara", "MediaAssets",

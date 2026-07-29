@@ -3,7 +3,7 @@
 
 #include "Mode/SSPawnExtensionComponent.h"
 
-
+#include "GameFramework/Controller.h"
 #include "SSGameModularTypes.h"
 #include "SSLog.h"
 #include "Components/GameFrameworkComponentManager.h"
@@ -120,8 +120,7 @@ bool USSPawnExtensionComponent::CanChangeInitState(UGameFrameworkComponentManage
 		// TODO : Maybe change this part to be no dependant of player state actor components
 		// In wait should check only if the player state have at least on actor component with states chain
 		auto* PlayerState = GetPlayerState<APlayerState>();
-		if (auto* GameFrameworkInitStateInterface = PlayerState->FindComponentByInterface<
-			UGameFrameworkInitStateInterface>())
+		if (auto* GameFrameworkInitStateInterface = PlayerState->FindComponentByInterface<UGameFrameworkInitStateInterface>())
 		{
 			bool bPlayerStateComponentsInitialized = Manager->HaveAllFeaturesReachedInitState(
 				PlayerState, SSGameplayTags::InitState_DataAvailable);
