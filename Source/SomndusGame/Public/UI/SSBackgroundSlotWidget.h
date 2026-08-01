@@ -35,6 +35,14 @@ public:
 	void OnHoverActive(bool InActive = true);
 
 private:
+
+	UFUNCTION()
+	void OnHoverAnimationFinished();
+	
 	UPROPERTY(BlueprintReadOnly, Transient, meta = (BindWidgetAnim, BlueprintProtected = true, AllowPrivateAccess = true))
 	TObjectPtr<UWidgetAnimation> HoverAnimation;
+	
+	UPROPERTY(BlueprintReadOnly, Transient, meta = (BindWidgetAnimOptional, BlueprintProtected = true, AllowPrivateAccess = true))
+	TObjectPtr<UWidgetAnimation> HoverLoopAnimation;
+	
 };

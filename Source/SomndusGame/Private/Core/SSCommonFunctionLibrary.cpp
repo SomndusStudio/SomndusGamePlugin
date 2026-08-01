@@ -16,10 +16,14 @@
 FText USSCommonFunctionLibrary::LocalizeFromString(FString Key)
 {
 	FText Result;
-	if (FText::FindTextInLiveTable_Advanced(FString("FGameModule"), Key, Result))
+#if UE_VERSION_NEWER_THAN(5, 4, 0)
+	(FText::FindTextInLiveTable_Advanced(FString("FGameModule"), Key, Result))
+#else
+	if (FText::FindText(FString("FGameModule"), Key, Result))
 	{
 		return Result;
 	}
+#endif
 	return FText::FromString(Key);
 }
 

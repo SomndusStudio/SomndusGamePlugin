@@ -11,6 +11,8 @@
 
 void USSWidgetSlotEntry_Animation::SetHoverEffect(bool bInActive)
 {
+	bIsHovered = bInActive;
+
 	if (bInActive)
 	{
 		if (BackgroundWidget)
@@ -20,7 +22,19 @@ void USSWidgetSlotEntry_Animation::SetHoverEffect(bool bInActive)
 
 		if (HoverAnimation)
 		{
+			// Rebind à chaque fois pour éviter les doublons
+			UnbindAllFromAnimationFinished(HoverAnimation);
+
+			FWidgetAnimationDynamicEvent Delegate;
+			Delegate.BindDynamic(this, &USSWidgetSlotEntry_Animation::OnHoverAnimationFinished);
+			BindToAnimationFinished(HoverAnimation, Delegate);
+
 			PlayAnimationForward(HoverAnimation);
+		}
+		else if (HoverLoopAnimation)
+		{
+			// Pas d'intro : on lance la loop direct
+			PlayAnimation(HoverLoopAnimation, 0.0f, 0, EUMGSequencePlayMode::Forward, 1.0f);
 		}
 	}
 	else
@@ -30,19 +44,22 @@ void USSWidgetSlotEntry_Animation::SetHoverEffect(bool bInActive)
 			BackgroundWidget->OnHoverActive(false);
 		}
 
+		if (HoverLoopAnimation)
+		{
+			StopAnimation(HoverLoopAnimation);
+		}
+
 		if (HoverAnimation)
 		{
 			PlayAnimationReverse(HoverAnimation);
 		}
 	}
-	
 }
 
 FReply USSWidgetSlotEntry_Animation::NativeOnFocusReceived(const FGeometry& InGeometry, const FFocusEvent& InFocusEvent)
 {
 	SetHoverEffect(true);
 	return Super::NativeOnFocusReceived(InGeometry, InFocusEvent);
-
 }
 
 void USSWidgetSlotEntry_Animation::NativeOnFocusLost(const FFocusEvent& InFocusEvent)
@@ -63,6 +80,14 @@ void USSWidgetSlotEntry_Animation::NativeOnMouseLeave(const FPointerEvent& InMou
 	Super::NativeOnMouseLeave(InMouseEvent);
 
 	SetHoverEffect(false);
+}
+
+void USSWidgetSlotEntry_Animation::OnHoverAnimationFinished()
+{
+	if (bIsHovered && HoverLoopAnimation)
+	{
+		PlayAnimation(HoverLoopAnimation, 0.0f, 0, EUMGSequencePlayMode::Forward, 1.0f);
+	}
 }
 
 void USSWidgetSlotEntry_Animation::PlayDisappearEffect_Implementation()

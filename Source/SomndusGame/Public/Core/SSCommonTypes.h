@@ -9,7 +9,11 @@
 #include "CoreMinimal.h"
 #include "SSLog.h"
 #include "Engine/DataTable.h"
+#if UE_VERSION_NEWER_THAN(5, 4, 0)
 #include "StructUtils/InstancedStruct.h"
+#else
+#include "InstancedStruct.h"
+#endif
 #include "UObject/Class.h"
 #include "SSCommonTypes.generated.h"
 

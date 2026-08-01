@@ -43,7 +43,7 @@ public:
 
 protected:
 	
-	UPROPERTY(EditDefaultsOnly, Category = Input)
+	UPROPERTY(EditAnywhere, Category = Input)
 	bool bShouldStoreLastFocusedWidget = false;
 
 public:

@@ -40,12 +40,20 @@ public:
 	void PlaySelectConfirmEffect();
 
 protected:
+	UFUNCTION()
+	void OnHoverAnimationFinished();
+	
+	bool bIsHovered = false;
+	
 	UPROPERTY(BlueprintReadOnly, Transient, meta = (BindWidgetOptional, BlueprintProtected = true, AllowPrivateAccess = true))
 	TObjectPtr<USSBackgroundSlotWidget> BackgroundWidget;
 
 	UPROPERTY(BlueprintReadOnly, Transient, meta = (BindWidgetAnimOptional, BlueprintProtected = true, AllowPrivateAccess = true))
 	TObjectPtr<UWidgetAnimation> HoverAnimation;
 
+	UPROPERTY(BlueprintReadOnly, Transient, meta = (BindWidgetAnimOptional, BlueprintProtected = true, AllowPrivateAccess = true))
+	TObjectPtr<UWidgetAnimation> HoverLoopAnimation;
+	
 	UPROPERTY(BlueprintReadOnly, Transient, meta = (BindWidgetAnimOptional, BlueprintProtected = true, AllowPrivateAccess = true))
 	TObjectPtr<UWidgetAnimation> SelectedConfirmAnimation;
 	

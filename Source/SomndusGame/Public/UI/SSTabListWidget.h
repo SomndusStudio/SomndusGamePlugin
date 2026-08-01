@@ -8,7 +8,11 @@
 
 #include "CoreMinimal.h"
 #include "CommonTabListWidgetBase.h"
+#if UE_VERSION_NEWER_THAN(5, 4, 0)
 #include "StructUtils/InstancedStruct.h"
+#else
+#include "InstancedStruct.h"
+#endif
 #include "SSTabListWidget.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSSNavigationEventSignature, class USSTabListWidget*, Widget, int32, Index, FName, Info);

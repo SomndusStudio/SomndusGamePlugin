@@ -356,11 +356,13 @@ void SSSNarrativeGraphNodeVisual::UpdateGraphNode()
 	CreatePinWidgets();
 }
 
+#if UE_VERSION_NEWER_THAN(5, 4, 0)
 void SSSNarrativeGraphNodeVisual::MoveTo(const FVector2f& NewPosition, FNodeSet& NodeFilter, bool bMarkDirty)
 {
 	if (!CanMove()) return;
 	SGraphNode::MoveTo(NewPosition, NodeFilter, bMarkDirty);
 }
+#endif
 
 void USSNarrativeGraphSchema::CreateDefaultNodesForGraph(UEdGraph& Graph) const
 {

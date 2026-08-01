@@ -8,6 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "CommonButtonBase.h"
+#include "SSCommonButtonBase.h"
 #include "SSButtonGamepadInteraction.generated.h"
 
 
@@ -20,7 +21,7 @@
 
  */
 UCLASS()
-class SOMNDUSGAME_API USSButtonGamepadInteraction : public UCommonButtonBase
+class SOMNDUSGAME_API USSButtonGamepadInteraction : public USSCommonButtonBase
 {
 	GENERATED_BODY()
 

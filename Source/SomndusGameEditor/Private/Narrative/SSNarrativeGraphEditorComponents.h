@@ -131,8 +131,9 @@ public:
 	bool CanMove() const;
 	// SGraphNode override
 	virtual void UpdateGraphNode() override;
+#if UE_VERSION_NEWER_THAN(5, 4, 0)
 	virtual void MoveTo(const FVector2f& NewPosition, FNodeSet& NodeFilter, bool bMarkDirty = true) override;
-	
+#endif
 protected:
 };
 

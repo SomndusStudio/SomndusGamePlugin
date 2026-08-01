@@ -10,9 +10,16 @@
 void USSBackgroundSlotWidget::SetSelected(bool InSelected)
 {
 	//if (bSelected == InSelected) return;
-	
 	bSelected = InSelected;
 	OnSelectedChange(bSelected);
+}
+
+void USSBackgroundSlotWidget::OnHoverAnimationFinished()
+{
+	if (bIsHovering && HoverLoopAnimation)
+	{
+		PlayAnimation(HoverLoopAnimation, 0.0f, 0, EUMGSequencePlayMode::Forward, 1.0f);
+	}
 }
 
 void USSBackgroundSlotWidget::OnSelectedChange_Implementation(bool bInSelected)
@@ -47,10 +54,33 @@ void USSBackgroundSlotWidget::OnHoverActive_Implementation(bool InActive)
 	
 	if (InActive)
 	{
-		PlayAnimationForward(HoverAnimation);
+		if (HoverAnimation)
+		{
+			// Rebind à chaque fois pour éviter les doublons
+			UnbindAllFromAnimationFinished(HoverAnimation);
+
+			FWidgetAnimationDynamicEvent Delegate;
+			Delegate.BindDynamic(this, &USSBackgroundSlotWidget::OnHoverAnimationFinished);
+			BindToAnimationFinished(HoverAnimation, Delegate);
+		
+			PlayAnimationForward(HoverAnimation);
+		}
+		else if (HoverLoopAnimation)
+		{
+			// Pas d'intro : on lance la loop direct
+			PlayAnimation(HoverLoopAnimation, 0.0f, 0, EUMGSequencePlayMode::Forward, 1.0f);
+		}
 	}
 	else
 	{
-		PlayAnimationReverse(HoverAnimation);
+		if (HoverLoopAnimation)
+		{
+			StopAnimation(HoverLoopAnimation);
+		}
+
+		if (HoverAnimation)
+		{
+			PlayAnimationReverse(HoverAnimation);
+		}
 	}
 }
