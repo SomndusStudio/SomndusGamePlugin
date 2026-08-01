@@ -6,6 +6,7 @@
 
 
 #include "Helper/SSHelperStatics.h"
+#include "Misc/EngineVersionComparison.h"
 
 TArray<FName> USSHelperStatics::ConvertGTagsToFTags(const TArray<FGameplayTag>& InGameplayTags)
 {
@@ -20,7 +21,7 @@ TArray<FName> USSHelperStatics::ConvertGTagsToFTags(const TArray<FGameplayTag>& 
 
 int32 USSHelperStatics::GetPlayInEditorID()
 {
-#if UE_VERSION_NEWER_THAN(5, 4, 0)
+#if UE_VERSION_NEWER_THAN(5, 5, 0)
 	return UE::GetPlayInEditorID();
 #else
 	return GPlayInEditorID;

@@ -7,6 +7,7 @@
 
 #include "Core/SSCommonFunctionLibrary.h"
 
+#include "Misc/EngineVersionComparison.h"
 #include "Core/SSCommonTypes.h"
 #include "Core/SSGameSubsystem.h"
 #include "DAO/SSDAOManager.h"
@@ -16,7 +17,7 @@
 FText USSCommonFunctionLibrary::LocalizeFromString(FString Key)
 {
 	FText Result;
-#if UE_VERSION_NEWER_THAN(5, 4, 0)
+#if UE_VERSION_NEWER_THAN(5, 5, 0)
 	(FText::FindTextInLiveTable_Advanced(FString("FGameModule"), Key, Result))
 #else
 	if (FText::FindText(FString("FGameModule"), Key, Result))

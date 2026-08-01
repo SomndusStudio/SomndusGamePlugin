@@ -7,6 +7,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Misc/EngineVersionComparison.h"
 #include "GameSettingValue.h"
 #include "Input/SSInputLocalPlayerSubsystem.h"
 #include "SSKeyInputSetting.generated.h"
@@ -58,7 +59,7 @@ protected:
 	FPlayerMappableKeyQueryOptions QueryOptions;
 
 	/** The profile identifier that this key setting is from */
-#if UE_VERSION_NEWER_THAN(5, 4, 0)
+#if UE_VERSION_NEWER_THAN(5, 5, 0)
 	FString ProfileIdentifierId;
 #else
 	FGameplayTag ProfileIdentifierId;

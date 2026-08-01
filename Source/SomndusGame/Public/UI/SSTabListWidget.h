@@ -7,8 +7,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Misc/EngineVersionComparison.h"
 #include "CommonTabListWidgetBase.h"
-#if UE_VERSION_NEWER_THAN(5, 4, 0)
+#if UE_VERSION_NEWER_THAN(5, 5, 0)
 #include "StructUtils/InstancedStruct.h"
 #else
 #include "InstancedStruct.h"

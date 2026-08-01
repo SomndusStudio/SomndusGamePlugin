@@ -21,7 +21,7 @@ bool USSKeyInputSetting::InitializeInputData(const UEnhancedPlayerMappableKeyPro
 	check(KeyProfile);
 
 	GameModeControlTag = InGameModeControlTag;
-#if UE_VERSION_NEWER_THAN(5, 4, 0)
+#if UE_VERSION_NEWER_THAN(5, 5, 0)
 	ProfileIdentifierId = KeyProfile->GetProfileIdString();
 #else
 	ProfileIdentifierId = KeyProfile->GetProfileIdentifer();
@@ -227,7 +227,7 @@ UEnhancedPlayerMappableKeyProfile* USSKeyInputSetting::FindMappableKeyProfile() 
 {
 	if (UEnhancedInputUserSettings* Settings = GetUserSettings())
 	{
-#if UE_VERSION_NEWER_THAN(5, 4, 0)
+#if UE_VERSION_NEWER_THAN(5, 5, 0)
 		return Settings->GetKeyProfileWithId(ProfileIdentifierId);
 #else
 		return Settings->GetKeyProfileWithIdentifier(ProfileIdentifierId);

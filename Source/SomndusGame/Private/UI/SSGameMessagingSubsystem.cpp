@@ -89,6 +89,35 @@ void USSGameMessagingSubsystem::ShowLoading(UCommonGameDialogDescriptor* DialogD
 	}
 }
 
+void USSGameMessagingSubsystem::ShowInputText(TSubclassOf<UCommonGameDialog> DialogClass,
+	UCommonGameDialogDescriptor* DialogDescriptor, FSSInputTextResultDelegate ResultCallback)
+{
+	if (!DialogClass)
+	{
+		UE_LOG(LogSomndusGame, Error, TEXT("[%s] ShowInputText failed: DialogClass is null."), *GetNameSafe(this));
+		ResultCallback.ExecuteIfBound(ECommonMessagingResult::Unknown, FText::GetEmpty());
+		return;
+	}
+
+	if (UCommonLocalPlayer* LocalPlayer = GetLocalPlayer<UCommonLocalPlayer>())
+	{
+		if (UPrimaryGameLayout* RootLayout = LocalPlayer->GetRootUILayout())
+		{
+			RootLayout->PushWidgetToLayerStack<UCommonGameDialog>(SSGameplayTags::TAG_SS_LAYER_MODAL, DialogClass, [DialogDescriptor, ResultCallback](UCommonGameDialog& Dialog) {
+				if (USSInputTextModal* InputModal = Cast<USSInputTextModal>(&Dialog))
+				{
+					InputModal->SetOnInputTextResult(ResultCallback);
+				}
+				Dialog.SetupDialog(DialogDescriptor, FCommonMessagingResultDelegate());
+			});
+			return;
+		}
+	}
+
+	// Layout unavailable, notify the caller so the async action can complete
+	ResultCallback.ExecuteIfBound(ECommonMessagingResult::Unknown, FText::GetEmpty());
+}
+
 void USSGameMessagingSubsystem::HandleGlobalLoadingResult(ECommonMessagingResult CommonMessagingResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Global Loading dialog closed"));

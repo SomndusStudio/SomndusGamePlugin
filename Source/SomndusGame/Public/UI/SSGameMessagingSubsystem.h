@@ -11,6 +11,7 @@
 #include "Messaging/CommonGameDialog.h"
 #include "Messaging/CommonMessagingSubsystem.h"
 #include "Notification/SSGameNotificationManager.h"
+#include "UI/Dialog/SSInputTextModal.h"
 #include "SSGameMessagingSubsystem.generated.h"
 
 namespace SSGameplayTags
@@ -59,6 +60,14 @@ public:
 	void ShowAlert(UCommonGameDialogDescriptor* DialogDescriptor, FCommonMessagingResultDelegate ResultCallback = FCommonMessagingResultDelegate());
 
 	void ShowLoading(UCommonGameDialogDescriptor* DialogDescriptor, FCommonMessagingResultDelegate ResultCallback = FCommonMessagingResultDelegate());
+
+	/**
+	 * Push a text input modal onto the modal layer stack.
+	 *
+	 * The dialog class is provided by the caller so several prompt widgets can be
+	 * used, and the typed value is returned through the native result delegate.
+	 */
+	void ShowInputText(TSubclassOf<UCommonGameDialog> DialogClass, UCommonGameDialogDescriptor* DialogDescriptor, FSSInputTextResultDelegate ResultCallback = FSSInputTextResultDelegate());
 
 	void HandleGlobalLoadingResult(ECommonMessagingResult CommonMessagingResult);
 	

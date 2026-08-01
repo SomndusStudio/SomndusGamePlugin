@@ -7,6 +7,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Misc/EngineVersionComparison.h"
 #include "ConnectionDrawingPolicy.h"
 #include "EdGraphUtilities.h"
 #include "SGraphNode.h"
@@ -131,7 +132,7 @@ public:
 	bool CanMove() const;
 	// SGraphNode override
 	virtual void UpdateGraphNode() override;
-#if UE_VERSION_NEWER_THAN(5, 4, 0)
+#if UE_VERSION_NEWER_THAN(5, 5, 0)
 	virtual void MoveTo(const FVector2f& NewPosition, FNodeSet& NodeFilter, bool bMarkDirty = true) override;
 #endif
 protected:
